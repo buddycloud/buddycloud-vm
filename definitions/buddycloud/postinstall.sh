@@ -5,14 +5,17 @@ date > /etc/vagrant_box_build_time
 # Apt-install various things necessary for Ruby, guest additions,
 # etc., and remove optional things to trim down the machine.
 apt-get -y update
+# update the image
 apt-get -y upgrade
 apt-get -y dist-upgrade
-apt-get -y install linux-headers-$(uname -r) build-essential
-apt-get -y install zlib1g-dev libssl-dev libreadline-gplv2-dev
+# puppet & tools
 apt-get -y install puppet augeas-tools augeas-lenses ruby git
+# vmware support
 apt-get -y install open-vm-dkms open-vm-tools vmfs-tools
+# virtualbox support
+apt-get -y install virtualbox-guest-dkms virtualbox-guest-utils
+# no apparmor
 apt-get -y purge apparmor
-apt-get clean
 
 # Setup sudo to allow no-password sudo for "admin"
 cp /etc/sudoers /etc/sudoers.orig
@@ -30,22 +33,10 @@ wget --no-check-certificate 'https://raw.github.com/mitchellh/vagrant/master/key
 chmod 600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant /home/vagrant/.ssh
 
-# Installing the virtualbox guest additions
-VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
-cd /tmp
-wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
-mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
-sh /mnt/VBoxLinuxAdditions.run
-umount /mnt
-
-rm VBoxGuestAdditions_$VBOX_VERSION.iso
-
-# Remove items used for building, since they aren't needed anymore
-apt-get -y remove linux-headers-$(uname -r) build-essential
+# package cleanup
 apt-get -y autoremove
-
 apt-get -y clean
-apt-get update
+apt-get -y update
 
 # Zero out the free space to save space in the final image:
 dd if=/dev/zero of=/EMPTY bs=1M
