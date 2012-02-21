@@ -5,9 +5,6 @@ date > /etc/vagrant_box_build_time
 # Apt-install various things necessary for Ruby, guest additions,
 # etc., and remove optional things to trim down the machine.
 apt-get -y update
-# update the image
-apt-get -y upgrade
-apt-get -y dist-upgrade
 # puppet & tools
 apt-get -y install puppet augeas-tools augeas-lenses ruby git
 # vmware support
@@ -16,6 +13,8 @@ apt-get -y install open-vm-dkms open-vm-tools vmfs-tools
 apt-get -y install virtualbox-guest-dkms virtualbox-guest-utils
 # no apparmor
 apt-get -y purge apparmor
+# dist upgrade
+apt-get -y dist-upgrade
 
 # Setup sudo to allow no-password sudo for "admin"
 cp /etc/sudoers /etc/sudoers.orig
