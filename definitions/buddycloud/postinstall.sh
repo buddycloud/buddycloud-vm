@@ -45,6 +45,7 @@ apt-get -y remove linux-headers-$(uname -r) build-essential
 apt-get -y autoremove
 
 apt-get -y clean
+apt-get update
 
 # Zero out the free space to save space in the final image:
 dd if=/dev/zero of=/EMPTY bs=1M
