@@ -1,0 +1,15 @@
+$ORIGIN <%= domain %>.
+$TTL    604800
+<%= domain %>. IN SOA ns1.<%= domain %>. ns2.<%= domain %>. (
+                      <%= datetime %>        ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+<%= domain %>. IN NS ns1.<%= domain %>.
+<%= domain %>. IN NS ns2.<%= domain %>.
+<%= domain %>. IN A <%= externalip %>
+ns1.<%= domain %>. IN A <%= externalip %>
+ns2.<%= domain %>. IN A <%= externalip %>
+_xmpp-client._tcp.<%= domain %>.   IN SRV 5 0 5222 <%= domain %>.
+_xmpp-server._tcp.<%= domain %>.   IN SRV 5 0 5269 <%= domain %>.
