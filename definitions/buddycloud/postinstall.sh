@@ -2,19 +2,8 @@
 
 date > /etc/vagrant_box_build_time
 
-# Apt-install various things necessary for Ruby, guest additions,
-# etc., and remove optional things to trim down the machine.
+# update package list
 apt-get -y update
-# puppet & tools
-apt-get -y install puppet augeas-tools augeas-lenses ruby git
-# vmware support
-apt-get -y install open-vm-dkms open-vm-tools vmfs-tools
-# virtualbox support
-apt-get -y install virtualbox-guest-dkms virtualbox-guest-utils
-# no apparmor
-apt-get -y purge apparmor
-# dist upgrade
-apt-get -y dist-upgrade
 
 # Setup sudo to allow no-password sudo for "admin"
 cp /etc/sudoers /etc/sudoers.orig
@@ -31,11 +20,6 @@ cd /home/vagrant/.ssh
 wget --no-check-certificate 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub' -O authorized_keys
 chmod 600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant /home/vagrant/.ssh
-
-# package cleanup
-apt-get -y autoremove
-apt-get -y clean
-apt-get -y update
 
 # Zero out the free space to save space in the final image:
 dd if=/dev/zero of=/EMPTY bs=1M
