@@ -1,0 +1,13 @@
+Building a buddycloud dev vm
+----------------------------
+
+vagrant basebox build buddycloud
+vagrant basebox export buddycloud
+vagrant up
+vagrant ssh
+
+Work In Progress
+----------------
+
+This is still a work in progress and does not yet provide a fully functional
+virtual machine.
