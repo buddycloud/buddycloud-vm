@@ -2,6 +2,7 @@ define buddycloud::server(
     $domain,
     $externalip
 ) {
+    include apt
     include buddycloud::database
     buddycloud::dns::domain{"$domain":
         externalip => "$externalip",
