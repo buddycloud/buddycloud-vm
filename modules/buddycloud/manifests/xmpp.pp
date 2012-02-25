@@ -4,7 +4,7 @@ class buddycloud::xmpp {
 }
 
 define buddycloud::xmpp::config(
-    $admin => false
+    $admin = false
 ) {
     include buddycloud::xmpp
     $domain = $name
