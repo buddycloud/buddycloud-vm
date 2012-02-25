@@ -1,6 +1,10 @@
 class buddycloud::xmpp {
     package { "prosody": ensure => installed }
-    service { "prosody": ensure => running, require => Package['prosody']}
+    package { "liblua5.1-sql-postgres-2": ensure => installed }
+    service { "prosody":
+        ensure => running,
+        require => [Package['prosody'], Package['liblua5.1-sql-postgres-2']]
+    }
 }
 
 define buddycloud::xmpp::config(
