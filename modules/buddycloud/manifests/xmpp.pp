@@ -5,7 +5,7 @@ class buddycloud::xmpp {
     }
     apt::sources_list{"prosody":
         ensure  => present,
-        content => 'deb http://packages.prosody.im/debian natty main',
+        content => 'deb http://packages.prosody.im/debian maverick main',
         require => Apt::Key['prosody'],
     }
     package { "prosody": ensure => installed }
