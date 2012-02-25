@@ -4,6 +4,10 @@ class buddycloud {
         ensure => present,
         mode   => 0755,
     }
+    file {"/srv/http/":
+        ensure => directory,
+        mode   => 0755,
+    }
 }
 
 define buddycloud::server(
