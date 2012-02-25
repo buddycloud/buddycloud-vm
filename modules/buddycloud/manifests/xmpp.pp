@@ -8,7 +8,7 @@ define buddycloud::xmpp::config(
 ) {
     include buddycloud::xmpp
     $domain = $name
-    if ($admin == false || $admin == [] || $admin == '') {
+    if (($admin == false) or ($admin == []) or ($admin == '')) {
         $iadmin = [ "admin@$domain" ]
     } else {
         if (is_string($admin)) {
