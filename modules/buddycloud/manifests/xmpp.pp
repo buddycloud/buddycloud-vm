@@ -5,13 +5,13 @@ class buddycloud::xmpp {
     }
     apt::sources_list{"prosody":
         ensure  => present,
-        content => 'deb http://packages.prosody.im/debian maverick main',
+        content => 'deb http://packages.prosody.im/debian stable main',
         require => Apt::Key['prosody'],
     }
     package { "prosody": ensure => installed }
     package { "liblua5.1-sql-postgres-2": ensure => installed }
-    package { "liblua5.1-dbi0": ensure => installed }
-    package { "lua-zlib": ensure => installed }
+    package { "liblua5.1-dbi0": ensure => installed, require => Apt::Sources_list['prosody'] }
+    package { "lua-zlib": ensure => installed, require => Apt::Sources_list['prosody'] }
     service { "prosody":
         ensure => running,
         require => [Package['prosody'], Package['liblua5.1-sql-postgres-2'], Package['liblua5.1-dbi0']]
