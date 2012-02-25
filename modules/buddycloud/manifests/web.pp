@@ -18,6 +18,18 @@ class buddycloud::web {
         require => Package["apache2-mpm-event"],
         notify  => Service["apache2"],
     }
+    file { "/etc/apache2/mods-enabled/proxy.conf":
+        ensure => link,
+        target => "/etc/apache2/mods-available/proxy.conf",
+        require => Package["apache2-mpm-event"],
+        notify  => Service["apache2"],
+    }
+    file { "/etc/apache2/mods-enabled/proxy_http.load":
+        ensure => link,
+        target => "/etc/apache2/mods-available/proxy_http.load",
+        require => Package["apache2-mpm-event"],
+        notify  => Service["apache2"],
+    }
     file { "/etc/apache2/mods-enabled/ssl.load":
         ensure => link,
         target => "/etc/apache2/mods-available/ssl.load",
