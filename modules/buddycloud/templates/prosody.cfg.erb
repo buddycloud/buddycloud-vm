@@ -10,7 +10,6 @@ modules_enabled = {
   "register";           -- Allow users to register on this server using a client and change passwords
   "bosh";               -- Enable BOSH clients, aka "Jabber over HTTP"
   "watchregistrations"; -- Alert admins of registrations
---  "compression";        -- Enable mod_compression -- broken in ubuntu
   "legacyauth";         -- Needed by strophe
 };
  
@@ -27,7 +26,7 @@ VirtualHost "<%= domain %>"
   authentication        = "internal_hashed"
   allow_registration    = true -- if you want this, replace mod_register.lua with http://hg.prosody.im/0.9/raw-file/5e84fb3c4ba0/plugins/mod_register.lua
   anonymous_login       = false
-  ssl                   = { key = "/etc/prosody/certs/example.com.key"; certificate = "/etc/prosody/certs/example.com.crt" }
+  ssl                   = { key = "/etc/apache2/<%= domain %>.key"; certificate = "/etc/apache2/<%= domain %>.crt" }
  
 -- when an unauthenticated browser connects via BOSH, it binds as an anonymous (ephemeral) userID.
 -- this domain is where we place these short lived browsing users. They cannot do anything other than
