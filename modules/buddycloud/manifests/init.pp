@@ -1,4 +1,5 @@
 class buddycloud {
+    include syslog
     file {"/usr/local/sbin/update-buddycloud":
         source => "puppet:///modules/buddycloud/update-buddycloud",
         ensure => present,
