@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$(id -u)" != 0 ]; then
+    echo ::
+    echo :: root access required
+    echo ::
+    exec sudo -u root -H "$0"
+fi
+
+echo ::
+echo :: updating the buddycloud web client
+echo ::
+(
+    cd /tmp
+    WEB_PKG=$(wget -O - -o /dev/null 'https://api.github.com/repos/buddycloud/buddycloud-webclient/downloads'|grep '"url":'|sed 's/[^:]*:.*"\([^"]*\)".*/\1/'|head -n1)
+    WEB_PKG=$(wget -O - -o /dev/null "$WEB_PKG"|grep '"html_url":'|sed 's/[^:]*:.*"\([^"]*\)".*/\1/')
+    wget -o /dev/null -O /tmp/buddycloud_web.tar.gz "$WEB_PKG"
+    cd /srv/http/
+    tar -xzf /tmp/buddycloud_web.tar.gz
+    /etc/init.d/apache2 reload
+)

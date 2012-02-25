@@ -1,9 +1,18 @@
+class buddycloud {
+    file {"/usr/local/sbin/update-buddycloud":
+        source => "puppet:///modules/buddycloud/update-buddycloud"
+        ensure => present,
+        mode   => 0755,
+    }
+}
+
 define buddycloud::server(
     $domain,
     $externalip
 ) {
     include apt
     include buddycloud::database
+    include buddycloud
     buddycloud::dns::domain{"$domain":
         externalip => "$externalip",
     }
