@@ -1,4 +1,13 @@
 class buddycloud::xmpp {
+    apt::key {"prosody":
+        ensure => present,
+        source => 'http://prosody.im/files/prosody-debian-packages.key',
+    }
+    apt::sources_list{"prosody":
+        ensure  => present,
+        content => 'deb http://packages.prosody.im/debian natty main',
+        require => Apt::Key['prosody'],
+    }
     package { "prosody": ensure => installed }
     package { "liblua5.1-sql-postgres-2": ensure => installed }
     service { "prosody":
