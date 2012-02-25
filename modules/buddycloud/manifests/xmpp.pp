@@ -10,9 +10,11 @@ class buddycloud::xmpp {
     }
     package { "prosody": ensure => installed }
     package { "liblua5.1-sql-postgres-2": ensure => installed }
+    package { "liblua5.1-dbi0": ensure => installed }
+    package { "lua-zlib": ensure => installed }
     service { "prosody":
         ensure => running,
-        require => [Package['prosody'], Package['liblua5.1-sql-postgres-2']]
+        require => [Package['prosody'], Package['liblua5.1-sql-postgres-2'], Package['liblua5.1-dbi0']]
     }
 }
 
