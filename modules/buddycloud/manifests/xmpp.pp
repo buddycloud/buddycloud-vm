@@ -49,3 +49,7 @@ define buddycloud::xmpp::config(
         notify  => Service['prosody'],
     }
 }
+
+define buddycloud::xmpp::component() {
+}
+
