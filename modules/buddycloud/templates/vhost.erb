@@ -7,7 +7,7 @@
 </VirtualHost>
  
 <VirtualHost *:443>
-        ServerName  example.com
+        ServerName  <%= domain %>
         SSLEngine On
         SSLCertificateFile      /etc/apache2/<%= domain %>.cert
         SSLCertificateKeyFile   /etc/apache2/<%= domain %>.key
