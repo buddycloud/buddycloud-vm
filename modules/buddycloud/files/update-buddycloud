@@ -17,5 +17,7 @@ echo ::
     wget -o /dev/null -O /tmp/buddycloud_web.tar.gz "$WEB_PKG"
     cd /srv/http/
     tar -xzf /tmp/buddycloud_web.tar.gz
+    rm ./config.js
+    ln -s /etc/buddycloud/web-config.js ./config.js
     /etc/init.d/apache2 reload
 )

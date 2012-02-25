@@ -8,6 +8,10 @@ class buddycloud {
         ensure => directory,
         mode   => 0755,
     }
+    file{"/etc/buddycloud/":
+        ensure => directory,
+        mode   => 0755,
+    }
 }
 
 define buddycloud::server(
@@ -22,6 +26,7 @@ define buddycloud::server(
     }
     buddycloud::cert{"$domain": }
     buddycloud::web::vhost{"$domain": }
+    buddycloud::web::config{"$domain": }
     buddycloud::xmpp::config{"$domain": }
     notify {"secret": message => "serversecret: $serversecret"}
 }

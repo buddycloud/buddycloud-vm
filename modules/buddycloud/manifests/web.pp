@@ -47,3 +47,10 @@ define buddycloud::web::vhost() {
 
 }
 
+define buddycloud::web::config() {
+    $domain = $name
+    file { "/etc/buddycloud/web-config.js":
+        ensure  => present,
+        content => template("buddycloud/web-config.erb"),
+    }
+}
