@@ -9,6 +9,7 @@ define buddycloud::server(
     }
     buddycloud::cert{"$domain": }
     buddycloud::web::vhost{"$domain": }
+    buddycloud::xmpp::config{"$domain": }
     notify {"secret": message => "serversecret: $serversecret"}
 }
 
