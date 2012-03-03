@@ -51,5 +51,9 @@ define buddycloud::xmpp::config(
 }
 
 define buddycloud::xmpp::component() {
+    file {'/etc/buddycloud/component-config.js':
+        ensure  => present,
+        content => template("puppet:///buddycloud/component-config.js"),
+    }
 }
 
