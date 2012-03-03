@@ -6,10 +6,10 @@ exports.xmpp = { jid: 'buddycloud.<%= domain %>',
 
 exports.modelBackend = 'postgres';
 exports.modelConfig = {
-    host: 'localhost',
+    host: '127.0.0.1',
     port: 5432,
     database: 'buddycloud-server',
-    user: 'buddycloud-server',
+    user: 'buddycloud',
     password: '<%= serversecret %>',
     poolSize: 4
 };
