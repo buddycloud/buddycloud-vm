@@ -51,6 +51,12 @@ define buddycloud::xmpp::config(
 }
 
 define buddycloud::xmpp::component() {
+    include nodejs
+    package{"libicu-dev": ensure => installed}
+    package{"node-stringprep":
+        provider => 'npm',
+        require  => [Package['npm'], Package['libicu-dev']],
+    }
     file {'/etc/buddycloud/component-config.js':
         ensure  => present,
         content => template("buddycloud/component-config.erb"),
