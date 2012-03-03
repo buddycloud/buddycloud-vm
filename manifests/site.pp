@@ -7,7 +7,10 @@ stage {
 }
 
 class finalize {
-    exec => '/usr/local/sbin/update-buddycloud'
+    exec{"finalize":
+        command => '/usr/local/sbin/update-buddycloud',
+        creates => '/srv/http/index.html',
+    }
 }
 
 node default {
@@ -18,6 +21,6 @@ node default {
         domain => 'buddycloud.local',
         externalip => "$ipaddress_eth0",
     }
-    class {'finalize': stage => 'post',}
+    class{'finalize': stage => 'post'}
 }
 
