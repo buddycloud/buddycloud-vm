@@ -61,5 +61,10 @@ define buddycloud::xmpp::component() {
         ensure  => present,
         content => template("buddycloud/component-config.erb"),
     }
+    file {'/etc/buddycloud-server': ensure => directory}
+    file {'/etc/buddycloud-server/config.js':
+        ensure => link,
+        target => '/etc/buddycloud/component-config.js',
+    }
 }
 

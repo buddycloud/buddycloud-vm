@@ -29,11 +29,15 @@ echo ::
     cd /tmp
     WEB_PKG=$(wget -O - -o /dev/null 'https://api.github.com/repos/buddycloud/buddycloud-server/downloads'|grep '"html_url":'|sed 's/[^:]*:.*"\([^"]*\)".*/\1/'|grep x86-64.tar.gz|head -n1)
     wget -o /dev/null -O /tmp/buddycloud_server.tar.gz "$WEB_PKG"
+    [ -d "buddycloud_server" ] || rm -rf buddycloud_server
     [ -d "buddycloud_server" ] || mkdir buddycloud_server
     (
         cd buddycloud_server
         tar -xzf /tmp/buddycloud_server.tar.gz
         cd opt/buddycloud-server/
         tar -cSsp . | (cd /srv/xmpp-component/ ; tar -xSsp )
+        cd /srv/xmpp-component/
+        rm -rf /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
+        ln -s /usr/lib/node_modules/node-stringprep /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
     )
 )
