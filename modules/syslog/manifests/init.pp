@@ -1,6 +1,6 @@
 class syslog {
-    package { "rsyslogd": ensure => installed }
-    service { "rsyslogd": ensure => running, require => Package["rsyslogd"] }
+    package { "rsyslog": ensure => installed }
+    service { "rsyslog": ensure => running, require => Package["rsyslogd"] }
     file {"/etc/rsyslog.d/10-udp.conf":
         ensure  => present,
         content => "\$ModLoad imudp\n\$UDPServerRun 514",
