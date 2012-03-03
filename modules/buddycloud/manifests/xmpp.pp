@@ -44,6 +44,7 @@ define buddycloud::xmpp::config(
     file {'/etc/prosody/prosody.cfg.lua':
         content => template("buddycloud/prosody.cfg.erb"),
         ensure  => present,
+        require => Package['prosody'],
     }
     file {'/usr/lib/prosody/modules/mod_register.lua':
         source  => "puppet:///buddycloud/mod_register.lua",
