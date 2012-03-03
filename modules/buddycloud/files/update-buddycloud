@@ -39,5 +39,6 @@ echo ::
         cd /srv/xmpp-component/
         rm -rf /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
         ln -s /usr/lib/node_modules/node-stringprep /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
+        /etc/init.d/buddycloud-component restart
     )
 )
