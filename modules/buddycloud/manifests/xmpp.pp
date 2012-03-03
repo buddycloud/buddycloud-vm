@@ -69,7 +69,7 @@ define buddycloud::xmpp::component() {
     }
     file {'/etc/init.d/buddycloud-component':
         ensure => present,
-        source => "puppet:///buddycloud/files/init-buddycloud-component"
+        source => "puppet:///buddycloud/init-buddycloud-component"
     }
 }
 
