@@ -3,7 +3,7 @@ import "common"
 stage {
     "apt": before => Stage["packages"];
     "packages": before => Stage["main"];
-    "post": after => Stage["main"];
+    "post": require => Stage["main"];
 }
 
 node default {
