@@ -5,18 +5,18 @@ window.config = {
     bosh_service: '/http-bind/',
 
     /*this is the inbox domain for anon users */
-    home_domain: "buddycloud.<%= domain %>",
+    home_domain: "<%= domain %>",
 
     /* domain to authenticate against for anon users */
     anon_domain: "anon.<%= domain %>",
 
     /* overall used domain for this webclient instance.
      * used for registration and login. */
-    domain: "<%= domain %>",
+    domain: "<%= domain %>"//,
 
     /* Default domain to create topics under
      * unless the user specifies …@domain as the name. */
-    topic_domain: "topics.<%= domain %>",
+    //topic_domain: "topics.<%= domain %>",
 
     /* Sign up for an embed.ly account to use OStatus */
     //embedly_key: "xxx"
