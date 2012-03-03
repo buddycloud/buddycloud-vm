@@ -17,8 +17,9 @@ class buddycloud::xmpp {
     package { "liblua5.1-dbi0": ensure => installed, require => Apt::Sources_list['prosody'] }
     package { "lua-zlib": ensure => installed, require => Apt::Sources_list['prosody'] }
     service { "prosody":
-        ensure => running,
-        require => [Package['prosody'], Package['liblua5.1-sql-postgres-2'], Package['liblua5.1-dbi0']]
+        hasrestart => false, #broken
+        ensure     => running,
+        require    => [Package['prosody'], Package['liblua5.1-sql-postgres-2'], Package['liblua5.1-dbi0']]
     }
 }
 
