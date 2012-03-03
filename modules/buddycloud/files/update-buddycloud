@@ -39,6 +39,8 @@ echo ::
         cd /srv/xmpp-component/
         rm -rf /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
         ln -s /usr/lib/node_modules/node-stringprep /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
+        echo 'Please type the password $(cat 50f02619-67f1-4856-b42f-82db273e31a1)'
+        /usr/bin/psql --user buddycloud --pass -h 127.0.0.1 buddycloud-server < /srv/xmpp-component//lib/node_modules/buddycloud-server/postgres.sql
         /etc/init.d/buddycloud-component restart
     )
 )
