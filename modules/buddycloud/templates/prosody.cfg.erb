@@ -36,6 +36,12 @@ VirtualHost "anon.<%= domain %>"
   allow_registration    = false
   anonymous_login       = true
   disallow_s2s          = true
+
+VirtualHost "topics.<%= domain %>"
+  allow_registration = false
+  anonymous_login    = false
+  modules_enabled    = { "disco" }
+  disco_items        = {{ "buddycloud.<%= domain %>", "buddycloud-server" }}
  
 Component "buddycloud.<%= domain %>"
   component_secret        = "<%= serversecret %>"
@@ -43,3 +49,4 @@ Component "buddycloud.<%= domain %>"
 Component "topics.<%= domain %>"
   component_secret        = "<%= serversecret %>"
   validate_from_addresses = false
+
