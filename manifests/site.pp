@@ -1,4 +1,11 @@
 import "common"
+
+stage {
+    "apt": before => Stage["packages"];
+    "packages": before => Stage["main"];
+    "post": after => Stage["main"];
+}
+
 node default {
     package { "apparmor": ensure => purged }
     package { "avahi-daemon": ensure => installed }

@@ -1,5 +1,5 @@
 class buddycloud {
-    include syslog
+    class{"syslog": stage => 'packages'}
     file {"/usr/local/sbin/update-buddycloud":
         source => "puppet:///modules/buddycloud/update-buddycloud",
         ensure => present,
@@ -23,8 +23,8 @@ define buddycloud::server(
     $domain,
     $externalip
 ) {
-    include apt
-    include buddycloud::database
+    class{"apt": stage => 'apt'}
+    class{"buddycloud::database": stage => 'packages'}
     include buddycloud
     buddycloud::dns::domain{"$domain":
         externalip => "$externalip",

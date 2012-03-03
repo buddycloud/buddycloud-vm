@@ -42,7 +42,7 @@ define buddycloud::web::vhost() {
 
     $domain = $name
 
-    include buddycloud::web
+    class{"buddycloud::web": stage => 'packages'}
 
     file { "/etc/apache2/sites-enabled/buddycloud":
         ensure  => present,
