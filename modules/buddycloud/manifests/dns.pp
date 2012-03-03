@@ -1,6 +1,10 @@
 class buddycloud::dns {
     package { "bind9": ensure => latest }
     service { "bind9": ensure => running, require => Package["bind9"] }
+    file { "/etc/resolv.conf":
+        ensure  => present,
+        content => 'nameserver 127.0.0.1',
+    }
 }
 
 define buddycloud::dns::domain(

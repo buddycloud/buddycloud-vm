@@ -9,9 +9,13 @@ $TTL    604800
 <%= domain %>. IN NS ns1.<%= domain %>.
 <%= domain %>. IN NS ns2.<%= domain %>.
 <%= domain %>. IN A <%= externalip %>
+buddycloud.<%= domain %>. IN A <%= externalip %>
+anon.<%= domain %>. IN A <%= externalip %>
+topics.<%= domain %>. IN A <%= externalip %>
 ns1.<%= domain %>. IN A <%= externalip %>
 ns2.<%= domain %>. IN A <%= externalip %>
 _xmpp-client._tcp.<%= domain %>.   IN SRV 5 0 5222 <%= domain %>.
 _xmpp-server._tcp.<%= domain %>.   IN SRV 5 0 5269 <%= domain %>.
 _xmpp-server._tcp.buddycloud.<%= domain %>.   IN SRV 5 0 5269 <%= domain %>.
 _xmpp-server._tcp.anon.<%= domain %>.   IN SRV 5 0 5269 <%= domain %>.
+_xmpp-server._tcp.topics.<%= domain %>.   IN SRV 5 0 5269 <%= domain %>.
