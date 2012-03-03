@@ -21,7 +21,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="buddycloud server"
 NAME=buddycloud
-RUN_AS_USER=buddycloud
+RUN_AS_USER=root
 DAEMON=/usr/bin/node
 RUNDIR=/srv/xmpp-component/lib/node_modules/buddycloud-server
 DAEMON_ARGS=lib/main.js
