@@ -54,7 +54,6 @@ define buddycloud::web::vhost() {
             File["/etc/apache2/mods-enabled/ssl.load"],
             Exec["openssl-key-$domain"],
         ],
-        notify  => Service["apache2"],
     }
 
 }
