@@ -63,7 +63,6 @@ define buddycloud::xmpp::config(
 
 define buddycloud::xmpp::component() {
     class{"nodejs": stage => 'apt'}
-    class{"buddycloud::xmpp": stage => 'packages'}
 
     file {'/etc/buddycloud/component-config.js':
         ensure  => present,
