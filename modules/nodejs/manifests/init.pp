@@ -1,29 +1,29 @@
 class nodejs {
 
-    apt::key{"npm":
+    apt::key{"node":
         content => '-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: SKS 1.0.10
 
-mI0ETnD1WwEEAKJWE70uR4T/FmbPeCN9h5FiaVPj+wizjBJ/DhjgxXylCbMm8ed8v9zNAAPb
-bcFPjuqJJ1MXMsPgRryOLTBvJ4ZaZcvvx3/y3rEGfcT1+whZRS51gUSVB2u+gYipR3TaO3vN
-ZQOHp637Pr2DeWtfRaKI9JahCLVKZiisBVtsuP6HABEBAAG0HkxhdW5jaHBhZCBQUEEgZm9y
-IEdpYXMgS2F5IExlZYi4BBMBAgAiBQJOcPVbAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIX
-gAAKCRADfiqe/UsnAnd0A/0U6ZFhszCTKegaVBjaqYoxy3P218D4rQLQOkPssFkg4XUEZ9w6
-+t6B13groYxdH5ttabp5w1A90clvuQe/G4OavkL3xPNCAxiF22LJGOZVS8cliNc3A0zd2F+a
-29qyZhXrzSOSmqgVpPoNas7QVgyVuAsrvINEKGBq210kFITsVw==
-=i7D9
------END PGP PUBLIC KEY BLOCK-----'
+mI0ES/EY5AEEAOZl+6Cv7b0fOnXLj8lt1cZiNQHIuOkGRJaMUdvXdrSbtQ4v9GiMWFoFj+9g
+dFN9EjD9JKoXjJb/e/Q9P21uOi0/YmlOfkqWvqm1qsyBXTXTrGx1mghtALPSw0bvYoWZ3aZJ
+3c9VPT5sCdv9IYw6X/+4Z0HoQGvxymbfvRKH3J/xABEBAAG0EkxhdW5jaHBhZCBjaHJpc2xl
+YYi2BBMBAgAgBQJL8RjkAhsDBgsJCAcDAgQVAggDBBYCAwECHgECF4AACgkQuTFqe8eRexLB
+rAQAk9ux3R+k38+dY0f8p3B+0UESy/jNFL/S+t6Fdpw/2qMV1EZohAgJXUw/axmTdr1gKUoy
+GDtE13gebKGy+zqtzsIVo44V0ztC3Z7Kbd9bbiW+wMo7RT4yyi6kURMyE68RrqGbkenZveU6
+o2Urq4LW6bfn5fDLVeYQ5GNsrNdSS1k=
+=9f3N
+-----END PGP PUBLIC KEY BLOCK-----',
     }
 
-    apt::sources_list{"npm":
+    apt::sources_list{"node":
         ensure  => present,
-        content => "deb http://ppa.launchpad.net/gias-kay-lee/npm/ubuntu oneiric main",
-        require => [Apt::Key['npm']],
+        content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu oneiric main",
+        require => [Apt::Key['node']],
     }
 
-    package{"nodejs": ensure => installed, require => Apt::Sources_list['npm']}
-    package{"nodejs-dev": ensure => installed, require => Apt::Sources_list['npm']}
-    package{"npm": ensure => installed, require => Apt::Sources_list['npm']}
+    package{"nodejs": ensure => installed, require => Apt::Sources_list['node']}
+    package{"nodejs-dev": ensure => installed, require => Apt::Sources_list['node']}
+    package{"npm": ensure => installed, require => Apt::Sources_list['node']}
 
 }
 
