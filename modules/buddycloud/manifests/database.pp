@@ -20,13 +20,13 @@ class buddycloud::database {
     exec { "buddycloud-prosody-db":
         command => "/usr/bin/createdb --owner buddycloud --encoding UTF8 buddycloud-prosody -T template0",
         user    => "postgres",
-        unless  => '/usr/bin/psql -c "select * from pg_tablespace;" buddycloud-prosody',
+        unless  => '/usr/bin/psql -c "select * from pg_tablespace;" | /bin/grep buddycloud-prosody',
         require => Exec["buddycloud-db-user"],
     }
     exec { "buddycloud-server-db":
         command => "/usr/bin/createdb --owner buddycloud --encoding UTF8 buddycloud-server -T template0",
         user    => "postgres",
-        unless  => '/usr/bin/psql -c "select * from pg_tablespace;" buddycloud-server',
+        unless  => '/usr/bin/psql -c "select * from pg_tablespace;" | /bin/grep buddycloud-server',
         require => Exec["buddycloud-db-user"],
     }
 }
