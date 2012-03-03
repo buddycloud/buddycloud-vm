@@ -16,15 +16,9 @@ class buddycloud::xmpp::repository {
 
 class buddycloud::xmpp {
     class{"buddycloud::xmpp::repository": stage => 'apt'}
-    package { "prosody": ensure => installed }
     package { "liblua5.1-sql-postgres-2": ensure => installed }
     package { "liblua5.1-dbi0": ensure => installed, require => Apt::Sources_list['prosody'] }
     package { "lua-zlib": ensure => installed, require => Apt::Sources_list['prosody'] }
-    service { "prosody":
-        hasrestart => false, #broken
-        ensure     => running,
-        require    => [Package['prosody'], Package['liblua5.1-sql-postgres-2'], Package['liblua5.1-dbi0']]
-    }
     package{"libicu-dev": ensure => installed}
     package{"node-stringprep":
         provider => 'npm',
@@ -50,12 +44,16 @@ define buddycloud::xmpp::config(
     file {'/etc/prosody/prosody.cfg.lua':
         content => template("buddycloud/prosody.cfg.erb"),
         ensure  => present,
-        notify  => Service['prosody'],
     }
     file {'/usr/lib/prosody/modules/mod_register.lua':
         source  => "puppet:///buddycloud/mod_register.lua",
         ensure  => present,
-        notify  => Service['prosody'],
+    }
+    package { "prosody": ensure => installed }
+    service { "prosody":
+        hasrestart => false, #broken
+        ensure     => running,
+        require    => [Package['prosody'], File['/etc/prosody/prosody.cfg.lua'], File['/usr/lib/prosody/modules/mod_register.lua']],
     }
 }
 
