@@ -1,5 +1,4 @@
-class nodejs {
-
+class nodejs::repository {
     apt::key{"node":
         content => '-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: SKS 1.0.10
@@ -13,19 +12,20 @@ GDtE13gebKGy+zqtzsIVo44V0ztC3Z7Kbd9bbiW+wMo7RT4yyi6kURMyE68RrqGbkenZveU6
 o2Urq4LW6bfn5fDLVeYQ5GNsrNdSS1k=
 =9f3N
 -----END PGP PUBLIC KEY BLOCK-----',
-        stage => 'apt',
     }
 
     apt::sources_list{"node":
         ensure  => present,
         content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu oneiric main",
         require => [Apt::Key['node']],
-        stage   => 'apt',
     }
+}
 
-    package{"nodejs": ensure => installed, require => Apt::Sources_list['node'], stage => 'apt'}
-    package{"nodejs-dev": ensure => installed, require => Apt::Sources_list['node'], stage => 'apt'}
-    package{"npm": ensure => installed, require => Apt::Sources_list['node'], stage => 'apt'}
+class nodejs {
+    class{"nodejs::repository": stage => 'apt',}
+    package{"nodejs": ensure => installed, require => Apt::Sources_list['node']}
+    package{"nodejs-dev": ensure => installed, require => Apt::Sources_list['node']}
+    package{"npm": ensure => installed, require => Apt::Sources_list['node']}
 
 }
 
