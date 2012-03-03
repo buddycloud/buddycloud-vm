@@ -4,6 +4,7 @@ class buddycloud::dns {
     file { "/etc/resolv.conf":
         ensure  => present,
         content => 'nameserver 127.0.0.1',
+        require => Service['bind9'],
     }
 }
 
