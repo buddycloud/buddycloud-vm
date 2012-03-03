@@ -67,5 +67,9 @@ define buddycloud::xmpp::component() {
         ensure => link,
         target => '/etc/buddycloud/component-config.js',
     }
+    file {'/etc/init.d/buddycloud-component':
+        ensure => present,
+        source => "puppet:///buddycloud/files/init-buddycloud-component"
+    }
 }
 
