@@ -7,24 +7,24 @@ class buddycloud::database {
         unless  => "/bin/ps aux | /bin/grep [p]ostgres"
     }
     exec { "buddycloud-db-user-create":
-        command => "/usr/bin/psql -c \"CREATE USER buddycloud WITH PASSWORD '$serversecret'\"",
+        command => "/usr/bin/psql -c \"CREATE USER buddycloud WITH PASSWORD '$serversecret'\" | :",
         user    => "postgres",
         require => Exec["postgres-start"],
         unless  => "/usr/bin/psql -c \"select rolname from pg_roles;\" | /bin/grep buddycloud",
     }
     exec { "buddycloud-db-user":
-        command => "/usr/bin/psql -c \"ALTER ROLE buddycloud WITH PASSWORD '$serversecret'\"",
+        command => "/usr/bin/psql -c \"ALTER ROLE buddycloud WITH PASSWORD '$serversecret'\" | :",
         user    => "postgres",
         require => Exec["buddycloud-db-user-create"],
     }
     exec { "buddycloud-prosody-db":
-        command => "/usr/bin/createdb --owner buddycloud --encoding UTF8 buddycloud-prosody -T template0",
+        command => "/usr/bin/createdb --owner buddycloud --encoding UTF8 buddycloud-prosody -T template0 | :",
         user    => "postgres",
         unless  => '/usr/bin/psql -c "select * from pg_tablespace;" | /bin/grep buddycloud-prosody',
         require => Exec["buddycloud-db-user"],
     }
     exec { "buddycloud-server-db":
-        command => "/usr/bin/createdb --owner buddycloud --encoding UTF8 buddycloud-server -T template0",
+        command => "/usr/bin/createdb --owner buddycloud --encoding UTF8 buddycloud-server -T template0 | :",
         user    => "postgres",
         unless  => '/usr/bin/psql -c "select * from pg_tablespace;" | /bin/grep buddycloud-server',
         require => Exec["buddycloud-db-user"],
