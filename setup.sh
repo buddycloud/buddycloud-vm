@@ -49,7 +49,8 @@ cat << HERE
     Rerunning as root.
 
 HERE
-exec sudo -H -u root ./setup.sh $*
+sudo -H -u root ./setup.sh $*
+exit $?
 fi
 
 if [ "$QUITE" = "NO" ]; then
