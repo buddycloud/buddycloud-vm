@@ -39,7 +39,6 @@ echo ::
         cd /srv/xmpp-component/
         rm -rf /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
         ln -s /usr/lib/node_modules/node-stringprep /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
-        echo "Please type the password $(cat /etc/bc-secret)"
         /usr/bin/psql --user buddycloud --pass -h 127.0.0.1 buddycloud-server < /srv/xmpp-component//lib/node_modules/buddycloud-server/postgres.sql
         /etc/init.d/prosody stop
         killall node
@@ -47,3 +46,12 @@ echo ::
         /etc/init.d/buddycloud-component restart
     )
 )
+
+echo ::
+echo :: registering init scripts
+echo ::
+
+update-rc.d buddycloud-component defaults
+update-rc.d prosody defaults
+update-rc.d avahi-daemon defaults
+
