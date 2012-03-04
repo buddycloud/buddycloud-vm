@@ -52,7 +52,7 @@ HERE
 exec sudo -H -u root "$0" $*
 fi
 
-if [ "$QUITE" -eq "NO" ]; then
+if [ "$QUITE" = "NO" ]; then
 cat << HERE
 
     Welcome to the automated buddycloud install
@@ -74,10 +74,10 @@ cat << HERE
 $(echo $(hostname -A) $(hostname -f)|tr ' ' '\n'|sort -u|grep -v '^$'|sed 's:.*:    - \0:')
 
 HERE
-    read -p 'buddycloud domain:' -i "$(hostname -f)"
+    read -p 'buddycloud domain:' -i "$(hostname -f)" DOMAIN
 fi
 
-cat > manifest/config.pp << HERE
+cat > manifests/config.pp << HERE
 \$buddycloud_domain="$DOMAIN"
 HERE
 
