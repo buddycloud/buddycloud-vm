@@ -39,7 +39,7 @@ echo ::
         cd /srv/xmpp-component/
         rm -rf /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
         ln -s /usr/lib/node_modules/node-stringprep /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
-        /usr/bin/psql --user buddycloud --host 127.0.0.1 buddycloud-server < /srv/xmpp-component//lib/node_modules/buddycloud-server/postgres.sql | ( echo FAILED to import sql > /dev/stderr ; exit 1 )
+        /usr/bin/psql --user buddycloud --host 127.0.0.1 buddycloud-server -f /srv/xmpp-component//lib/node_modules/buddycloud-server/postgres.sql | ( echo FAILED to import sql > /dev/stderr ; exit 1 )
         /etc/init.d/prosody stop
         killall node
         /etc/init.d/prosody start
