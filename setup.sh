@@ -49,7 +49,7 @@ cat << HERE
     Rerunning as root.
 
 HERE
-exec sudo -H -u root "$0" $*
+exec sudo -H -u root ./setup.sh $*
 fi
 
 if [ "$QUITE" = "NO" ]; then
