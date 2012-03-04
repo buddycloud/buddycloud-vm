@@ -8,7 +8,7 @@ while [ "$#" -gt 0 ]; do
         "--quite" | "-q") QUITE="YES" ;;
         "--domain" | "-d")
             if [ "$#" -gt 1 ] && shift; then
-                DOMAIN="${i}"
+                DOMAIN="${1}"
             else
                 echo "--domain|-d requires an argument"
                 exit 1
