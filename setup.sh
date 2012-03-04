@@ -19,8 +19,8 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-if ! [ -d "manifests/site.pp" ]; then
-if [ "$QUITE" -eq "NO" ]; then
+if ! [ -f "manifests/site.pp" ]; then
+if [ "$QUITE" = "NO" ]; then
 cat << HERE
 
     Requiring the bc/puppet repository
