@@ -30,7 +30,11 @@ cat << HERE
 HERE
 fi
 if git clone git://github.com/rtreffer/buddycloud-vm.git ; then
-    exec ./buddycloud-vm/setup.sh $*
+    (
+        cd buddycloud-vm
+        ./setup.sh $*
+    )
+    exit 0
 else
     echo "Checkout failed. Try installing git."
     exit 1
