@@ -1,4 +1,5 @@
 import "common"
+import "./config"
 
 stage {
     "apt": before => Stage["packages"];
@@ -18,7 +19,7 @@ node default {
     package { "avahi-daemon": ensure => installed }
     service { "avahi-daemon": ensure => running, require => Package["avahi-daemon"], }
     buddycloud::server { "buddycloud":
-        domain => 'buddycloud.local',
+        domain => "$buddycloud_domain",
         externalip => "$ipaddress_eth0",
     }
     class{'finalize': stage => 'post'}
