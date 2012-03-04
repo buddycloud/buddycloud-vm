@@ -29,7 +29,7 @@ class buddycloud::database {
         unless  => '/usr/bin/psql -c "select * from pg_tablespace;" | /bin/grep buddycloud-server',
         require => Exec["buddycloud-db-user"],
     }
-    file { "/root/.pgpass.conf":
+    file { "/root/.pgpass":
         ensure  => present,
         mode    => 0600,
         content => "127.0.0.1:5432:buddycloud-server:buddycloud:$serversecret",
