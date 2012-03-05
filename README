@@ -1,3 +1,9 @@
+Install the prereqs
+-------------------
+
+gem install veewee 
+gem install vagrant
+
 Building a buddycloud dev vm
 ----------------------------
 
