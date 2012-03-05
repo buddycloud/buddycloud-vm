@@ -19,6 +19,18 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
+if [ "$(id -u)" -ne "0" ]; then
+cat << HERE
+
+    Setting up buddycloud requires root access.
+
+    Rerunning as root.
+
+HERE
+sudo -H -u root ./setup.sh $*
+exit $?
+fi
+
 if ! [ -f "manifests/site.pp" ]; then
 if [ "$QUITE" = "NO" ]; then
 cat << HERE
@@ -28,6 +40,9 @@ cat << HERE
     Checking out
 
 HERE
+fi
+if ! which git &> /dev/null; then
+    apt-get install -y git
 fi
 if git clone git://github.com/rtreffer/buddycloud-vm.git ; then
     (
@@ -41,16 +56,8 @@ else
 fi
 fi
 
-if [ "$(id -u)" -ne "0" ]; then
-cat << HERE
-
-    Setting up buddycloud requires root access.
-
-    Rerunning as root.
-
-HERE
-sudo -H -u root ./setup.sh $*
-exit $?
+if ! which puppet &> /dev/null; then
+    apt-get install -y puppet
 fi
 
 if [ "$QUITE" = "NO" ]; then
