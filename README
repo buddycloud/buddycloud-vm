@@ -1,9 +1,8 @@
 Install the prereqs
 -------------------
 
-apt-get install puppet virtualbox
-gem install veewee 
-gem install vagrant
+apt-get install puppet virtualbox virtualbox-ose dkms linux-headers-$(uname -r)
+gem install veewee vagrant
 
 Building a buddycloud dev vm
 ----------------------------
