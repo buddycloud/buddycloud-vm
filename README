@@ -1,6 +1,7 @@
 Install the prereqs
 -------------------
 
+apt-get install puppet
 gem install veewee 
 gem install vagrant
 
