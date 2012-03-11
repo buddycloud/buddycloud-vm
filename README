@@ -7,10 +7,12 @@ The scripts automatically setup and install the followign buddycloud components:
 - buddycloud server
 - buddycloud webclient
 - apache and virtual host config
-- database 
+- database
 - XMPP server
 
-
+This instance should run fine as an EC2 macine on Amazon's micro instance
+- http://aws.amazon.com/free/
+- http://aws.amazon.com/ec2/#pricing
 
 Install the prereqs
 -------------------
@@ -25,7 +27,3 @@ vagrant basebox build buddycloud
 vagrant basebox export buddycloud
 vagrant up
 vagrant ssh
-
-This instance should run fine as an EC2 macine on Amazon's micro instance
-- http://aws.amazon.com/free/
-- http://aws.amazon.com/ec2/#pricing
