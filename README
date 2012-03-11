@@ -1,3 +1,17 @@
+About
+-----
+
+These scripts help you build you a full virtual box or EC2 virtual machine complete with a working buddycloud instance.
+The scripts automatically setup and install the followign buddycloud components:
+
+- buddycloud server
+- buddycloud webclient
+- apache and virtual host config
+- database 
+- XMPP server
+
+
+
 Install the prereqs
 -------------------
 
