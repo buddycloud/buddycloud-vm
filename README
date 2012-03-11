@@ -1,7 +1,7 @@
 Install the prereqs
 -------------------
 
-apt-get install puppet virtualbox virtualbox-ose dkms linux-headers-$(uname -r)
+apt-get install rubygems puppet virtualbox virtualbox-ose dkms linux-headers-$(uname -r)
 gem install veewee vagrant
 
 Building a buddycloud dev vm
@@ -12,8 +12,6 @@ vagrant basebox export buddycloud
 vagrant up
 vagrant ssh
 
-Work In Progress
-----------------
-
-This is still a work in progress and does not yet provide a fully functional
-virtual machine.
+This instance should run fine as an EC2 macine on Amazon's micro instance
+- http://aws.amazon.com/free/
+- http://aws.amazon.com/ec2/#pricing
