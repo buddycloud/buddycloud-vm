@@ -25,7 +25,10 @@ mkdir ec2
     cd /mnt/root
     git clone git://github.com/buddycloud/buddycloud-vm.git
     cd /mnt/root/buddycloud-vm
-    echo '$buddycloud_domain=$externalhost' > manifests/config.pp
+    cat > manifests/config.pp << _HERE_
+buddycloud_domain=$externalhost
+buddycloud_ip=$externalip
+_HERE_
 
     cat > /mnt/etc/cloud/cloud.cfg << _HERE_
 user: buddycloud
