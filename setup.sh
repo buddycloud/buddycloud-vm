@@ -91,11 +91,11 @@ cat << HERE
     buddycloud requires an IP to run on
 
     sensible choices are usually the external or internal ip:
-    - $externalip
-    - $ipaddress_eth0
+    - \$externalip
+    - \$ipaddress_eth0
 $(ip addr|grep inet|sed 's:.*inet6\? ::'|sed 's: .*::'|sed 's:^:    - :')
 HERE
-    read -p 'buddycloud ip:' -i "$externalip" IP
+    read -p 'buddycloud ip:' -i "\$externalip" IP
 fi
 
 cat > manifests/config.pp << HERE
