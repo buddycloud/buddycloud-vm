@@ -20,7 +20,7 @@ node default {
     service { "avahi-daemon": ensure => running, require => Package["avahi-daemon"], }
     buddycloud::server { "buddycloud":
         domain => "$buddycloud_domain",
-        externalip => "$ipaddress_eth0",
+        externalip => "$buddycloud_ip",
     }
     class{'finalize': stage => 'post'}
 }

@@ -79,14 +79,28 @@ cat << HERE
     buddycloud requires a domain that points to this server.
 
     You may try one of the following names:
-$(echo $(hostname -A) $(hostname -f)|tr ' ' '\n'|sort -u|grep -v '^$'|sed 's:.*:    - \0:')
+$(echo $(hostname -A) $(hostname -f)|tr ' ' '\n'|sort -u|grep -v '^$'|sed 's:^:    - :')
 
 HERE
     read -p 'buddycloud domain:' -i "$(hostname -f)" DOMAIN
 fi
 
+if [ "$IP" = "" ]; then
+cat << HERE
+
+    buddycloud requires an IP to run on
+
+    sensible choices are usually the external or internal ip:
+    - $externalip
+    - $ipaddress_eth0
+$(ip addr|grep inet|sed 's:.*inet6\? ::'|sed 's: .*::'|sed 's:^:    - :')
+HERE
+    read -p 'buddycloud ip:' -i "$externalip" IP
+fi
+
 cat > manifests/config.pp << HERE
 \$buddycloud_domain="$DOMAIN"
+\$buddycloud_ip="$IP"
 HERE
 
 puppet apply --modulepath=./modules/ manifests/site.pp
