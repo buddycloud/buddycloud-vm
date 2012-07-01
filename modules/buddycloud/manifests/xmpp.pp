@@ -1,4 +1,5 @@
 class buddycloud::xmpp::repository {
+    include lua-dbi
     apt::key {"prosody":
         ensure => present,
         source => 'http://prosody.im/files/prosody-debian-packages.key',
@@ -17,12 +18,12 @@ class buddycloud::xmpp::repository {
 class buddycloud::xmpp {
     class{"buddycloud::xmpp::repository": stage => 'apt'}
     package { "liblua5.1-sql-postgres-2": ensure => installed }
-    package { "liblua5.1-dbi0": ensure => installed, require => Apt::Sources_list['prosody'] }
     package { "lua-zlib": ensure => installed, require => Apt::Sources_list['prosody'] }
     package{"libicu-dev": ensure => installed}
+    package{"build-essential": ensure => installed}
     package{"node-stringprep":
         provider => 'npm',
-        require  => [Package['npm'], Package['libicu-dev']],
+        require  => [Package['npm'], Package['libicu-dev'], Package['build-essential']],
     }
 
 }
@@ -49,6 +50,7 @@ define buddycloud::xmpp::config(
     file {'/usr/lib/prosody/modules/mod_register.lua':
         source  => "puppet:///buddycloud/mod_register.lua",
         ensure  => present,
+        require => Package['prosody'],
     }
     package { "prosody": ensure => installed }
     service { "prosody":

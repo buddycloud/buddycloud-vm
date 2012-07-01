@@ -10,6 +10,10 @@ apt-get -y autoremove
 apt-get -y clean
 apt-get -y update
 
+# add admin group (if missing)
+groupadd -r admin
+usermod -a -G admin vagrant
+
 # Setup sudo to allow no-password sudo for "admin"
 cp /etc/sudoers /etc/sudoers.orig
 sed -i -e '/Defaults\s\+env_reset/a Defaults\texempt_group=admin' /etc/sudoers
