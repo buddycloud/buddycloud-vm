@@ -8,6 +8,16 @@ if [ "$(id -u)" != 0 ]; then
 fi
 
 echo ::
+echo :: going dark
+echo ::
+
+/etc/init.d/apache2 stop
+/etc/init.d/prosody stop
+killall lua
+killall node
+killall buddycloud-server
+
+echo ::
 echo :: updating the buddycloud web client
 echo ::
 (
@@ -40,10 +50,12 @@ echo ::
         rm -rf /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
         ln -s /usr/lib/node_modules/node-stringprep /srv/xmpp-component/lib/node_modules/buddycloud-server/node_modules/node-stringprep
         /usr/bin/psql --user buddycloud --host 127.0.0.1 buddycloud-server -f /srv/xmpp-component//lib/node_modules/buddycloud-server/postgres.sql || ( echo FAILED to import sql > /dev/stderr ; exit 1 )
+        rm /srv/xmpp-component/lib/node_modules/buddycloud-server/config.js
+        ln -s /etc/buddycloud/component-config.js /srv/xmpp-component/lib/node_modules/buddycloud-server/config.js
         /etc/init.d/prosody stop
+        killall lua
         killall node
-        /etc/init.d/prosody start
-        /etc/init.d/buddycloud-component restart
+        killall buddycloud-server
     )
 )
 
@@ -55,3 +67,6 @@ update-rc.d buddycloud-component defaults
 update-rc.d prosody defaults
 update-rc.d avahi-daemon defaults
 
+/etc/init.d/prosody start
+/etc/init.d/buddycloud-component start
+/etc/init.d/apache2 start
