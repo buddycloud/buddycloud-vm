@@ -30,8 +30,8 @@ mkdir ec2
     git clone git://github.com/buddycloud/buddycloud-vm.git /mnt/root/buddycloud-vm
     cd /mnt/root/buddycloud-vm
     cat > manifests/config.pp << _HERE_
-buddycloud_domain=\$externalhost
-buddycloud_ip=\$externalip
+$buddycloud_domain=\$externalhost
+$buddycloud_ip=\$externalip
 _HERE_
 
     cat > /mnt/etc/cloud/cloud.cfg << _HERE_
