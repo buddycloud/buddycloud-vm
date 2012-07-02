@@ -17,8 +17,9 @@ mkdir ec2
     umount /mnt/mnt
     chroot /mnt /usr/bin/apt-get update
     chroot /mnt /usr/bin/apt-get install -y curl puppet cloud-init linux-image{-extra,}-virtual
-    chroot /mnt /usr/bin/apt-get install -y grub-legacy-ec2
-    chroot /mnt /usr/bin/apt-get purge virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 open-vm-tools open-vm-dkms vmfs-tools
+    chroot /mnt /usr/bin/apt-get install -y grub-legacy-ec2 git
+    chroot /mnt /usr/bin/apt-get purge -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 open-vm-tools open-vm-dkms vmfs-tools
+    chroot /mnt /usr/bin/apt-get autoremove -y
     chroot /mnt /usr/sbin/userdel -rf vagrant
     chroot /mnt /usr/sbin/useradd -m buddycloud -G adm,admin,users,netdev -s /bin/bash
     rm /mnt/etc/ssh/*_key*
@@ -77,7 +78,7 @@ _HERE_
 
     cat > /mnt/etc/cloud/build.info << _HERE_
 build_name: server
-serial: 20120701
+serial: 20120702
 _HERE_
 
     cat > /mnt/etc/rc.local << _HERE_
@@ -102,7 +103,12 @@ else
 fi
 
 cd /root/buddycloud-vm
+cp manifests/config.pp manifests/config.pp.bak
+git checkout -- manifests/config.pp
+git pull
+cp manifests/config.pp.bak manifests/config.pp
 puppet apply --modulepath=./modules/ manifests/site.pp
+/usr/local/sbin/update-buddycloud
 _HERE_
 
     umount /mnt/*
@@ -116,5 +122,10 @@ _HERE_
     umount /mnt
 )
 dd if=/dev/buddycloud/root of=buddycloud_dense.img bs=$((1*1024*1024))
+vgchange -a n buddycloud
+kpartx -d /dev/loop7
+losetup -d /dev/loop7
 kvm-img convert -f raw -O raw buddycloud_dense.img buddycloud.img
 rm buddycloud_dense.img
+cat buddycloud.img | pbzip -9 > buddycloud.img.bz2
+rm buddycloud.img

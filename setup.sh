@@ -104,4 +104,4 @@ cat > manifests/config.pp << HERE
 HERE
 
 puppet apply --modulepath=./modules/ manifests/site.pp
-
+/usr/local/sbin/update-buddycloud
