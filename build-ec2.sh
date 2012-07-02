@@ -10,25 +10,28 @@ mkdir ec2
     losetup /dev/loop7 sda.img
     kpartx -a /dev/loop7
     vgscan
+    while ! [ -e /dev/buddycloud/root ] ; do sleep 1 ; done
     mount /dev/buddycloud/root /mnt
     for i in proc sys dev; do mount -o bind /$i /mnt/$i ; done
     mount /dev/mapper/loop7p1 /mnt/mnt
     ( cd /mnt/mnt ; tar -cSsp . ) | ( cd /mnt/boot/ ; tar -xSsp )
     umount /mnt/mnt
     chroot /mnt /usr/bin/apt-get update
-    chroot /mnt /usr/bin/apt-get install -y curl puppet cloud-init linux-image{-extra,}-virtual
+    chroot /mnt /usr/bin/apt-get install -y curl puppet cloud-init linux-image{-extra,}-virtual ubuntu-minimal
     chroot /mnt /usr/bin/apt-get install -y grub-legacy-ec2 git
     chroot /mnt /usr/bin/apt-get purge -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 open-vm-tools open-vm-dkms vmfs-tools
+    chroot /mnt /usr/bin/apt-get purge -y nfs-common libnfsidmap2 avahi-daemon dosfstools geoip-database language-pack-gnome-en linux-image-server ntfs-3g
+    chroot /mnt /usr/bin/apt-get purge -y xauth xfonts-base xfonts-utils xserver-xorg-core
     chroot /mnt /usr/bin/apt-get autoremove -y
     chroot /mnt /usr/sbin/userdel -rf vagrant
     chroot /mnt /usr/sbin/useradd -m buddycloud -G adm,admin,users,netdev -s /bin/bash
     rm /mnt/etc/ssh/*_key*
     cd /mnt/root
-    git clone git://github.com/buddycloud/buddycloud-vm.git
+    git clone git://github.com/buddycloud/buddycloud-vm.git /mnt/root/buddycloud-vm
     cd /mnt/root/buddycloud-vm
     cat > manifests/config.pp << _HERE_
-buddycloud_domain=$externalhost
-buddycloud_ip=$externalip
+buddycloud_domain=\$externalhost
+buddycloud_ip=\$externalip
 _HERE_
 
     cat > /mnt/etc/cloud/cloud.cfg << _HERE_
@@ -125,7 +128,8 @@ dd if=/dev/buddycloud/root of=buddycloud_dense.img bs=$((1*1024*1024))
 vgchange -a n buddycloud
 kpartx -d /dev/loop7
 losetup -d /dev/loop7
+rm -rf ec2
 kvm-img convert -f raw -O raw buddycloud_dense.img buddycloud.img
 rm buddycloud_dense.img
-cat buddycloud.img | pbzip -9 > buddycloud.img.bz2
+cat buddycloud.img | pbzip2 -9 > buddycloud.img.bz2
 rm buddycloud.img
