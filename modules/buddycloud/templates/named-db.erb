@@ -2,10 +2,10 @@ $ORIGIN <%= domain %>.
 $TTL    604800
 <%= domain %>. IN SOA ns1.<%= domain %>. ns2.<%= domain %>. (
                       <%= datetime %>        ; Serial
-                         604800         ; Refresh
-                          86400         ; Retry
-                        2419200         ; Expire
-                         604800 )       ; Negative Cache TTL
+                           3600         ; Refresh
+                             60         ; Retry
+                           3600         ; Expire
+                             60 )       ; Negative Cache TTL
 <%= domain %>. IN NS ns1.<%= domain %>.
 <%= domain %>. IN NS ns2.<%= domain %>.
 <%= domain %>. IN A <%= externalip %>
