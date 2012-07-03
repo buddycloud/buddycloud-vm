@@ -5,6 +5,11 @@ class buddycloud {
         ensure => present,
         mode   => 0755,
     }
+    file {"/usr/local/sbin/update-buddycloud-trunk":
+        source => "puppet:///modules/buddycloud/update-buddycloud-trunk",
+        ensure => present,
+        mode   => 0755,
+    }
     file {"/srv/http/":
         ensure => directory,
         mode   => 0755,
