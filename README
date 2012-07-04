@@ -27,3 +27,8 @@ vagrant basebox build buddycloud
 vagrant basebox export buddycloud
 vagrant up
 vagrant ssh
+
+Setting up your new image on AWS
+--------------------------------
+
+https://buddycloud.org/wiki/Buddycloud_on_Amazon_Web_Service
