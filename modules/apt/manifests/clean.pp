@@ -1,25 +1,21 @@
-/*
-
-== Class: apt::clean-cache
-create a cronjob which will run "apt-get clean" once a month.
-
-Arguments:
-*$apt_clean_minutes*: cronjob minutes - default uses ip_to_cron from module "common"
-*$apt_clean_hours*:   cronjob hours - default to 0
-*$apt_clean_mday*:    cronjob monthday - default uses ip_to_cron from module "common"
-
-Require:
-- module common (http://github.com/camptocamp/puppet-common)
-
-*/
-class apt::clean {
-  $minutes  = $apt_clean_minutes? {'' => ip_to_cron(1, 59), default => $apt_clean_minutes }
-  $hours    = $apt_clean_hours?   {'' => "0", default => $apt_clean_hours }
-  $monthday = $apt_clean_mday?    {'' => ip_to_cron(1, 28), default => $apt_clean_mday }
-
-  cron {"cleanup APT cache - prevents diskfull":
+# == Class: apt::clean
+#
+# Create a cronjob which will run "apt-get clean" once a month.
+#
+# === Variables
+#
+#  *$minutes*: cronjob minutes  - default uses fqdn_rand(), range 0 to 59
+#  *$hours*:   cronjob hours    - default to 0
+#  *$monthday*:    cronjob monthday - default uses fqdn_rand(), range 1 to 29
+#
+class apt::clean (
+  $minutes = $apt::params::clean_minutes,
+  $hours = $apt::params::clean_hours,
+  $monthday = $apt::params::clean_monthday,
+) {
+  cron {'cleanup APT cache - prevents diskfull':
     ensure   => present,
-    command  => "apt-get clean",
+    command  => 'apt-get clean',
     hour     => $hours,
     minute   => $minutes,
     monthday => $monthday,

@@ -1,6 +1,8 @@
 import "common"
 import "./config"
 
+Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+
 stage {
     "apt": before => Stage["packages"];
     "packages": before => Stage["main"];
