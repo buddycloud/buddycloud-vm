@@ -3,7 +3,7 @@
 
 Vagrant::Config.run do |config|
   config.vm.box = "precise64"
-  config.vm.box_url = "buddycloud.box"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   config.vm.forward_port 53, 5553
   config.vm.forward_port 5269, 5269
