@@ -1,11 +1,11 @@
-= buddycloud Vagrant Box =
+# buddycloud Vagrant Box
 
 This set of scripts allows you to automatically build a virtual machine with
 the complete [buddycloud](http://www.buddycloud.com) stack installed, using
 [Vagrant](http://www.vagrantup.com/) and [Puppet](http://puppetlabs.com/).
 Its main use is as a development environment for buddycloud hackers.
 
-== Installation & Usage ==
+## Installation & Usage
 
 First, make sure you have Vagrant, Puppet and [VirtualBox](https://www.virtualbox.org/)
 installed. If you use Ubuntu, run the following:
