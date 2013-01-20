@@ -1,29 +1,29 @@
-import "common"
 import "./config"
 
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
-stage {
-    "apt": before => Stage["packages"];
-    "packages": before => Stage["main"];
-    "post": require => Stage["main"];
-}
-
-class finalize {
-    exec{"finalize":
-        command => '/usr/local/sbin/update-buddycloud',
-        creates => '/srv/http/index.html',
-    }
-}
-
 node default {
-    package { "apparmor": ensure => purged }
-    package { "avahi-daemon": ensure => installed }
-    service { "avahi-daemon": ensure => running, require => Package["avahi-daemon"], }
-    buddycloud::server { "buddycloud":
-        domain => "$buddycloud_domain",
-        externalip => "$buddycloud_ip",
-    }
-    class{'finalize': stage => 'post'}
+
+  class { "buddycloud":
+    domain => "example.com"
+  }
+
+  class { "nginx":
+    require => Class["buddycloud"]
+  }
+
+  nginx::resource::vhost { "localhost":
+    ensure => enable,
+    www_root => "/opt/buddycloud/webclient",
+  }
+
+  # There seems to be a bug in the puppetlabs/nginx module which seems
+  # causes nginx not to be restarted after the vhost is added to its
+  # configuration. We work around this problem by restarting nginx
+  # manually.
+
+  exec { "service nginx restart":
+    require => Nginx::Resource::Vhost["localhost"]
+  }
 }
 

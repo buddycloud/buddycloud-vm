@@ -5,11 +5,9 @@ Vagrant::Config.run do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.forward_port 53, 5553
-  config.vm.forward_port 5269, 5269
-  config.vm.forward_port 5222, 5222
-  config.vm.forward_port 8080, 80
-  config.vm.forward_port 8443, 443
+  config.vm.forward_port 5222, 5222   # XMPP
+  config.vm.forward_port 9123, 19123  # HTTP API  
+  config.vm.forward_port 80, 10080    # Webclient
 
   config.vm.provision :puppet do |puppet|
      puppet.manifests_path = "manifests"
