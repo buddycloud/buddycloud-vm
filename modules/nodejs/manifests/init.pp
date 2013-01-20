@@ -1,31 +1,94 @@
-class nodejs::repository {
-    apt::key{"node":
-        content => '-----BEGIN PGP PUBLIC KEY BLOCK-----
-Version: SKS 1.0.10
+# Class: nodejs
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Usage:
+#
+class nodejs(
+  $dev_package = false,
+  $proxy       = ''
+) inherits nodejs::params {
 
-mI0ES/EY5AEEAOZl+6Cv7b0fOnXLj8lt1cZiNQHIuOkGRJaMUdvXdrSbtQ4v9GiMWFoFj+9g
-dFN9EjD9JKoXjJb/e/Q9P21uOi0/YmlOfkqWvqm1qsyBXTXTrGx1mghtALPSw0bvYoWZ3aZJ
-3c9VPT5sCdv9IYw6X/+4Z0HoQGvxymbfvRKH3J/xABEBAAG0EkxhdW5jaHBhZCBjaHJpc2xl
-YYi2BBMBAgAgBQJL8RjkAhsDBgsJCAcDAgQVAggDBBYCAwECHgECF4AACgkQuTFqe8eRexLB
-rAQAk9ux3R+k38+dY0f8p3B+0UESy/jNFL/S+t6Fdpw/2qMV1EZohAgJXUw/axmTdr1gKUoy
-GDtE13gebKGy+zqtzsIVo44V0ztC3Z7Kbd9bbiW+wMo7RT4yyi6kURMyE68RrqGbkenZveU6
-o2Urq4LW6bfn5fDLVeYQ5GNsrNdSS1k=
-=9f3N
------END PGP PUBLIC KEY BLOCK-----',
+  case $::operatingsystem {
+    'Debian': {
+      include 'apt'
+
+      apt::source { 'sid':
+        location    => 'http://ftp.us.debian.org/debian/',
+        release     => 'sid',
+        repos       => 'main',
+        pin         => 100,
+        include_src => false,
+        before      => Anchor['nodejs::repo'],
+      }
+
     }
 
-    apt::sources_list{"node":
-        ensure  => present,
-        content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu oneiric main",
-        require => [Apt::Key['node']],
+    'Ubuntu': {
+      include 'apt'
+
+      # Only use PPA when necessary.
+      if $::lsbdistcodename != 'Precise'{
+        apt::ppa { 'ppa:chris-lea/node.js':
+          before => Anchor['nodejs::repo'],
+        }
+      }
     }
+
+    'Fedora', 'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Amazon': {
+      package { 'nodejs-stable-release':
+        ensure => absent,
+        before => Yumrepo['nodejs-stable'],
+      }
+
+      yumrepo { 'nodejs-stable':
+        descr    => 'Stable releases of Node.js',
+        baseurl  => $nodejs::params::baseurl,
+        enabled  => 1,
+        gpgcheck => $nodejs::params::gpgcheck,
+        gpgkey   => 'http://patches.fedorapeople.org/oldnode/stable/RPM-GPG-KEY-tchol',
+        before   => Anchor['nodejs::repo'],
+      }
+    }
+
+    default: {
+      fail("Class nodejs does not support ${::operatingsystem}")
+    }
+  }
+
+  # anchor resource provides a consistent dependency for prereq.
+  anchor { 'nodejs::repo': }
+
+  package { 'nodejs':
+    name    => $nodejs::params::node_pkg,
+    ensure  => present,
+    require => Anchor['nodejs::repo']
+  }
+
+  package { 'npm':
+    name    => $nodejs::params::npm_pkg,
+    ensure  => present,
+    require => Anchor['nodejs::repo']
+  }
+
+  if $proxy {
+    exec { 'npm_proxy':
+      command => "npm config set proxy ${proxy}",
+      path    => $::path,
+      require => Package['npm'],
+    }
+  }
+
+  if $dev_package and $nodejs::params::dev_pkg {
+    package { 'nodejs-dev':
+      name    => $nodejs::params::dev_pkg,
+      ensure  => present,
+      require => Anchor['nodejs::repo']
+    }
+  }
+
 }
-
-class nodejs {
-    class{"nodejs::repository": stage => 'apt',}
-    package{"nodejs": ensure => installed, require => Apt::Sources_list['node']}
-    package{"nodejs-dev": ensure => installed, require => Apt::Sources_list['node']}
-    package{"npm": ensure => installed, require => Apt::Sources_list['node']}
-
-}
-

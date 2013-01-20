@@ -1,0 +1,57 @@
+// buddycloud-server config file
+
+// jid referrs to your server component
+exports.xmpp = {
+    jid: 'buddycloud.<%= domain %>',
+    password: '<%= shared_secret %>',
+    host: 'localhost',
+    port: 5347
+};
+
+// uncomment and set to enable topic channels on this domain
+//exports.advertiseComponents = [ 'topics.<%= domain %>' ];
+
+// database settings
+exports.modelBackend = 'postgres';
+exports.modelConfig = {
+    host: 'localhost',
+    port: 5432,
+    database: 'buddycloud_server',
+    user: 'buddycloud_server',
+    password: '<%= shared_secret %>',
+    poolSize: 4
+};
+
+// default privacy for new new channels
+exports.defaults = {
+    userChannel: { openByDefault:  true },
+    topicChannel: { openByDefault: true },
+};
+
+// level can be "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE".
+// you should use at least one of stdout, syslog and file.
+exports.logging = {
+    colorized: false,
+    level: "INFO",
+    // stdout: true,
+    // syslog: { hostname: "localhost", port: 514 },
+    file: "/var/log/buddycloud-server.log"
+};
+
+// restrict creation of topic channels to just your domain - a good idea
+exports.checkCreateNode = function(opts) {
+    return (opts.nodeUser === opts.actor) ||
+    (opts.nodeUser.split("@")[1] === "topics.<%= domain %>");
+};
+
+// JID of the pusher. This component will be notified of *all* events, including
+// those on private channels. If you don't know what the pusher component is, or
+// if you don't have one, you really should leave this commented.
+//exports.pusherJid = "pusher.<%= domain %>";
+
+// autosubscribe users to a few channels
+exports.autosubscribeNewUsers = [
+    "help@topics.buddycloud.org",
+    "lounge@topics.buddycloud.org",
+    "topics@topics.buddycloud.org"
+];

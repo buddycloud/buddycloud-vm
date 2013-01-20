@@ -1,23 +1,48 @@
-class apt::backports {
+# This adds the necessary components to get backports for ubuntu and debian
+#
+# == Parameters
+#
+# [*release*]
+#   The ubuntu/debian release name. Defaults to $lsbdistcodename. Setting this
+#   manually can cause undefined behavior. (Read: universe exploding)
+#
+# == Examples
+#
+#   include apt::backports
+#
+#   class { 'apt::backports':
+#     release => 'natty',
+#   }
+#
+# == Authors
+#
+# Ben Hughes, I think. At least blame him if this goes wrong.
+# I just added puppet doc.
+#
+# == Copyright
+#
+# Copyright 2011 Puppet Labs Inc, unless otherwise noted.
+class apt::backports(
+  $release  = $::lsbdistcodename,
+  $location = $apt::params::backports_location
+) inherits apt::params {
 
-  $debian_mirror = 'http://backports.debian.org/debian-backports'
-  $ubuntu_mirror = 'http://archive.ubuntu.com/ubuntu'
-
-  $uri = $::operatingsystem ? {
-    Debian => "deb ${debian_mirror} ${::lsbdistcodename}-backports main contrib non-free\n",
-    Ubuntu => "deb ${ubuntu_mirror} ${::lsbdistcodename}-backports main universe multiverse restricted\n",
+  $release_real = downcase($release)
+  $key = $::lsbdistid ? {
+    'debian' => '55BE302B',
+    'ubuntu' => '437D05B5',
+  }
+  $repos = $::lsbdistid ? {
+    'debian' => 'main contrib non-free',
+    'ubuntu' => 'main universe multiverse restricted',
   }
 
-  apt::sources_list{'backports':
-    ensure  => present,
-    content => $uri,
+  apt::source { 'backports':
+    location   => $location,
+    release    => "${release_real}-backports",
+    repos      => $repos,
+    key        => $key,
+    key_server => 'pgp.mit.edu',
+    pin        => '200',
   }
-
-  apt::preferences {"${::lsbdistcodename}-backports":
-    ensure   => present,
-    package  => '*',
-    pin      => "release a=${::lsbdistcodename}-backports",
-    priority => 400,
-  }
-
 }

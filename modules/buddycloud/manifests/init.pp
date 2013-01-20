@@ -1,52 +1,49 @@
-class buddycloud {
-    class{"syslog": stage => 'packages'}
-    file {"/usr/local/sbin/update-buddycloud":
-        source => "puppet:///modules/buddycloud/update-buddycloud",
-        ensure => present,
-        mode   => 0755,
-    }
-    file {"/usr/local/sbin/update-buddycloud-trunk":
-        source => "puppet:///modules/buddycloud/update-buddycloud-trunk",
-        ensure => present,
-        mode   => 0755,
-    }
-    file {"/srv/http/":
-        ensure => directory,
-        mode   => 0755,
-    }
-    file {"/srv/xmpp-component/":
-        ensure => directory,
-        mode   => 0755,
-    }
-    file{"/etc/buddycloud/":
-        ensure => directory,
-        mode   => 0755,
-    }
-}
-
-define buddycloud::server(
-    $domain,
-    $externalip
+class buddycloud (
+  $domain,
+  $secret = "secret"
 ) {
-    class{"apt": stage => 'apt'}
-    class{"buddycloud::database": stage => 'packages'}
-    include buddycloud
-    buddycloud::dns::domain{"$domain":
-        externalip => "$externalip",
-    }
-    buddycloud::cert{"$domain": }
-    buddycloud::web::vhost{"$domain": }
-    buddycloud::web::config{"$domain": }
-    buddycloud::xmpp::config{"$domain": }
-    buddycloud::xmpp::component{"$domain": }
-    notify {"secret": message => "serversecret: $serversecret"}
-}
 
-define buddycloud::cert() {
-    $domain = $name
-    exec { "openssl-key-$domain":
-        command => "/usr/bin/openssl req -new -x509 -days 3650 -nodes -out /etc/apache2/$domain.cert -keyout /etc/apache2/$domain.key -batch -subj /CN=$domain",
-        creates => "/etc/apache2/$domain.key",
-    }
-}
+  file { "/opt/buddycloud/":
+    ensure => directory,
+    mode   => 0755,
+  }
 
+  file { "/etc/buddycloud/":
+    ensure => directory,
+    mode   => 0755,
+  }
+
+  # Use the Node.js package from Chris Lea's Node.js PPA
+  # so that we have the newest version. Due to a bug in
+  # the puppetlabs/apt module, we need to explicitly call
+  # "apt-get update" beforehand.
+
+  exec { "buddycloud::apt_update":
+    command => "apt-get update"
+  }
+
+  apt::ppa { "ppa:chris-lea/node.js":
+    before => Class["nodejs"],
+    require => Exec["buddycloud::apt_update"]
+  }
+
+  class { "buddycloud::prosody":
+    domain => $domain,
+    shared_secret => $secret
+  }
+
+  class { "buddycloud::server":
+    domain => $domain,
+    shared_secret => $secret
+  }
+
+  class { "buddycloud::http-api":
+    domain => $domain
+  }
+
+  class { "buddycloud::webclient":
+    domain => $domain,
+    api_root => "http://localhost:9123"
+  }
+
+}

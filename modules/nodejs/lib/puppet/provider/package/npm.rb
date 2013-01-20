@@ -1,76 +1,74 @@
-
 require 'puppet/provider/package'
 
 Puppet::Type.type(:package).provide :npm, :parent => Puppet::Provider::Package do
-  desc "node.js package management with npm"
+  desc "npm is package management for node.js. This provider only handles global packages."
 
-#   raise Puppet::Error, "The npm provider can only be used as root" if Process.euid != 0
+  has_feature :versionable
 
-  def self.exec_as_user(op, pkg)
-      s = execute ["/usr/bin/npm", "#{op}", "-g", "#{pkg}"]
-      s.split("\n").collect do | line |
-        yield line
-      end
-  end
+  optional_commands :npm => 'npm'
 
-  def self.npm_list(hash)
+  def self.npmlist
     begin
-      list = []
-      exec_as_user("list", "") do | line |
-        if npm_hash = npm_split(line)
-          npm_hash[:provider] = :npm
-          if (npm_hash[:name] == hash[:justme]) or hash[:local]
-            list << npm_hash
-          end
-        end
-      end
-      list.compact!
-    rescue Puppet::ExecutionFailure => detail
-      raise Puppet::Error, "Could not list npm packages: #{detail}"
-    end
-    if hash[:local]
-      list
-    else
-      list.shift
+      output = npm('list', '--json', '--global')
+      # ignore any npm output lines to be a bit more robust
+      output = PSON.parse(output.lines.select{ |l| l =~ /^((?!^npm).*)$/}.join("\n"))
+      @npmlist = output['dependencies'] || {}
+    rescue Exception => e
+      Puppet.debug("Error: npm list --json command error #{e.message}")
+      @npmlist = {}
     end
   end
 
-  def self.npm_split(desc)
-    return nil if not desc.include? '@'
-    split_desc = desc.split(/ /)
-    installed = split_desc[1]
-    name = installed.split(/@/)[0]
-    version = installed.split(/@/)[1]
-    if (name.nil? || version.nil?)
-      nil
-    else
-      return {
-        :name => name,
-        :ensure => version
-      }
-    end
+  def npmlist
+    self.class.npmlist
   end
 
   def self.instances
-    npm_list(:local => true).collect do |hash|
-      new(hash)
+    @npmlist ||= npmlist
+    @npmlist.collect do |k,v|
+      new({:name=>k, :ensure=>v['version'], :provider=>'npm'})
     end
   end
 
-  def install
-    output = self.class.exec_as_user("install", resource[:name]) { | line | line }.collect
-    self.fail "Could not install: #{resource[:name]}" if output.include?("npm not ok")
-  end
-  
-  def uninstall
-    output = self.class.exec_as_user("uninstall", resource[:name]) { | line | line }.collect
-    self.fail "Could not install: #{resource[:name]}" if output.include?("npm not ok")
-  end
-
   def query
-    version = nil
-    self.class.npm_list(:justme => resource[:name])
-  end
-    
-end
+    list = npmlist
 
+    if list.has_key?(resource[:name]) and list[resource[:name]].has_key?('version')
+      version = list[resource[:name]]['version']
+      { :ensure => version, :name => resource[:name] }
+    else
+      { :ensure => :absent, :name => resource[:name] }
+    end
+  end
+
+  def latest
+    if /#{resource[:name]}@([\d\.]+)/ =~ npm('outdated', '--global',  resource[:name])
+      @latest = $1
+    else
+      @property_hash[:ensure] unless @property_hash[:ensure].is_a? Symbol
+    end
+  end
+
+  def update
+    resource[:ensure] = @latest
+    self.install
+  end
+
+  def install
+    if resource[:ensure].is_a? Symbol
+      package = resource[:name]
+    else
+      package = "#{resource[:name]}@#{resource[:ensure]}"
+    end
+
+    if resource[:source]
+      npm('install', '--global', resource[:source])
+    else
+      npm('install', '--global', package)
+    end
+  end
+
+  def uninstall
+    npm('uninstall', '--global', resource[:name])
+  end
+end

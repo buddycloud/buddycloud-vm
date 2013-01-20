@@ -1,19 +1,18 @@
-define apt::conf($ensure, $content = false, $source = false) {
-  if $content {
-    file {"/etc/apt/apt.conf.d/${name}":
-      ensure  => $ensure,
-      content => $content,
-      before  => Exec['apt-get_update'],
-      notify  => Exec['apt-get_update'],
-    }
-  }
+define apt::conf (
+  $content,
+  $ensure   = present,
+  $priority = '50'
+) {
 
-  if $source {
-    file {"/etc/apt/apt.conf.d/${name}":
-      ensure => $ensure,
-      source => $source,
-      before => Exec['apt-get_update'],
-      notify => Exec['apt-get_update'],
-    }
+  include apt::params
+
+  $apt_conf_d = $apt::params::apt_conf_d
+
+  file { "${apt_conf_d}/${priority}${name}":
+    ensure  => $ensure,
+    content => $content,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
   }
 }

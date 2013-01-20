@@ -1,98 +1,119 @@
 # Apt module for Puppet
 
-**Manages apt configuration under Debian or Ubuntu.**
+## Description
+Provides helpful definitions for dealing with Apt.
 
-This module is provided by [Camptocamp](http://www.camptocamp.com/)
+## Usage
 
-## Classes
+### apt
+The apt class provides a number of common resources and options which
+are shared by the various defined types in this module. This class
+should always be included in your manifests if you are using the `apt`
+module.
 
- * apt
- * apt::backports
- * apt::clean
- * apt::params
- * apt::unattended-upgrade
- * apt::unattended-upgrade::automatic
-
-### apt::clean
-
-Variables
-
- * **$apt\_clean\_minutes**: cronjob minutes  - default uses fqdn\_rand()
- * **$apt\_clean\_hours**  : cronjob hours    - default to 0
- * **$apt\_clean\_mday**   : cronjob monthday - default uses fqdn\_rand()
-
-## Definitions
-
-  * apt::conf
-  * apt::key
-  * apt::ppa
-  * apt::preferences
-  * apt::sources\_list
-
-### apt::conf
-
-    apt::conf{'99unattended-upgrade':
-      ensure  => present,
-      content => "APT::Periodic::Unattended-Upgrade \"1\";\n",
-    } 
- 
-### apt::key
-
-    apt::key {"A37E4CF5":
-      source  => "http://dev.camptocamp.com/packages/debian/pub.key",
+    class { 'apt':
+      always_apt_update    => false,
+      disable_keys         => undef,
+      proxy_host           => false,
+      proxy_port           => '8080',
+      purge_sources_list   => false,
+      purge_sources_list_d => false,
+      purge_preferences_d  => false
     }
 
-    apt::key {"997D3880":
-      keyserver => "keyserver.ubuntu.com",
+### apt::builddep
+Install the build depends of a specified package.
+
+    apt::builddep { "glusterfs-server": }
+
+### apt::force
+Force a package to be installed from a specific release.  Useful when
+using repositories like Debian unstable in Ubuntu.
+
+    apt::force { "glusterfs-server":
+	  release => "unstable",
+	  version => '3.0.3',
+	  require => Apt::Source["debian_unstable"],
     }
+
+### apt::pin
+Add an apt pin for a certain release.
+
+    apt::pin { "karmic": priority => 700 }
+    apt::pin { "karmic-updates": priority => 700 }
+    apt::pin { "karmic-security": priority => 700 }
 
 ### apt::ppa
+Add a ppa repository using `add-apt-repository`.  Somewhat experimental.
 
-    apt::ppa {'chris-lea':
-      ensure => present,
-      key    => 'C7917B12',
-      ppa    => 'node.js'
+    apt::ppa { "ppa:drizzle-developers/ppa": }
+
+### apt::release
+Set the default apt release.  Useful when using repositories like
+Debian unstable in Ubuntu.
+
+    apt::release { "karmic": }
+
+### apt::source
+Add an apt source to `/etc/apt/sources.list.d/`.
+
+    apt::source { "debian_unstable":
+      location          => "http://debian.mirror.iweb.ca/debian/",
+      release           => "unstable",
+      repos             => "main contrib non-free",
+      required_packages => "debian-keyring debian-archive-keyring",
+      key               => "55BE302B",
+      key_server        => "subkeys.pgp.net",
+      pin               => "-10",
+      include_src       => true
     }
 
-### apt::preferences
+This source will configure your system for the Puppet Labs APT
+repository.
 
-    apt::preferences {"${lsbdistcodename}-backports":
-      ensure   => present,
-      package  => '*',
-      pin      => "release a=${lsbdistcodename}-backports",
-      priority => 400,
+    apt::source { 'puppetlabs':
+      location   => 'http://apt.puppetlabs.com',
+      repos      => 'main',
+      key        => '4BD6EC30',
+      key_server => 'pgp.mit.edu',
     }
 
-### apt::sources\_list
+### apt::key
+Add a key to the list of keys used by apt to authenticate packages.
 
-    apt::sources_list {"camptocamp":
-      ensure  => present,
-      content => 'deb http://dev.camptocamp.com/packages/ etch puppet',
+    apt::key { "puppetlabs":
+      key        => "4BD6EC30",
+      key_server => "pgp.mit.edu",
     }
 
-## Contributing
+    apt::key { "jenkins":
+      key        => "D50582E6",
+      key_source => "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key",
+    }
 
-Please report bugs and feature request using [GitHub issue
-tracker](https://github.com/camptocamp/puppet-apt/issues).
+Note that use of the "key_source" parameter requires wget to be
+installed and working.
 
-For pull requests, it is very much appreciated to check your Puppet manifest
-with [puppet-lint](https://github.com/camptocamp/puppet-apt/issues) to follow the recommended Puppet style guidelines from the
-[Puppet Labs style guide](http://docs.puppetlabs.com/guides/style_guide.html).
 
-## License
+## Contributors
+A lot of great people have contributed to this module. A somewhat
+current list follows.
 
-Copyright (c) 2012 <mailto:puppet@camptocamp.com> All rights reserved.
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+Ben Godfrey <ben.godfrey@wonga.com>
+Branan Purvine-Riley <branan@puppetlabs.com>
+Christian G. Warden <cwarden@xerus.org>  
+Dan Bode <bodepd@gmail.com> <dan@puppetlabs.com>  
+Garrett Honeycutt <github@garretthoneycutt.com>  
+Jeff Wallace <jeff@evolvingweb.ca> <jeff@tjwallace.ca>  
+Ken Barber <ken@bob.sh>  
+Matthaus Litteken <matthaus@puppetlabs.com> <mlitteken@gmail.com>  
+Matthias Pigulla <mp@webfactory.de>  
+Monty Taylor <mordred@inaugust.com>  
+Peter Drake <pdrake@allplayers.com>  
+Reid Vandewiele <marut@cat.pdx.edu>  
+Robert Navarro <rnavarro@phiivo.com>  
+Ryan Coleman <ryan@puppetlabs.com>  
+Scott McLeod <scott.mcleod@theice.com>  
+Spencer Krum <spencer@puppetlabs.com>  
+William Van Hevelingen <blkperl@cat.pdx.edu> <wvan13@gmail.com>  
+Zach Leslie <zach@puppetlabs.com>  

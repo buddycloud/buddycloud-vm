@@ -1,0 +1,49 @@
+modules_enabled = {
+  "roster";             -- Allow users to have a roster.
+  "saslauth";           -- Authentication for clients and servers. Recommended if you want to log in.
+  "tls";                -- Add support for secure TLS on c2s/s2s connections
+  "dialback";           -- s2s dialback support
+  "disco";              -- Service discovery
+  "time";               -- Let others know the time here on this server
+  "ping";               -- Replies to XMPP pings with pongs
+  "posix";              -- Do posixy things
+  "register";           -- Allow users to register on this server using a client and change passwords
+  "bosh";               -- Enable BOSH clients, aka "Jabber over HTTP"
+  "watchregistrations"; -- Alert admins of registrations
+  "compression";        -- Enable mod_compression
+  "legacyauth";         -- Needed by strophe
+};
+ 
+storage                 = "sql"
+sql                     = { driver = "PostgreSQL"; database = "buddycloud_prosody"; username = "buddycloud_prosody"; password = "<%= shared_secret %>"; host = "localhost" }
+log                     = { error = "/var/log/prosody/prosody.err"; info = "/var/log/prosody/prosody.log" } -- Change 'info' to 'debug' for more verbose logging
+admins                  = { "admin@<%= domain %>" }
+pidfile                 = "/var/run/prosody/prosody.pid"
+bosh_ports              = { 5280 }
+cross_domain_bosh       = true
+consider_bosh_secure    = true
+console_enabled         = true
+ 
+VirtualHost "<%= domain %>"
+  authentication        = "internal_hashed"
+  allow_registration    = true
+  anonymous_login       = false
+  ssl                   = { key = "/etc/prosody/certs/<%= domain %>.pem"; certificate = "/etc/prosody/certs/<%= domain %>.pem" }
+ 
+VirtualHost "anon.<%= domain %>"
+  authentication        = "anonymous"
+  allow_registration    = false
+  anonymous_login       = true
+  disallow_s2s          = true
+
+VirtualHost "topics.<%= domain %>"
+  authentication = "internal_plain"
+  allow_registration = false
+  anonymous_login = false
+  modules_enabled =  { "disco" }
+  disco_items = {
+    { "channels.<%= domain %>", "buddycloud-server" }
+  }
+ 
+Component "buddycloud.<%= domain %>"
+  component_secret      = "<%= shared_secret %>"
