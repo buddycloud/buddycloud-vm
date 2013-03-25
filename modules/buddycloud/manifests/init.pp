@@ -22,7 +22,7 @@ class buddycloud (
     command => "apt-get update"
   }
 
-  apt::ppa { "ppa:chris-lea/node.js":
+  apt::ppa { "ppa:chris-lea/node.js-legacy":
     before => Class["nodejs"],
     require => Exec["buddycloud::apt_update"]
   }
