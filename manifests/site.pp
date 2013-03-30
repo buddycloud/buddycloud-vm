@@ -23,7 +23,8 @@ node default {
   # manually.
 
   exec { "service nginx restart":
-    require => Nginx::Resource::Vhost["localhost"]
+    require => Nginx::Resource::Vhost["localhost"],
+    subscribe => Exec["rebuild-nginx-vhosts"]
   }
 }
 
