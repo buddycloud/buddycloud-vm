@@ -43,7 +43,7 @@ class buddycloud (
 
   class { "buddycloud::webclient":
     domain => $domain,
-    api_root => "http://localhost:9123"
+    api_root => "http://localhost:10123"
   }
 
 }

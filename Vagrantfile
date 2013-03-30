@@ -6,9 +6,9 @@ Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.network :forward_port, guest: 5222, host: 5222   # XMPP
-  config.vm.network :forward_port, guest: 9123, host: 19123  # HTTP API
-  config.vm.network :forward_port, guest: 80,   host: 10080  # Webclient
+  config.vm.network :forwarded_port, guest: 5222,  host: 5222   # XMPP
+  config.vm.network :forwarded_port, guest: 80,    host: 10080  # Webclient
+  config.vm.network :forwarded_port, guest: 10123, host: 10123  # HTTP API
 
   config.vm.provision :puppet do |puppet|
      puppet.manifests_path = "manifests"

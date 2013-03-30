@@ -17,6 +17,7 @@ class buddycloud::webclient ($domain, $api_root) {
 
   file { "/opt/buddycloud/webclient/config.js": 
     ensure => present,
+    replace => true,
     content => template("buddycloud/config.webclient.js.erb"),
     require => Vcsrepo["/opt/buddycloud/webclient"]
   }
