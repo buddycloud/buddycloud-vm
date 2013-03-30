@@ -27,7 +27,7 @@ VirtualHost "<%= domain %>"
   authentication        = "internal_hashed"
   allow_registration    = true
   anonymous_login       = false
-  ssl                   = { key = "/etc/prosody/certs/<%= domain %>.pem"; certificate = "/etc/prosody/certs/<%= domain %>.pem" }
+  ssl                   = { key = "/etc/prosody/certs/<%= domain %>.key"; certificate = "/etc/prosody/certs/<%= domain %>.cert" }
  
 VirtualHost "anon.<%= domain %>"
   authentication        = "anonymous"
