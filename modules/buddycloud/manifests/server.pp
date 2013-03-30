@@ -98,6 +98,7 @@ class buddycloud::server ($domain, $shared_secret) {
     require => [
       Exec["npm-buddycloud::server"],
       Exec["cake-buddycloud::server"],
+      Exec["psql-upgrade-1.sql"]
     ],
     subscribe => Service["prosody"]
   }
