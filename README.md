@@ -7,10 +7,11 @@ Its main use is as a development environment for buddycloud hackers.
 
 ## Installation & Usage
 
-First, make sure you have Vagrant, Puppet and [VirtualBox](https://www.virtualbox.org/)
-installed. If you use Ubuntu, run the following:
+First, make sure you have Vagrant (>= 1.1.x), Puppet and
+[VirtualBox](https://www.virtualbox.org/) installed. If you use
+Ubuntu, run the following:
 
-    sudo apt-get install virtualbox puppet rubygems
+    sudo apt-get install virtualbox virtualbox-dkms puppet rubygems
     sudo gem install vagrant
 
 Then, change to the buddycloud-vm directory and run:
