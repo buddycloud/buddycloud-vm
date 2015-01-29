@@ -1,7 +1,7 @@
 base:
   '*':
+    - base.sanity
     - iptables
     - postgres
-    - base.sanity
     - users
     - motd
