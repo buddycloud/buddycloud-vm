@@ -1,7 +1,10 @@
 base:
   '*':
     - base.sanity
+    - motd
+    - wheel
+    - users
     - iptables
     - postgres
-    - users
-    - motd
+    - docker
+    - buddycloud-server-java
