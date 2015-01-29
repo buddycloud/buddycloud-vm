@@ -39,7 +39,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Masterless salt configuration
-  config.vm.synced_folder "salt/roots", "/srv/salt"
+  config.vm.synced_folder "salt/salt",   "/srv/salt"
+  config.vm.synced_folder "salt/pillar", "/srv/pillar"
 
   # Use all the defaults:
   config.vm.provision :salt do |salt|
