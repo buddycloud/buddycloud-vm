@@ -1,7 +1,7 @@
 base:
   '*':
+    - iptables
+    - postgres
     - base.sanity
-    - nginx
-    - git
-    - wheel
     - users
+    - motd

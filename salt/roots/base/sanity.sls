@@ -4,4 +4,6 @@ foundation:
       - vim
       - tmux
       - htop
-      - bash-completion
+      - tree
+      - htop
+      - git

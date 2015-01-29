@@ -1,0 +1,21 @@
+  ______           _     _            _                 _ 
+  | ___ \         | |   | |          | |               | |
+  | |_/ /_   _  __| | __| |_   _  ___| | ___  _   _  __| |
+  | ___ \ | | |/ _` |/ _` | | | |/ __| |/ _ \| | | |/ _` |
+  | |_/ / |_| | (_| | (_| | |_| | (__| | (_) | |_| | (_| |
+  \____/ \__,_|\__,_|\__,_|\__, |\___|_|\___/ \__,_|\__,_|
+                            __/ |                         
+                           |___/                          
+
+This server is managed by Saltstack. Changes will be lost
+unless pushed through saltstack
+
+ID            : {{ grains.get('id') }}
+Node Name     : {{ grains.get('nodename') }}
+Zone Name     : {{ grains.get('zonename') }}
+Memory        : {{ grains.get('mem_total') }}
+OS            : {{ grains.get('os') }}
+Image Version : {{ grains.get('imageversion') }}
+Pkgsrc Verson : {{ grains.get('pkgsrcversion') }}
+Pkgsrc Repo   : {{ grains.get('pkgsrcpath') }}
+
