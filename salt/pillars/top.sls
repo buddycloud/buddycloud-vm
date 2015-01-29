@@ -1,0 +1,6 @@
+base:
+  '*':
+    - postgres
+    - users
+    - iptables
+
