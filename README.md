@@ -48,7 +48,7 @@ Currently working:
 - /etc/motd
 
 Todo
-- docker (buddycloud-server-java, http-api, media-server, webserver)
+- docker (prosody, buddycloud-server-java, http-api, media-server, webserver)
 - postfix
 - persistient media-store (shared into the buddycloud-media-server)
 - munin/graphite for monitoring
