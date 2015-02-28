@@ -1,0 +1,89 @@
+--#
+--# WARNING:
+--# This file is under CM control - all manual changes will be removed
+--#
+
+-- Prosody XMPP Server Configuration
+
+admins = { '{{ admin_user }}' }
+
+daemonize = true
+use_libevent = true;
+
+plugin_paths = { "/etc/prosody/modules" }
+pidfile = "/var/run/prosody/prosody.pid"
+
+modules_enabled = {
+    "roster"; -- Allow users to have a roster. Recommended ;)
+    "saslauth"; -- Authentication for clients and servers. Recommended if you want to log in.
+    "tls"; -- Add support for secure TLS on c2s/s2s connections
+    "dialback"; -- s2s dialback support
+    "disco"; -- Service discovery
+    "posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
+
+    "private"; -- Private XML storage (for room bookmarks, etc.)
+    "vcard"; -- Allow users to set vCards
+
+    "compression"; -- Stream compression (requires the lua-zlib package installed)
+
+    "version"; -- Replies to server version requests
+    "uptime"; -- Report how long server has been running
+    "time"; -- Let others know the time here on this server
+    "ping"; -- Replies to XMPP pings with pongs
+    "pep"; -- Enables users to publish their mood, activity, playing music and more
+    "register"; -- Allow users to register on this server using a client and change passwords
+
+    "admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
+
+    "auth_ldap"; -- Ldap authentificator
+    "groups"; -- Shared roster support
+    "watchregistrations"; -- Alert admins of registrations
+    "proxy65";
+    "mam";
+    "smacks";
+    "carbons";
+    "offline"; -- Store offline messages
+    "lastactivity";
+    "pubsub";
+    "csi"; -- Mobile clients states
+}
+
+modules_disabled = {
+}
+
+groups_file = "/etc/prosody/sharedgroups.ini"
+default_archive_policy = "roster";
+
+allow_registration = false;
+
+c2s_require_encryption = true
+s2s_secure_auth = true
+--s2s_secure_domains = { "jabber.org" }
+s2s_insecure_domains = {
+}
+
+authentication = "ldap"
+
+ldap_server = "{{ ldap_server }}"
+ldap_tls    = true
+ldap_base   = "{{ ldap_userbase }}"
+ldap_filter = "{{ ldap_filter }}"
+
+storage = "sql2"
+
+-- Available: SQLite3, MySQL, PostgreSQL
+{% if db_type == 'SQLite3' -%}
+sql = { driver = "{{ db_type }}", database = "{{ db_path }}" }
+{%- else %}
+sql = { driver = "{{ db_type }}", database = "{{ db_name }}", username = "{{ db_user }}", password = "{{ db_password }}", host = "{{ db_path }}" }
+{%- endif %}
+
+log = {
+    --debug = "/var/log/prosody/prosody.dbg";
+    info = "/var/log/prosody/prosody.log";
+    error = "/var/log/prosody/prosody.err";
+    -- Syslog:
+    { levels = { "error" }; to = "syslog";  };
+}
+
+Include "conf.d/*.cfg.lua"
