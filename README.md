@@ -7,9 +7,9 @@ Get it running
 --------------
 
 ```bash
-git clone https://github.com/buddycloud/buddycloud-dev-machine.git
+git clone https://github.com/buddycloud/buddycloud-machine.git
 
-cd buddycloud-dev-machine
+cd buddycloud-machine
 
 # build and boot the machine
 vagrant up
