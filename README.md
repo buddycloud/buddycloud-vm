@@ -58,14 +58,12 @@ vagrant halt
 - ~~Postgres~~
     - ~~Create database `buddycloud-server-java`~~
     - ~~Create database `buddycloud-media-server`~~
+- Postfix
+- Prosody
+- persistient media-store (shared into the buddycloud-media-server)
 - ~~docker management~~
     - ~~buddycloud-server-java~~
-    - prosody
     - buddycloud-server-java
     - http-api
     - media-server
     - nginx
-- Postfix
-- persistient media-store (shared into the buddycloud-media-server)
-- munin/graphite for monitoring
-- some logging from docker containers
