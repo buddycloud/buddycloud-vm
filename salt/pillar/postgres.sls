@@ -25,15 +25,15 @@ postgres:
       owner: 'buddycloud_server_java'
       user: 'buddycloud_server_java'
       template: 'template0'
-      lc_ctype: 'C.UTF_8'
-      lc_collate: 'C.UTF_8'
+      lc_ctype: 'C.UTF-8'
+      lc_collate: 'C.UTF-8'
 
     buddycloud_media_server:
       owner: 'buddycloud_media_server'
       user: 'buddycloud_media_server'
       template: 'template0'
-      lc_ctype: 'C.UTF_8'
-      lc_collate: 'C.UTF_8'
+      lc_ctype: 'C.UTF-8'
+      lc_collate: 'C.UTF-8'
 
   # This section will append your configuration to postgresql.conf.
   postgresconf: |
