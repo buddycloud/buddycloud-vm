@@ -7,8 +7,4 @@ base:
     - users
     - iptables
     - postgres
-    - prosody
-    - docker
     - buddycloud-server-java
-    - buddycloud-http-api
-    - buddycloud-media-server

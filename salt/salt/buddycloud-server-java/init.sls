@@ -1,39 +1,26 @@
-# Pull the channel-server image
-buddycloud/channel-server:
-  docker.pulled:
-    - tag: latest
-    - force: True
-    - require:
-      - pip: docker-py
-      - service: lxc-docker
+buddycloud-server-java:
+  pkg:
+    - installed
+    - sources:
+      - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-server-java/buddycloud-server-java_latest.deb
 
-# Remove the channel-server container (stop and killed) if the image has changed
-channel-server-absent:
-  cmd.wait:
-    - name: docker rm -f channel-server
-    - onlyif: docker inspect channel-server
-    - watch:
-      - docker: buddycloud/channel-server
+/etc/dbconfig-common/buddycloud-server-java.conf:
+  file.managed:
+    - source: salt://buddycloud-server-java/buddycloud-server-java.dbconfig.conf
+    - user: root
+    - group: root
+    - mode: 644
 
-# Create a container
-channel-server-container:
-  docker.installed:
-    - name: channel-server
-    - image: buddycloud/channel-server
-    - ports:
-      - '5000/tcp'
-    - require:
-      - docker: buddycloud/channel-server
-    - watch:
-      - cmd: channel-server-absent
+/usr/share/buddycloud-server-java/configuration.properties:
+  file.managed:
+    - source: salt://buddycloud-server-java/buddycloud-server-java-configuration.properties
+    - user: root
+    - group: root
+    - mode: 644
 
-# Run the container
-channel-server:
-  docker.running:
-    - container: 
-    - port_bindings:
-        "5000/tcp":
-            HostIp: ""
-            HostPort: "5000"
-    - require:
-      - docker: channel-server-container
+/usr/share/buddycloud-server-java/log4j.properties:
+  file.managed:
+    - source: salt://buddycloud-server-java/buddycloud-server-java-log4j.properties
+    - user: root
+    - group: root
+    - mode: 644
