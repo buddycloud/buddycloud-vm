@@ -6,8 +6,8 @@ base:
     - wheel
     - users
     - iptables
-#    - postgres
+    - postgres
     - tigase-server
-#    - buddycloud-server-java
-#    - buddycloud-media-server
-#    - buddycloud-http-api
+    - buddycloud-http-api
+    - buddycloud-server-java
+    - buddycloud-media-server

@@ -13,13 +13,6 @@ oracle-java7-installer:
     - require_in:
       - pkg: oracle-java7-installer
 
-#/opt/tigase-server:
-#  file.directory:
-#    - user: root
-#    - group: root
-#    - mode: 755
-#    - makedirs: True
-
 tigase-server:
   archive.extracted:
     - name: /opt/tigase-server
@@ -50,7 +43,6 @@ tigase-server:
     - include_empty: True
 
 # Patched with https://projects.tigase.org/attachments/1475/tigase-ibr-cidr-whitelist.patch
-
 /opt/tigase-server/jars/tigase-server.jar:
   file.managed:
     - source: salt://tigase-server/tigase-server.jar

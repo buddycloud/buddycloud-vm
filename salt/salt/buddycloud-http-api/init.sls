@@ -1,39 +1,21 @@
-# Pull the http-api image
-buddycloud/http-api-server:
-  docker.pulled:
-    - tag: latest
-    - force: True
-    - require:
-      - pip: docker-py
-      - service: lxc-docker
+api-foundation:
+  pkg.installed:
+    - pkgs:
+      - software-properties-common
+      - python-software-properties
+      - libicu-dev
+      - nodejs
+      - wget
 
-# Remove the http-api container (stop and killed) if the image has changed
-buddycloud-http-api-server-absent:
-  cmd.wait:
-    - name: docker rm -f http-api-server
-    - onlyif: docker inspect http-api-server
-    - watch:
-      - docker: buddycloud/http-api-server
+buddycloud-http-api:
+  pkg:
+    - installed
+    - sources:
+      - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-http-api/buddycloud-http-api_latest.deb
 
-# Create a container
-http-api-server-container:
-  docker.installed:
-    - name: http-api-server
-    - image: buddycloud/http-api-server
-    - ports:
-      - '5000/tcp'
-    - require:
-      - docker: buddycloud/http-api-server
-    - watch:
-      - cmd: http-api-server-absent
-
-# Run the container
-http-api-server:
-  docker.running:
-    - container: 
-    - port_bindings:
-        "60001/tcp":
-            HostIp: ""
-            HostPort: "60001"
-    - require:
-      - docker: http-api-server-container
+/usr/share/buddycloud-http-api/config.js:
+  file.managed:
+    - source: salt://buddycloud-http-api/config.js
+    - user: root
+    - group: root
+    - mode: 644
