@@ -25,9 +25,10 @@ tigase-server:
     - name: /opt
     - source: https://projects.tigase.org/attachments/download/1409/tigase-server-5.2.1-b3461-dist-max.tar.gz
     - source_hash: sha256=9cee2d39ea5e958596b2f44d09f8106225462f66c897a2c3101f5691cdb4a2a7
-    - tar_options: "-xz --strip-components=1 -"
+    - tar_options: xzv
     - archive_format: tar
-    #- if_missing: /opt/tigase-server
+    - keep: false
+    - if_missing: /opt/tigase-server
 
 /opt/tigase-server/etc/tigase.conf:
   file.managed:
