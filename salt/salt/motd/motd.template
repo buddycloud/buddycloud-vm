@@ -19,3 +19,5 @@ Image Version : {{ grains.get('imageversion') }}
 Pkgsrc Verson : {{ grains.get('pkgsrcversion') }}
 Pkgsrc Repo   : {{ grains.get('pkgsrcpath') }}
 
+To update:
+sudo salt-call  --local state.highstate
