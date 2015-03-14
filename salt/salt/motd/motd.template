@@ -21,3 +21,6 @@ Pkgsrc Repo   : {{ grains.get('pkgsrcpath') }}
 
 To update:
 sudo salt-call  --local state.highstate
+
+
+

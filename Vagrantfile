@@ -48,8 +48,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     salt.minion_config = "salt/configs/minion.conf"
     salt.run_highstate = true
+    salt.colorize = true
+    salt.log_level = "info"
     salt.verbose = true
-     
+    # I also prefer to install from git so I can specify a version.
+    salt.install_type = "git"
+    salt.install_args = "v2015.2" 
   end
   #
   # View the documentation for the provider you're using for more

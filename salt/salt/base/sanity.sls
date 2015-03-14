@@ -1,6 +1,7 @@
 foundation:
   pkg.installed:
     - pkgs:
+      - language-pack-en
       - vim
       - tmux
       - htop

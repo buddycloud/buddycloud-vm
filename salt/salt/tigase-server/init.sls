@@ -22,13 +22,13 @@ oracle-java7-installer:
 
 tigase-server:
   archive.extracted:
-    - name: /opt
+    - name: /opt/tigase-server
     - source: https://projects.tigase.org/attachments/download/1409/tigase-server-5.2.1-b3461-dist-max.tar.gz
     - source_hash: sha256=9cee2d39ea5e958596b2f44d09f8106225462f66c897a2c3101f5691cdb4a2a7
-    - tar_options: xzv
+    - tar_options: "z --strip-components=1"
     - archive_format: tar
     - keep: false
-    - if_missing: /opt/tigase-server
+    - if_missing: /opt/tigase-server/
 
 /opt/tigase-server/etc/tigase.conf:
   file.managed:
