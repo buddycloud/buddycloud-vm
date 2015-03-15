@@ -1,18 +1,3 @@
-debconf-utils:
-  pkg.installed
-
-oracle-java7-installer:
-  pkgrepo.managed:
-    - ppa: webupd8team/java
-  pkg.installed:
-    - require:
-      - pkgrepo: oracle-java7-installer
-  debconf.set:
-    - data:
-        'shared/accepted-oracle-license-v1-1': {'type': 'boolean', 'value': True}
-    - require_in:
-      - pkg: oracle-java7-installer
-
 tigase-server:
   archive.extracted:
     - name: /opt/tigase-server
@@ -55,4 +40,4 @@ Run myscript:
     - name: psql -h  127.0.0.1 -U tigase_server tigase_server -f database/postgresql-schema-5-1.sql
     - cwd: /opt/tigase-server
     - env:
-      - PGPASSWORD: 'Ied8eichOasheil0'
+      - PGPASSWORD: '{{ salt['pillar.get']('postgres:tigase_server:password') }}'
