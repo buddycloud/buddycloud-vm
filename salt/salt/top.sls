@@ -7,6 +7,7 @@ base:
     - users
     - iptables
     - postgres
+    - nginx
     - tigase-server
     - buddycloud-http-api
     - buddycloud-server-java
