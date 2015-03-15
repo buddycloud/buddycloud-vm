@@ -19,7 +19,6 @@ buddycloud-media-server:
     - service:
       - running
 
-
 /usr/share/buddycloud-media-server/mediaserver.properties:
   file.managed:
     - source: salt://buddycloud-media-server/mediaserver.properties

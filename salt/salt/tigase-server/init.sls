@@ -49,3 +49,10 @@ tigase-server:
     - user: root
     - group: root
     - mode: 644
+
+Run myscript:
+  cmd.run:
+    - name: psql -h  127.0.0.1 -U tigase_server tigase_server -f database/postgresql-schema-5-1.sql
+    - cwd: /opt/tigase-server
+    - env:
+      - PGPASSWORD: 'Ied8eichOasheil0'
