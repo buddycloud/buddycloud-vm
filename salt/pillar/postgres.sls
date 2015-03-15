@@ -14,13 +14,25 @@ postgres:
       password: '98asdfdaasdddaaa'
       createdb: False
 
+    tigase_server:
+      password: 'Ied8eichOasheil0'
+      createdb: False
+
   # This section cover this ACL management of the pg_hba.conf file.
   # <type>, <database>, <user>, [host], <method>
   acls:
-    - ['host', 'buddycloud_server_java', 'buddycloud_server_java', '0.0.0.0/0']
+    - ['host', 'tigase_server',           'tigase_server',           '0.0.0.0/0']
+    - ['host', 'buddycloud_server_java',  'buddycloud_server_java',  '0.0.0.0/0']
     - ['host', 'buddycloud_media_server', 'buddycloud_media_server', '0.0.0.0/0']
 
   databases:
+    tigase_server:
+      owner: 'tigase_server'
+      user: 'tigase_server'
+      template: 'template0'
+      lc_ctype: 'C.UTF-8'
+      lc_collate: 'C.UTF-8'
+
     buddycloud_server_java:
       owner: 'buddycloud_server_java'
       user: 'buddycloud_server_java'

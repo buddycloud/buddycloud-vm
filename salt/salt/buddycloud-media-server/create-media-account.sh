@@ -1,4 +1,4 @@
-echo #JDBC_DB_HOST#:#JDBC_DB_PORT#:#TIGASE_JDBC_DB_NAME#:#TIGASE_JDBC_DB_USER#:#TIGASE_JDBC_DB_PASS# > ~/.pgpass
-chmod 600 ~/.pgpass
-psql -w -U #TIGASE_JDBC_DB_USER# -d #TIGASE_JDBC_DB_NAME# -h #JDBC_DB_HOST# -p #JDBC_DB_PORT# -c "SELECT TigAddUserPlainPw('#MEDIA_XMPP_CLIENT_USER#@#MEDIA_XMPP_CLIENT_DOMAIN#', '#MEDIA_XMPP_CLIENT_PASSWORD#');" | true
-rm ~/.pgpass
+echo 127.0.0.1:5432:tigase_server:tigase_server:Ied8eichOasheil0 > .pgpass
+chmod 600 .pgpass
+psql -w -U tigase_server -d tigase_server -h 127.0.0.1 -p 5432 -c "SELECT TigAddUserPlainPw('mediaserver-test@buddycloud.com', 'mediaserver-test');" 
+rm .pgpass
