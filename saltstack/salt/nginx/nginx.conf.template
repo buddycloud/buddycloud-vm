@@ -1,12 +1,12 @@
 server {
     listen 80;
-    server_name buddycloud.dev;
+    server_name {{ salt['pillar.get']('buddycloud:lookup:domain') }};
     rewrite ^ https://$server_name$request_uri? permanent;
 }
 
 server {
     listen              443 ssl;
-    server_name         buddycloud.dev;
+    server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
     ssl_certificate     /etc/certs/buddycloud.dev.cert.pem;
     ssl_certificate_key /etc/certs/buddycloud.dev.key.pem;
     ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;

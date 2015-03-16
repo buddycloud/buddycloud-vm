@@ -1,0 +1,7 @@
+TIGASE_HOME="/opt/tigase-server"
+ENC="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
+DRV="-Djdbc.drivers=com.mysql.jdbc.Driver:org.postgresql.Driver:org.apache.derby.jdbc.EmbeddedDriver"
+CLASSPATH=""
+JAVA_OPTIONS="${GC} ${EX} ${ENC} ${DRV} -server -Xms100M -Xmx200M -XX:PermSize=32m -XX:MaxPermSize=256m -XX:MaxDirectMemorySize=128m "
+JAVA_HOME="/usr/lib/jvm/java-7-oracle/"
+TIGASE_OPTIONS=" --property-file etc/init.properties "

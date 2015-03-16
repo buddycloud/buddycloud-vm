@@ -10,17 +10,19 @@ tigase-server:
 
 /opt/tigase-server/etc/tigase.conf:
   file.managed:
-    - source: salt://tigase-server/tigase.conf
+    - source: salt://tigase-server/tigase.conf.template
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
 
 /opt/tigase-server/etc/init.properties:
   file.managed:
-    - source: salt://tigase-server/init.properties
+    - source: salt://tigase-server/init.properties.template
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
 
 /usr/lib/jvm/java-7-oracle/lib/security/UnlimitedJCEPolicy:
   file.recurse:
@@ -35,7 +37,7 @@ tigase-server:
     - group: root
     - mode: 644
 
-Run myscript:
+create-tigase-db-schema:
   cmd.run:
     - name: psql -h  127.0.0.1 -U tigase_server tigase_server -f database/postgresql-schema-5-1.sql
     - cwd: /opt/tigase-server
