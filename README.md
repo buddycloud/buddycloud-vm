@@ -13,11 +13,13 @@ Enter the project directory: `cd buddycloud-machine`
 
 ### Building the machine (Vagrant)
 
+Add your username and public key to `/saltstack/pillar/users.sls`
+
 ```bash
 # build and boot the machine
 vagrant up
 
-# remove old key if necessary
+# [if necessary] remove old key
 ssh-keygen -R '[localhost]:2222'
 ssh vagrant@localhost -p2222 
 # password is vagrant
@@ -28,11 +30,10 @@ ssh vagrant@localhost -p2222
 ```
 ssh vagrant@localhost -p2222 
 # password is vagrant
-sudo salt-call  --local  state.highstate -l debug
+sudo salt-call  --local  state.highstate
 ```
 
 ### Configuring Buddycloud
-
 
 Private config data (DB passwords, certs...) 
 - put confidential information into `/srv/pillar/<filename.sls>`
@@ -45,7 +46,7 @@ Public data of how the server should be
 
 ### Shutting down the VM
 
-When you're done working on Discourse, you can shut down Vagrant with:
+When you're done working on Buddycloud, you can shut down Vagrant with:
 
 ```
 vagrant halt
@@ -58,12 +59,14 @@ vagrant halt
 - ~~Postgres~~
     - ~~Create database `buddycloud-server-java`~~
     - ~~Create database `buddycloud-media-server`~~
-- Postfix
-- Prosody
-- persistient media-store (shared into the buddycloud-media-server)
-- ~~docker management~~
+    - ~~Create database `tigase_server`~~
+- ~~Buddycloud Services~~
     - ~~buddycloud-server-java~~
-    - buddycloud-server-java
-    - http-api
-    - media-server
-    - nginx
+    - ~~buddycloud-http-api~~
+    - ~~buddycloud-media-server~~
+    - create a persistient media-store directory
+- ~~nginx~~
+    - configure nginx to reverse proxy
+- Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>
+- export out VM for running on other systems (EC2 / Digital Ocean etc) - not sure how to do this with Vagrant
+

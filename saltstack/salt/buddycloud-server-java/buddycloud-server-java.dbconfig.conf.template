@@ -24,7 +24,7 @@ dbc_dbuser='buddycloud_server_java'
 # dbc_dbpass: database user password
 #	the password to use with the above username when connecting
 #	to a database, if one is required
-dbc_dbpass='tellnoone'
+dbc_dbpass='{{ salt['pillar.get']('postgres:users:buddycloud_server_java:password') }}'
 
 # dbc_dbserver: database host.  
 #	leave unset to use localhost (or a more efficient local method

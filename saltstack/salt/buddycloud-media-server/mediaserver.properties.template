@@ -26,7 +26,7 @@ xmpp.connection.servicename=#MEDIA_XMPP_CLIENT_DOMAIN#
 xmpp.reply.timeout=30000
 
 # JDBC
-jdbc.db.url=jdbc:postgresql://#JDBC_DB_URL#/#MEDIA_JDBC_DB_NAME#?user=#MEDIA_JDBC_DB_USER#&password=#MEDIA_JDBC_DB_PASS#
+jdbc.db.url=jdbc:postgresql://#JDBC_DB_URL#/#MEDIA_JDBC_DB_NAME#?user=#MEDIA_JDBC_DB_USER#&password={{ salt['pillar.get']('postgres:users:buddycloud_media_server:password') }}
 jdbc.driver.class=#JDBC_DRIVER_CLASS#
 
 # Max threshold beyond which files are written directly to disk, in bytes
@@ -34,6 +34,6 @@ jdbc.driver.class=#JDBC_DRIVER_CLASS#
 media.todisk.threshold=1048576
 
 # File System
-media.storage.root=/var/lib/media-storage
+media.storage.root=/srv/buddycloud-media-server-filestore
 media.sizelimit=1000240000
 

@@ -10,7 +10,7 @@ jdbc.proxool.alias=channelserver
 jdbc.proxool.driver-url=jdbc:postgresql://127.0.0.1:5432/buddycloud_server_java
 jdbc.proxool.driver-class=org.postgresql.Driver
 jdbc.user=buddycloud_server_java
-jdbc.password=tellnoone
+jdbc.password={{ salt['pillar.get']('postgres:users:buddycloud_server_java:password') }}
 jdbc.proxool.maximum-connection-count=10
 jdbc.proxool.house-keeping-test-sql=select CURRENT_DATE
 

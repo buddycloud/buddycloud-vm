@@ -1,4 +1,4 @@
-media-server-dependencies:
+install-media-server-dependencies:
   pkg.installed:
     - pkgs:
       - postgresql-client
@@ -6,10 +6,22 @@ media-server-dependencies:
       - libssl1.0.0
       - openssl
 
-create media account:
-  cmd.script:
-    - name: create-media-account.sh
-    - source: salt://buddycloud-media-server/create-media-account.sh
+/srv/buddycloud-media-server-filestore:
+    file.directory:
+    - user: root
+    - group: root
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+        - user
+        - group
+        - mode
+
+create-media-xmpp-user-account:
+  cmd.run:
+    - name: psql -h 127.0.0.1 -U tigase_server tigase_server -c "SELECT TigAddUserPlainPw('mediaserver-test@buddycloud.com', 'mediaserver-test');"
+    - env:
+      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
 
 buddycloud-media-server:
   pkg:
@@ -21,10 +33,11 @@ buddycloud-media-server:
 
 /usr/share/buddycloud-media-server/mediaserver.properties:
   file.managed:
-    - source: salt://buddycloud-media-server/mediaserver.properties
+    - source: salt://buddycloud-media-server/mediaserver.properties.template
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
 
 /usr/share/buddycloud-media-server/logback.xml:
   file.managed:
@@ -32,3 +45,4 @@ buddycloud-media-server:
     - user: root
     - group: root
     - mode: 644
+
