@@ -12,6 +12,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
+  # Forward ports
+  config.vm.network :forwarded_port, guest: 5222,  host: 5222   # XMPP-client
+  config.vm.network :forwarded_port, guest: 5269,  host: 5269   # XMPP-S2S
+  config.vm.network :forwarded_port, guest: 80,    host: 10080  # Webclient
+  config.vm.network :forwarded_port, guest: 10123, host: 10123  # HTTP API
+
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   # config.vm.network "private_network", ip: "192.168.33.10"
@@ -40,13 +46,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Masterless salt configuration
-  config.vm.synced_folder "salt/salt",   "/srv/salt"
-  config.vm.synced_folder "salt/pillar", "/srv/pillar"
+  config.vm.synced_folder "saltstack/salt",   "/srv/salt"
+  config.vm.synced_folder "saltstack/pillar", "/srv/pillar"
 
   # Use all the defaults:
   config.vm.provision :salt do |salt|
     
-    salt.minion_config = "salt/configs/minion.conf"
+    salt.minion_config = "saltstack/configs/minion.conf"
     salt.run_highstate = true
     salt.colorize = true
     salt.log_level = "info"
