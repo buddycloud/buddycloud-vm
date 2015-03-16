@@ -1,31 +1,36 @@
-# Vagrant+Saltstack+Docker+Buddycloud
-
-(Based off the skeleton from http://blog.roblayton.com/2014/12/masterless-saltstack-provisioning-to.html)
+## Vagrant + Saltstack + Buddycloud = Buddycloud Stack in a Box
 
 ### Getting Started
 
 Install [Git]([http://git-scm.com/downloads)
 Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 Install [Vagrant](http://www.vagrantup.com/) (We require Vagrant 1.1.2+ or later)
-Open a terminal
-Clone the project: `git clone https://github.com/buddycloud/buddycloud-machine.git`
-Enter the project directory: `cd buddycloud-machine`
 
-### Building the machine (Vagrant)
+Open a terminal
+
+```bash
+git clone https://github.com/buddycloud/buddycloud-vm.git`
+cd buddycloud-vm`
+```
 
 Add your username and public key to `/saltstack/pillar/users.sls`
 
-```bash
-# build and boot the machine
-vagrant up
+### Building the VM
 
+```bash
+vagrant up
+```
+
+### SSH into the VM
+
+```bash
 # [if necessary] remove old key
 ssh-keygen -R '[localhost]:2222'
 ssh vagrant@localhost -p2222 
 # password is vagrant
 ```
 
-### Configuring the machine (Saltstack)
+### Configuring the VM using Saltstack
 
 ```
 ssh vagrant@localhost -p2222 
@@ -46,13 +51,9 @@ Public data of how the server should be
 
 ### Shutting down the VM
 
-When you're done working on Buddycloud, you can shut down Vagrant with:
+When you're done working on Buddycloud, you can shut down Vagrant with: `vagrant halt`
 
-```
-vagrant halt
-```
-
-### Todo
+### Todo (pull requests welcomed)
 
 - ~~/etc/motd~~
 - ~~Firewall~~
@@ -67,6 +68,6 @@ vagrant halt
     - create a persistient media-store directory
 - ~~nginx~~
     - configure nginx to reverse proxy
-- Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>
-- export out VM for running on other systems (EC2 / Digital Ocean etc) - not sure how to do this with Vagrant
-
+- automate configuring: Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>
+- generate fake certificates where necessary
+- export out VMs ready for Amazon / Digitial Ocean / Google Compute
