@@ -19,7 +19,7 @@ install-media-server-dependencies:
 
 create-media-xmpp-user-account:
   cmd.run:
-    - name: psql -h 127.0.0.1 -U tigase_server tigase_server -c "SELECT TigAddUserPlainPw('mediaserver-test@buddycloud.com', 'mediaserver-test');"
+    - name: psql -h 127.0.0.1 -U tigase_server tigase_server -c "SELECT TigAddUserPlainPw('mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }}', '{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}');"
     - env:
       - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
 
@@ -46,3 +46,27 @@ buddycloud-media-server:
     - group: root
     - mode: 644
 
+create-buddycloud-media-server-schema:
+  cmd.run:
+    - name: psql -h 127.0.0.1 -U buddycloud_media_server buddycloud_media_server -f /usr/share/dbconfig-common/data/buddycloud-media-server/install/pgsql
+    - env:
+      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:buddycloud_media_server:password') }}'
+
+/etc/init.d/buddycloud-media-server:
+  file.managed:
+    - source: salt://buddycloud-media-server/buddycloud-media-server.init.d
+    - user: root
+    - group: root
+    - mode: 755
+  service.running:
+    - name: buddycloud-media-server
+    - enable: True
+    - reload: True
+    - require:
+      - pkg: postgresql-9.3
+      - pkg: oracle-java7-installer
+      - pkg: buddycloud-server-java
+      - pkg: buddycloud-media-server
+      - file: /usr/share/buddycloud-media-server/mediaserver.properties
+      - file: /usr/share/buddycloud-media-server/logback.xml
+      - cmd: create-buddycloud-media-server-schema
