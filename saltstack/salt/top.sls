@@ -13,3 +13,4 @@ base:
     - buddycloud-http-api
     - buddycloud-server-java
     - buddycloud-media-server
+    - buddycloud-pusher

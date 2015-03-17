@@ -1,4 +1,4 @@
-tigase-server:
+install-tigase-server:
   archive.extracted:
     - name: /opt/tigase-server
     - source: https://projects.tigase.org/attachments/download/1409/tigase-server-5.2.1-b3461-dist-max.tar.gz
@@ -43,3 +43,16 @@ create-tigase-db-schema:
     - cwd: /opt/tigase-server
     - env:
       - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
+
+/etc/init.d/tigase-server:
+  file.managed:
+    - source: salt://tigase-server/tigase.init.d
+    - user: root 
+    - group: root 
+    - mode: 0755
+  service.running:
+    - enable: True
+    - reload: True
+    - require:
+      - pkg: postgresql-9.3
+      - pkg: oracle-java7-installer

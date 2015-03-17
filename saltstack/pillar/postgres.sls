@@ -14,6 +14,10 @@ postgres:
       password: '98asdfdaasdddaaa'
       createdb: False
 
+    buddycloud_pusher:
+      password: '98addaassdfdaasdddaaa'
+      createdb: False
+
     tigase_server:
       password: 'Ied8eichOasheil0'
       createdb: False
@@ -24,6 +28,7 @@ postgres:
     - ['host', 'tigase_server',           'tigase_server',           '0.0.0.0/0']
     - ['host', 'buddycloud_server_java',  'buddycloud_server_java',  '0.0.0.0/0']
     - ['host', 'buddycloud_media_server', 'buddycloud_media_server', '0.0.0.0/0']
+    - ['host', 'buddycloud_pusher',       'buddycloud_pusher',       '0.0.0.0/0']
 
   databases:
     tigase_server:
@@ -36,6 +41,13 @@ postgres:
     buddycloud_server_java:
       owner: 'buddycloud_server_java'
       user: 'buddycloud_server_java'
+      template: 'template0'
+      lc_ctype: 'C.UTF-8'
+      lc_collate: 'C.UTF-8'
+
+    buddycloud_pusher:
+      owner: 'buddycloud_pusher'
+      user: 'buddycloud_pusher'
       template: 'template0'
       lc_ctype: 'C.UTF-8'
       lc_collate: 'C.UTF-8'

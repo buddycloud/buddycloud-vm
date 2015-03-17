@@ -3,6 +3,11 @@ buddycloud-server-java:
     - installed
     - sources:
       - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-server-java/buddycloud-server-java_latest.deb
+  service.running:
+    - enable: True
+    - reload: True
+    - watch:
+      - pkg: buddycloud-server-java
 
 /etc/dbconfig-common/buddycloud-server-java.conf:
   file.managed:
@@ -26,3 +31,4 @@ buddycloud-server-java:
     - user: root
     - group: root
     - mode: 0644
+
