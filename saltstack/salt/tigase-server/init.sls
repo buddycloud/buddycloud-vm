@@ -8,6 +8,13 @@ install-tigase-server:
     - keep: false
     - if_missing: /opt/tigase-server/
 
+/etc/default/tigase:
+  file.managed:
+    - source: salt://tigase-server/tigase.default
+    - user: root
+    - group: root
+    - mode: 644
+
 /opt/tigase-server/etc/tigase.conf:
   file.managed:
     - source: salt://tigase-server/tigase.conf.template
@@ -51,8 +58,17 @@ create-tigase-db-schema:
     - group: root 
     - mode: 0755
   service.running:
+    - name: tigase-server
     - enable: True
     - reload: True
+    - init_delay: 5
     - require:
       - pkg: postgresql-9.3
       - pkg: oracle-java7-installer
+      - file: /etc/default/tigase
+      - file: /opt/tigase-server/etc/tigase.conf
+      - file: /opt/tigase-server/etc/init.properties
+      - file: /usr/lib/jvm/java-7-oracle/lib/security/UnlimitedJCEPolicy
+      - file: /opt/tigase-server/jars/tigase-server.jar
+      - file: /etc/init.d/tigase-server
+      - cmd: create-tigase-db-schema

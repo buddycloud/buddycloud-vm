@@ -32,3 +32,8 @@ buddycloud-server-java:
     - group: root
     - mode: 0644
 
+buddycloud-server-java-service:
+  service.running:
+    - enable: True
+    - name: buddycloud-server-java
+
