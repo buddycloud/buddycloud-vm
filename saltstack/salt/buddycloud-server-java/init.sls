@@ -9,6 +9,12 @@ buddycloud-server-java:
     - watch:
       - pkg: buddycloud-server-java
 
+create-buddycloud-server-schema:
+  cmd.run:
+    - name: psql -h 127.0.0.1 -U buddycloud_server_java buddycloud_server_java -f /usr/share/dbconfig-common/data/buddycloud-server-java/install/pgsql
+    - env:
+      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:buddycloud_server_java:password') }}'
+
 /etc/dbconfig-common/buddycloud-server-java.conf:
   file.managed:
     - source: salt://buddycloud-server-java/buddycloud-server-java.dbconfig.conf.template
