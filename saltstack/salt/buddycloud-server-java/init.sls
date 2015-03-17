@@ -3,11 +3,6 @@ buddycloud-server-java:
     - installed
     - sources:
       - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-server-java/buddycloud-server-java_latest.deb
-  service.running:
-    - enable: True
-    - reload: True
-    - watch:
-      - pkg: buddycloud-server-java
 
 create-buddycloud-server-schema:
   cmd.run:
@@ -38,8 +33,22 @@ create-buddycloud-server-schema:
     - group: root
     - mode: 0644
 
-buddycloud-server-java-service:
+/etc/init.d/buddycloud-server-java:
+  file.managed:
+    - source: salt://buddycloud-server-java/buddycloud-server-java.init.d
+    - user: root
+    - group: root
+    - mode: 0755
   service.running:
-    - enable: True
     - name: buddycloud-server-java
-
+    - enable: True
+    - reload: True
+    - require:
+      - pkg: postgresql-9.3
+      - pkg: oracle-java7-installer
+      - pkg: buddycloud-server-java
+      - file: /usr/share/buddycloud-server-java/configuration.properties
+      - file: /usr/share/buddycloud-server-java/log4j.properties
+      - file: /etc/dbconfig-common/buddycloud-server-java.conf
+      - file: /etc/init.d/buddycloud-server-java
+      - cmd: create-buddycloud-server-schema
