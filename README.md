@@ -81,9 +81,10 @@ When you're done working on Buddycloud, you can shut down Vagrant with: `vagrant
     - ~~buddycloud-server-java~~
     - ~~buddycloud-http-api~~
     - ~~buddycloud-media-server~~
-    - create a persistient media-store directory
+    - ~~create a persistient media-store directory~~
+    - buddycloud-pusher (check that it comes up)
 - ~~nginx~~
-    - configure nginx to reverse proxy
-- automate configuring: Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>
+    - ~~configure nginx to reverse proxy~~
+- ~~automate configuring: Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>~~
 - generate fake certificates where necessary
-- export out VMs ready for Amazon / Digitial Ocean / Google Compute
+- ~~export out VMs ready for Amazon / Digitial Ocean / Google Compute~~
