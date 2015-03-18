@@ -29,4 +29,12 @@ users:
     groups:
       - wheel
     pubkey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDc6kFQ20ciODsqAg+eyebTF0C9i3sNT7ucuduq6qH7X0BYVkpuVV4FCbGFkqjMkVSI8njwnWI0dmXE5MzonLs/tPYW8/xC5aM+zBKblsf1NC6tLKEoyqgKH9KaahRfqnAEE3oqkUoE6G6R9nb1+J9jKMoTiLSg/yjBAUoq7co5dXRtfQU2IBZu/X54JKf3Olo2VVAyke57ddjnDcW0VU/og4cnOOkgbQ8FlXcKW3vdxqKWzNr7i5/6T5Ehny/SH3/Mr8xElg7U41T9H3TS+fblVwKdKutXNE91jwaKa+7nKz0mJWGnnDDgqn7XXHTn0lS1UcAHmsHzAJQBgYTNNST9 lloyd@evilprofessor.co.uk
-
+  mrflix:
+    state: present
+    fullname: Felix
+    shell: /bin/bash
+    home: /home/mrflix
+    uid: 4003
+    groups:
+      - wheel
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEApQP3/WtwQcVsE68NIll4ts5Wt3QMuU5D5vETBptMCFMWmTgrG3BfWWXmAgnioe1yep/BbKlSuJ4rs04szR/Q9HPFy90EERO4MXTIPGc+0CA7HcVGJYiZhA8j/J2ZHvirfmILFewfh9r6hSE3e7T0fqn1AMTrkuzCyeutlMsvykhLi6ZuXuIanfWIR+tZ5RdtQmaZtWM2tkE+g6d2V43+ixxxqw/N7r+hRJK0inBMcFy6gnwmjU5X5KeDA3b1OkzFKeQmDwTF0p9bKlWGd7kC14a4wfy6BXZVtobe6llHz1GWpLWwnzOqAvcYvRQfUxxYsT4PylX8nEu9hPII2dJvOw== mrflix@gmail.com
