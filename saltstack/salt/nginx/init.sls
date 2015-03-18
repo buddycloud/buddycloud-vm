@@ -14,9 +14,8 @@
 nginx:
   pkg:
     - installed
-  service.running:
-      - enable: True
-      - reload: True
+  service:
+      - running
       - watch:
         - pkg: nginx
         - file: /etc/nginx/nginx.conf

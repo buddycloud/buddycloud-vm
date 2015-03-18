@@ -5,6 +5,7 @@ server {
 }
 
 server {
+    server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
     
     # deploying into production, comment out the following:
     listen              8080;
@@ -14,7 +15,6 @@ server {
     ; ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
     ; ssl_ciphers         HIGH:!aNULL:!MD5;
 
-    server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
 
     root /opt/buddycloud-webapp;
     index index.html;
