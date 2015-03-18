@@ -9,6 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   # Forward ports
+  config.vm.network :forwarded_port, guest: 8080,  host: 8080   # non-ssl-website
   config.vm.network :forwarded_port, guest: 5222,  host: 5222   # XMPP-client
   config.vm.network :forwarded_port, guest: 5269,  host: 5269   # XMPP-S2S
   config.vm.network :forwarded_port, guest: 80,    host: 10080  # Webclient
@@ -18,9 +19,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
 
   # Provision the box with a masterless salt configuration
-  config.vm.synced_folder "saltstack/salt",   "/srv/salt"
-  config.vm.synced_folder "saltstack/pillar", "/srv/pillar"
-  config.vm.synced_folder "website",          "/usr/share/buddycloud-webclient"
+  config.vm.synced_folder "saltstack/salt",    "/srv/salt"
+  config.vm.synced_folder "saltstack/pillar",  "/srv/pillar"
+  config.vm.synced_folder "buddycloud-webapp", "/opt/buddycloud-webapp"
   config.vm.provision :salt do |salt|
     salt.minion_config = "saltstack/configs/minion.conf"
     salt.run_highstate = true
