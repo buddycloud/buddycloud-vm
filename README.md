@@ -49,6 +49,22 @@ Public data of how the server should be
 - reference that file in `/srv/salt/<top.sls>`
 - Bring the machine to the desired state by running `sudo salt-call  --local  state.highstate -l debug`
 
+### Depoloying to providers
+
+Edit the `Vagrantfile` with your settings. And then:
+
+#### Google Cloud
+```
+vagrant plugin install vagrant-google
+vagrant up --provider=google
+```
+
+#### VSphere 
+```
+vagrant plugin install vagrant-vsphere
+vagrant up --provider=vsphere
+```
+
 ### Shutting down the VM
 
 When you're done working on Buddycloud, you can shut down Vagrant with: `vagrant halt`

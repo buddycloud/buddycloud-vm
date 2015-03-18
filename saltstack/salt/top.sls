@@ -8,9 +8,9 @@ base:
     - iptables
     - postgres
     - java
-    - nginx
     - tigase-server
-    - buddycloud-http-api
     - buddycloud-server-java
     - buddycloud-media-server
     - buddycloud-pusher
+    - nginx
+    - buddycloud-http-api

@@ -1,7 +1,7 @@
 buddycloud:
   lookup:
-    domain: buddycloud.devvvvvvvvv
-    channels-xmpp-componet-password: laaaaadeeeeedaaaaa
-    media-xmpp-componet-password: meeeddeeeeeedaaaa
-    media-jid-password: asdfasdfasdfmeeeddeeeeeedaaaa
-    pusher-xmpp-componet-password: asdfdadsfadsfadsf
+    domain: buddycloud.dev
+    channels-xmpp-componet-password: channels-component-secret
+    media-xmpp-componet-password: media-component-secret
+    media-jid-password: media-jid-secret
+    pusher-xmpp-componet-password: pusher-secret
