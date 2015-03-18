@@ -3,7 +3,7 @@
     - user: root
     - group: root
     - mode: 755
-    - makedirs: true
+    - makedirs: True
     - recurse:
       - user
       - group
@@ -22,8 +22,8 @@ nginx:
   pkg:
     - installed
   service.running:
-      - enable: true
-      - reload: true
+      - enable: True
+      - reload: True
       - watch:
         - pkg: nginx
         - file: /etc/nginx/nginx.conf

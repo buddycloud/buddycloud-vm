@@ -45,7 +45,7 @@ To make these changes live run `sudo salt-call  --local  state.highstate` inside
 
 ### Working on the website
 
-Your webroot is exposed outside of the VM at `~/src/buddycloud-vm/website/`. Changes in here are served out by the nginx process inside the vm and avaliable on `http://localhost:8080`
+Your webroot is exposed outside of the VM at `~/src/buddycloud-vm/buddycloud-webapp/`. Changes in here are served out by the nginx process inside the vm and avaliable on `http://localhost:8080`
 
 ### Depoloying to providers
 
