@@ -84,5 +84,6 @@ Shut down Vagrant with: `vagrant halt`. And `vagrant kill` will remove all disks
 - ~~nginx~~
     - ~~configure nginx to reverse proxy~~
 - ~~automate configuring: Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>~~
-- generate fake certificates where necessary
+- ~~generate fake certificates where necessary (won't do)~~
 - ~~export out VMs ready for Amazon / Digitial Ocean / Google Compute~~
+- add logrotate for all packages
