@@ -39,6 +39,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.name = "buddycloud-dev-machine"
   end
   
+  config.vm.provider "libvirt" do |lv|
+    lv.memory = 1024
+  end
+
   # configure for Google Compute
   config.vm.provider :google do |google|
     google.google_project_id = "hallowed-coww-638"
