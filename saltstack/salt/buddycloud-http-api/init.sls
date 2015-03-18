@@ -1,17 +1,16 @@
-api-foundation:
+buddycloud-http-api-dependencies:
   pkg.installed:
     - pkgs:
       - software-properties-common
       - python-software-properties
       - libicu-dev
       - nodejs
-      - wget
 
 buddycloud-http-api:
   pkg:
     - installed
     - sources:
-      - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-http-api/buddycloud-http-api_latest.deb
+      - buddycloud-http-api: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-http-api/buddycloud-http-api_latest.deb
 
 /usr/share/buddycloud-http-api/config.js:
   file.managed:
@@ -19,3 +18,11 @@ buddycloud-http-api:
     - user: root
     - group: root
     - mode: 644
+
+/etc/init.d/buddycloud-http-api:
+  service.running:
+    - name: buddycloud-http-api
+    - enable: True
+    - reload: True
+    - require:
+      - file: /usr/share/buddycloud-http-api/config.js
