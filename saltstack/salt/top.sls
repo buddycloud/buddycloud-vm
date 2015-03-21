@@ -6,6 +6,7 @@ base:
     - wheel
     - users
     - iptables
+    - bind
     - postgres
     - java
     - tigase-server
