@@ -1,0 +1,17 @@
+$TTL 300
+$ORIGIN {{ salt['pillar.get']('buddycloud:lookup:domain') }}.
+@ IN  SOA {{ salt['pillar.get']('buddycloud:lookup:domain') }}. root.{{ salt['pillar.get']('buddycloud:lookup:domain') }}. (
+{{ salt['grains.get']('zoneserial') }}   ; Serial
+                 86400   ; Refresh
+                  7200   ; Retry
+               3600000   ; Expire
+                   300 ) ; Negative Cache TTL
+;
+    IN  NS  ns1.{{ salt['pillar.get']('buddycloud:lookup:domain') }}.
+    IN  NS  ns2.{{ salt['pillar.get']('buddycloud:lookup:domain') }}.
+ns1 IN  A 127.0.0.1
+ns2 IN  A 127.0.0.1
+@   IN  A 127.0.0.1
+*   IN  A 127.0.0.1
+@   IN  AAAA ::1
+*   IN  AAAA ::1

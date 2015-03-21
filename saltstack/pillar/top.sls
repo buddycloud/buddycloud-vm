@@ -4,4 +4,4 @@ base:
     - users
     - postgres
     - iptables
-
+    - nameservers
