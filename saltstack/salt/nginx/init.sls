@@ -35,16 +35,17 @@ nginx-firewall-443:
     - sport: 1025:65535
     - save: True
 
-nginx:
+nginx-full:
   pkg:
     - installed
   service:
       - running
+      - name: nginx
       - watch:
-        - pkg: nginx
+        - pkg: nginx-full
         - file: /etc/nginx/nginx.conf
       - require:
-        - pkg: nginx
+        - pkg: nginx-full
         - file: /opt/buddycloud-webapp
         - file: /etc/nginx/nginx.conf
 

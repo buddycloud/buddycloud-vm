@@ -31,3 +31,24 @@ bind-server:
     - require:
       - pkg: bind9
 
+bind-firewall-53-udp:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 53
+    - proto: udp
+    - save: True
+
+bind-firewall-53-tcp:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 53
+    - proto: tcp
+    - save: True

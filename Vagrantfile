@@ -9,11 +9,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   # Forward ports
-  config.vm.network :forwarded_port, guest: 8080,  host: 8080   # non-ssl-website
-  config.vm.network :forwarded_port, guest: 5222,  host: 5222   # XMPP-client
-  config.vm.network :forwarded_port, guest: 5269,  host: 5269   # XMPP-S2S
-  config.vm.network :forwarded_port, guest: 80,    host: 10080  # Webclient
-  config.vm.network :forwarded_port, guest: 10123, host: 10123  # HTTP API
+  config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
+  config.vm.network :forwarded_port, guest: 80,   host: 8080 # non-ssl-website
+  config.vm.network :forwarded_port, guest: 5222, host: 5222 # XMPP-client
+  config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
   
   # ssh <username>@127.0.0.1:2222
   config.ssh.forward_agent = true
