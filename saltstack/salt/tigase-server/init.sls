@@ -51,6 +51,30 @@ create-tigase-db-schema:
     - env:
       - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
 
+tigase-firewall-c2s:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 5222
+    - proto: tcp
+    - sport: 1025:65535
+    - save: True
+
+tigase-firewall-s2s:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 5269
+    - proto: tcp
+    - sport: 1025:65535
+    - save: True
+
 /etc/init.d/tigase-server:
   file.managed:
     - source: salt://tigase-server/tigase.init.d
