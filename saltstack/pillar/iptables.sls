@@ -1,7 +1,17 @@
-default to DROP:
+input-policy:
   iptables.set_policy:
     - chain: INPUT
     - policy: DROP
+
+output-policy:
+  iptables.set_policy:
+    - chain: OUTPUT
+    - policy: ACCEPT
+
+forward-policy:
+  iptables.set_policy:
+    - chain: FORWARD
+    - policy: ACCEPT
 
 firewall:
   install: True
