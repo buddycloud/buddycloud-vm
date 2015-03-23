@@ -49,11 +49,11 @@ http {
         text/x-component;
 
 
-server {
-    listen 80;
-    server_name {{ salt['pillar.get']('buddycloud:lookup:domain') }};
-    rewrite ^ https://$server_name$request_uri? permanent;
-}
+#server {
+#    listen 80;
+#    server_name {{ salt['pillar.get']('buddycloud:lookup:domain') }};
+#    rewrite ^ https://$server_name$request_uri? permanent;
+#}
 
 server {
     server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
