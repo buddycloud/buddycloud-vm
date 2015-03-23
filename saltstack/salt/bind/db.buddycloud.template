@@ -9,9 +9,19 @@ $ORIGIN {{ salt['pillar.get']('buddycloud:lookup:domain') }}.
 ;
     IN  NS  ns1.{{ salt['pillar.get']('buddycloud:lookup:domain') }}.
     IN  NS  ns2.{{ salt['pillar.get']('buddycloud:lookup:domain') }}.
-ns1 IN  A 127.0.0.1
-ns2 IN  A 127.0.0.1
-@   IN  A 127.0.0.1
-*   IN  A 127.0.0.1
-@   IN  AAAA ::1
-*   IN  AAAA ::1
+{% for ip in salt['pillar.get']('buddycloud:lookup:external-ipv4',
+               salt['grains.get']('fqdn_ip4', [ '127.0.0.1' ]))  %}
+ns1 IN A {{ ip }}
+ns2 IN A {{ ip }}
+@   IN A {{ ip }}
+*   IN A {{ ip }}
+{% endfor %}
+
+{% for ip in salt['pillar.get']('buddycloud:lookup:external-ipv6',
+               salt['grains.get']('fqdn_ip6', [ '::1' ]))  %}
+ns1 IN AAAA {{ ip }}
+ns2 IN AAAA {{ ip }}
+@   IN AAAA {{ ip }}
+*   IN AAAA {{ ip }}
+{% endfor %}
+
