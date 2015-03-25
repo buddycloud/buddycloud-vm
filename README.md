@@ -4,7 +4,7 @@
 
 Install [Git]([http://git-scm.com/downloads)
 Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-Install [Vagrant](http://www.vagrantup.com/) (We require Vagrant 1.1.2+ or later)
+Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
 
 Open a terminal
 
