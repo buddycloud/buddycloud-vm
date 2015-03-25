@@ -18,14 +18,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
 
   # Uncomment for Yosemite
-  config.trigger.after [:up, :reload, :provision], :stdout => true do
-    system('echo "
-      rdr pass inet proto tcp from any to any port 80 -> 127.0.0.1 port 8080
-      " | sudo pfctl -ef - >/dev/null 2>&1; echo "Add Port Forwarding (80 => 8080)"')
-      end
-  config.trigger.after [:halt, :suspend, :destroy], :stdout => true do
-    system('sudo pfctl -F all -f /etc/pf.conf >/dev/null 2>&1; echo "Removing Port Forwarding (80 => 8080)"')
-  end
+  # config.trigger.after [:up, :reload, :provision], :stdout => true do
+  #   system('echo "
+  #     rdr pass inet proto tcp from any to any port 80 -> 127.0.0.1 port 8080
+  #     " | sudo pfctl -ef - >/dev/null 2>&1; echo "Add Port Forwarding (80 => 8080)"')
+  #     end
+  #  config.trigger.after [:halt, :suspend, :destroy], :stdout => true do
+  #   system('sudo pfctl -F all -f /etc/pf.conf >/dev/null 2>&1; echo "Removing Port Forwarding (80 => 8080)"')
+  # end
 
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/salt",    "/srv/salt"
