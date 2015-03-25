@@ -1,8 +1,5 @@
-bind-server:
-  pkg.installed:
-    - name: bind9
+/etc/bind/named.conf.options:
   file.managed:
-    - name: /etc/bind/named.conf.options
     - source: salt://bind/named.conf.options.template
     - user: bind
     - group: bind
@@ -30,6 +27,20 @@ bind-server:
     - template: jinja
     - require:
       - pkg: bind9
+
+bind-server:
+  pkg.installed:
+    - name: bind9
+  service.running:
+    - name: bind9
+    - enable: True
+    - reload: True
+    - require:
+      - pkg: bind9
+    - watch:
+      - file: /etc/bind/db.buddycloud
+      - file: /etc/bind/named.conf.local
+      - file: /etc/bind/named.conf.options
 
 bind-firewall-53-udp:
   iptables.append:
