@@ -10,6 +10,7 @@ base:
     - bind
     - postgres
     - java
+    - nodejs
     - tigase-server
     - buddycloud-server-java
     - buddycloud-media-server
