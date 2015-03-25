@@ -1,15 +1,10 @@
-  ______           _     _            _                 _ 
-  | ___ \         | |   | |          | |               | |
-  | |_/ /_   _  __| | __| |_   _  ___| | ___  _   _  __| |
-  | ___ \ | | |/ _` |/ _` | | | |/ __| |/ _ \| | | |/ _` |
-  | |_/ / |_| | (_| | (_| | |_| | (__| | (_) | |_| | (_| |
-  \____/ \__,_|\__,_|\__,_|\__, |\___|_|\___/ \__,_|\__,_|
-                            __/ |                         
-                           |___/                          
 
-This server is managed by Saltstack. Changes will be lost
-unless pushed through saltstack
-
+ __                                     
+|__)    _| _|   _| _     _| __ \  /|\/| 
+|__)|_|(_|(_|\/(_|(_)|_|(_|     \/ |  | 
+             /                          
+Configuration
+-------------
 ID            : {{ grains.get('id') }}
 Node Name     : {{ grains.get('nodename') }}
 Zone Name     : {{ grains.get('zonename') }}
@@ -19,13 +14,21 @@ Image Version : {{ grains.get('imageversion') }}
 Pkgsrc Verson : {{ grains.get('pkgsrcversion') }}
 Pkgsrc Repo   : {{ grains.get('pkgsrcpath') }}
 
-To get a clean environment:
+Ingredients
+-----------
+- buddycloud-server-java
+- buddycloud-media-server
+- buddycloud-http-api
+- buddycloud-Pusher
+- a demo app avaliable on localhost:8080
 
-export LC_ALL="en_US.UTF-8"
+Preparation
+-----------
+This server is managed by Saltstack which means changes will 
+be lost unless pushed through saltstack. Make changes on your 
+local machine (eg in ~/src/buddycloud-vm/saltstack/...), 
 
-To update:
+To active changes, run: salt-call  --local state.highstate
 
-sudo salt-call  --local state.highstate
-
-
+To get a clean environment: export LC_ALL="en_US.UTF-8"
 
