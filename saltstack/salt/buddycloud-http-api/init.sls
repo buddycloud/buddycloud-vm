@@ -23,6 +23,10 @@ buddycloud-http-api:
   service.running:
     - name: buddycloud-http-api
     - enable: True
+    - restart: True
     - reload: True
     - require:
       - file: /usr/share/buddycloud-http-api/config.js
+    - watch: 
+      - file: /usr/share/buddycloud-http-api/config.js
+
