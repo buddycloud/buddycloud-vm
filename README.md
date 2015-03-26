@@ -34,18 +34,14 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 
 ### Configure changes
 
-You can configure changes to the VM by editing files on your local machine `~/src/buddycloud-vm/saltstack/`. These changes automatically appear inside your VM at `/srv/salt`.
+|                    | Outside the VM                                      | Inside the VM                      | Comment                          |
+|--------------------|-----------------------------------------------------|------------------------------------|----------------------------------|
+| General Configs    | `buddycloud-vm/saltstack/salt/*` (read-write)         | `/srv/salt` (read-only)              | e.g. `nginx.conf`                  |
+| Private configs    | `buddycloud-vm/saltstack/pillars/*` (read-write)      | `/srv/pillars` (read-only)           | e.g. database passwords          |
+| Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                                    |                                  |
+| Activating changes |                                                     | `salt-call --local state.highstate`  |                                  |
+| Webroot            | `buddycloud-vm/buddycloud-webapp` (read-write)        | `/opt/buddycloud-webapp` (read-only) | visible on http://localhost:8080 |
 
-To make these changes live run `sudo salt-call  --local  state.highstate` inside the VM. 
-
-### Configuring Buddycloud
-
-- put confidential information into `~/src/buddycloud-vm/saltstack/pillar/`
-- add service configuration to files in `~/src/buddycloud-vm/saltstack/salt/`
-
-### Working on the website
-
-Your webroot is exposed outside of the VM at `~/src/buddycloud-vm/buddycloud-webapp/`. Changes in here are served out by the nginx process inside the vm and avaliable on `http://localhost:8080`
 
 ### Depoloying to providers
 
@@ -69,21 +65,4 @@ Shut down Vagrant with: `vagrant halt`. And `vagrant kill` will remove all disks
 
 ### Todo (pull requests welcomed)
 
-- ~~/etc/motd~~
-- ~~Firewall~~
-- ~~Postgres~~
-    - ~~Create database `buddycloud-server-java`~~
-    - ~~Create database `buddycloud-media-server`~~
-    - ~~Create database `tigase_server`~~
-- ~~Buddycloud Services~~
-    - ~~buddycloud-server-java~~
-    - ~~buddycloud-http-api~~
-    - ~~buddycloud-media-server~~
-    - ~~create a persistient media-store directory~~
-    - buddycloud-pusher (check that it comes up)
-- ~~nginx~~
-    - ~~configure nginx to reverse proxy~~
-- ~~automate configuring: Take input domain and configure against this - probably will need to be in a /saltstack/pillar/<something>~~
-- ~~generate fake certificates where necessary (won't do)~~
-- ~~export out VMs ready for Amazon / Digitial Ocean / Google Compute~~
 - add logrotate for all packages
