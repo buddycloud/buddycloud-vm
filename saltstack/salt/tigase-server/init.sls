@@ -60,7 +60,6 @@ tigase-firewall-c2s:
     - connstate: NEW
     - dport: 5222
     - proto: tcp
-    - sport: 1025:65535
     - save: True
 
 tigase-firewall-s2s:
@@ -72,7 +71,6 @@ tigase-firewall-s2s:
     - connstate: NEW
     - dport: 5269
     - proto: tcp
-    - sport: 1025:65535
     - save: True
 
 /etc/init.d/tigase-server:
