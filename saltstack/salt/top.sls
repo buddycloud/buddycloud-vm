@@ -11,7 +11,8 @@ base:
     - postgres
     - java
     - nodejs
-    - tigase-server
+    - prosody
+#    - tigase-server
     - buddycloud-server-java
     - buddycloud-media-server
     - buddycloud-pusher

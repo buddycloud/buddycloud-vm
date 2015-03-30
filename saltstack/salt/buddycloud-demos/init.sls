@@ -3,6 +3,7 @@ robotnik-demo:
     - name: https://github.com/robotnic/buddycloud-xmpp-website.git
     - rev: buddycloud-move
     - target: /usr/share/nginx/html/
+    - force_reset: true
     - force: true
     - require:
         - pkg: git

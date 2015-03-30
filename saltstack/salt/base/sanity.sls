@@ -8,6 +8,7 @@ foundation:
       - tree
       - htop
       - git
+      - python-git
   cmd.run:
      - name: dpkg-reconfigure locales
 en_US.UTF-8:

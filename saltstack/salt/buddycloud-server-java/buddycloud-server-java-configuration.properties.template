@@ -1,6 +1,6 @@
 xmpp.host=127.0.0.1
 xmpp.port=5347
-xmpp.secretkey=tellnoone
+xmpp.secretkey={{ salt['pillar.get']('buddycloud:lookup:channels-xmpp-componet-password') }}
 
 server.domain={{ salt['pillar.get']('buddycloud:lookup:domain') }}
 server.domain.channels=buddycloud.{{ salt['pillar.get']('buddycloud:lookup:domain') }}
