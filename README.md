@@ -41,6 +41,7 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 | Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                                    |                                  |
 | Activating changes |                                                     | `salt-call --local state.highstate`  |                                  |
 | Webroot            | `buddycloud-vm/buddycloud-webapp` (read-write)        | `/opt/buddycloud-webapp` (read-only) | visible on http://localhost:8080 |
+| When deployed to AWS/GCE/your-server  |          | edit `/etc/salt/minion` to pull updates from Git | this will pull all future system configs from your private git repo |
 
 
 ### Depoloying to providers
@@ -48,6 +49,8 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 To deploy to a hosting provider, edit the `Vagrantfile` with your cloud-hosting-provider data.
 
 #### Google Cloud
+
+Configure according to https://github.com/mitchellh/vagrant-google, then:
 ```
 vagrant plugin install vagrant-google
 vagrant up --provider=google
