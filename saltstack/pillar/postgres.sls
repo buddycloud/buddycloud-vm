@@ -73,5 +73,5 @@ postgres:
 
   # This section will append your configuration to postgresql.conf.
   postgresconf: |
-    listen_addresses = 'localhost,*'
+    listen_addresses = '*'
 

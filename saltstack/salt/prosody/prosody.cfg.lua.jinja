@@ -45,7 +45,7 @@ sql = {
         host = "127.0.0.1"; -- The address of the database server (delete this line for Postgre
         database = "prosody_server"; -- The database name to use. 
         username = "prosody_server"; -- The username to authenticate to the database
-        password = "'{{ salt['pillar.get']('postgres:users:prosody_server:password') }}'"; -- The password to authenticate to the database
+        password = "{{ salt['pillar.get']('postgres:users:prosody_server:password') }}"; -- The password to authenticate to the database
     }
 
 log = {
