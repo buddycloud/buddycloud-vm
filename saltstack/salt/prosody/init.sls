@@ -50,3 +50,38 @@ prosody:
       - service: prosody
     - require:
       - pkg: prosody-packages
+
+prosody-firewall-c2s:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 5222
+    - proto: tcp
+    - save: True
+
+prosody-firewall-s2s:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 5269
+    - proto: tcp
+    - save: True
+
+prosody-firewall-temp-lloyd:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 5432
+    - proto: tcp
+    - save: True
+
+

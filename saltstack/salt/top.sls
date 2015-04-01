@@ -2,6 +2,7 @@ base:
   '*':
     - base.sanity
     - packages
+    #- gitfs
     - kernel
     - motd
     - wheel
@@ -10,7 +11,7 @@ base:
     - bind
     - postgres
     - java
-    - nodejs
+  #  - nodejs
     - prosody
 #    - tigase-server
     - buddycloud-server-java
