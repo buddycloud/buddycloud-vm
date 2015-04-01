@@ -19,6 +19,6 @@ base:
     - buddycloud-pusher
     - nginx
     - buddycloud-http-api
-    - buddycloud-demos
+#    - buddycloud-demos
     - webhook-deployer
 

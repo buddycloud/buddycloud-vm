@@ -4,7 +4,6 @@ buddycloud-http-api-dependencies:
       - software-properties-common
       - python-software-properties
       - libicu-dev
-      - nodejs
 
 buddycloud-http-api:
   pkg:

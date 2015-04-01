@@ -35,9 +35,18 @@ iojs-make-bom:
     - watch:
       - file: iojs-get-tarball
 
+iojs-remove-nodejs:
+  cmd.run:
+    - name: rm /usr/bin/nodejs
+
 iojs-link-iojs:
   file.symlink:
     - name: /usr/local/bin/iojs
+    - target: /usr/local/iojs/bin/iojs
+
+iojs-link-nodejs:
+  file.symlink:
+    - name: /usr/bin/nodejs
     - target: /usr/local/iojs/bin/iojs
 
 iojs-link-node:
