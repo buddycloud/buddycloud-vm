@@ -8,6 +8,7 @@ pygit-deps:
       - libssh-dev
       - libffi-dev
       - cmake
+      - python-pip
 
 dl-libgit2-src:
   archive.extracted:

@@ -2,7 +2,7 @@ base:
   '*':
     - base.sanity
     - packages
-    #- gitfs
+    - gitfs
     - kernel
     - motd
     - wheel
@@ -20,3 +20,5 @@ base:
     - nginx
     - buddycloud-http-api
     - buddycloud-demos
+    - webhook-deployer
+
