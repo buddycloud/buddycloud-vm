@@ -57,7 +57,7 @@ log = {
 }
 
 VirtualHost "{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
-  authentication        = "internal_hashed"
+  authentication        = "internal_plain" 
   allow_registration    = true 
   anonymous_login       = false
   ssl                   = {         key = "/etc/apache2/certs/EXAMPLE.COM.key";
