@@ -1,0 +1,20 @@
+# buddycloud-http-api - buddycloud HTTP API server
+description "wifi-chat"
+
+respawn
+respawn limit 10 5
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+setuid root
+setgid root
+
+script
+    cd /opt/wifi-chat
+    exec npm start >> /var/log/wifi-chat-website.log 2>&1
+end script
+
+post-start script
+   echo "wifi-chat-started"
+end script

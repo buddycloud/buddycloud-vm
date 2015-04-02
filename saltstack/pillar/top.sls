@@ -5,3 +5,4 @@ base:
     - postgres
     - iptables
     - nameservers
+    - node

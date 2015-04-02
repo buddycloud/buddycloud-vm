@@ -11,7 +11,7 @@ base:
     - bind
     - postgres
     - java
-  #  - nodejs
+    - node
     - prosody
 #    - tigase-server
     - buddycloud-server-java
@@ -20,5 +20,6 @@ base:
     - nginx
     - buddycloud-http-api
 #    - buddycloud-demos
+    - wifi-chat
     - webhook-deployer
 
