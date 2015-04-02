@@ -28,7 +28,8 @@ This server is managed by Saltstack which means changes will
 be lost unless pushed through saltstack. Make changes on your 
 local machine (eg in ~/src/buddycloud-vm/saltstack/...), 
 
-To active changes, run: salt-call  --local state.highstate
+Pull requests welcomed at https://github.com/buddycloud/buddycloud-vm
 
-To get a clean environment: export LC_ALL="en_US.UTF-8"
+To active changes, run: 
 
+sudo salt-call  --local state.highstate
