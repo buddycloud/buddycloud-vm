@@ -10,8 +10,8 @@ Open a terminal
 
 ```bash
 # in this example we'll assume you work in ~/src/
-git clone https://github.com/buddycloud/buddycloud-vm.git ~/src/buddycloud-vm 
-cd ~/src/buddycloud-vm
+git clone https://github.com/buddycloud/buddycloud-vm.git
+cd buddycloud-vm
 ```
 
 Add your username and public key to `~/src/buddycloud-vm/saltstack/pillar/users.sls`
@@ -19,7 +19,6 @@ Add your username and public key to `~/src/buddycloud-vm/saltstack/pillar/users.
 ### Building the VM
 
 ```bash
-cd ~/src/buddycloud-vm
 vagrant up
 ```
 
