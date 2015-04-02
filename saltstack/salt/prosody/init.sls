@@ -25,6 +25,8 @@ prosody:
   service.running:
     - require:
       - pkg: prosody-packages
+    - watch:
+      - file: /etc/prosody/prosody.cfg.lua
 
 /etc/prosody/modules:
   file.recurse:
