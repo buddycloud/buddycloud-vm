@@ -21,6 +21,16 @@ prosody-packages:
     - require:
       - pkgrepo: prosody-repo
 
+/var/tmp/reset-tokens.sql:
+  file.managed:
+    - source: salt://prosody/reset-tokens.sql
+
+create-password-recovery-schema:
+  cmd.run:
+    - name: psql -h 127.0.0.1 -U prosody_server prosody_server -f /var/tmp/reset-tokens.sql
+    - env:
+      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:prosody_server:password') }}'
+
 prosody:
   service.running:
     - require:
@@ -85,5 +95,4 @@ prosody-firewall-temp-lloyd:
     - dport: 5432
     - proto: tcp
     - save: True
-
 
