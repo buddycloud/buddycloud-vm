@@ -30,7 +30,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/salt",    "/srv/salt"
   config.vm.synced_folder "saltstack/pillar",  "/srv/pillar"
-  config.vm.synced_folder "buddycloud-webapp", "/opt/buddycloud-webapp"
   config.vm.provision :salt do |salt|
     salt.minion_config = "saltstack/configs/minion.conf"
     salt.run_highstate = true
