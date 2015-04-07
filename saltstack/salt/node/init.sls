@@ -1,7 +1,12 @@
-{% set pillar_get = salt['pillar.get'] -%}
-include:
-{%- if pillar_get('node:install_from_source') %}
-  - .source
-{%- else %}
-  - .pkg
-{%- endif %}
+nodesource:
+  pkgrepo.managed:
+    - humanname: NodeJs Repository
+    - name: deb https://deb.nodesource.com/node012 trusty main
+    - dist: trusty
+    - file: /etc/apt/sources.list.d/nodesource.list
+    - keyid: '68576280'
+    - keyserver: keys.gnupg.net
+
+install-node012:
+  pkg.latest:
+    - name: nodejs
