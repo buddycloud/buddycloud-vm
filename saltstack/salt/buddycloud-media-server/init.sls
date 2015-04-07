@@ -17,12 +17,6 @@ install-media-server-dependencies:
         - group
         - mode
 
-create-media-xmpp-user-account:
-  cmd.run:
-    - name: psql -h 127.0.0.1 -U tigase_server tigase_server -c "SELECT TigAddUserPlainPw('mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }}', '{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}');"
-    - env:
-      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
-
 buddycloud-media-server:
   pkg:
     - installed
@@ -52,6 +46,16 @@ create-buddycloud-media-server-schema:
     - env:
       - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:buddycloud_media_server:password') }}'
 
+create-media-xmpp-user-account:
+  cmd.run:
+    - name: echo -e "{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}\n{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}" | prosodyctl adduser mediaserver@buddycloud.dev | true 
+
+#create-media-xmpp-user-account:
+#  cmd.run:
+#    - name: psql -h 127.0.0.1 -U tigase_server tigase_server -c "SELECT TigAddUserPlainPw('mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }}', '{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}');"
+#    - env:
+#      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
+
 /etc/init.d/buddycloud-media-server:
   file.managed:
     - source: salt://buddycloud-media-server/buddycloud-media-server.init.d
@@ -70,3 +74,4 @@ create-buddycloud-media-server-schema:
       - file: /usr/share/buddycloud-media-server/mediaserver.properties
       - file: /usr/share/buddycloud-media-server/logback.xml
       - cmd: create-buddycloud-media-server-schema
+      - cmd: create-media-xmpp-user-account
