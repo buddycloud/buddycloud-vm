@@ -16,6 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 80,   host: 8080 # non-ssl-website
   config.vm.network :forwarded_port, guest: 5222, host: 5222 # XMPP-client
   config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
+  config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
 
   # Uncomment for Yosemite
   # config.trigger.after [:up, :reload, :provision], :stdout => true do
