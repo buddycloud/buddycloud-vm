@@ -16,7 +16,7 @@ base:
 #    - tigase-server
     - buddycloud-server-java
     - buddycloud-media-server
-    - buddycloud-pusher
+#    - buddycloud-pusher
     - nginx
     - buddycloud-http-api
 #    - buddycloud-demos
