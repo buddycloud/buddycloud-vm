@@ -1,5 +1,5 @@
 node:
   install_from_source: true
   version: 0.12.2
-  checksum: 0873180db9ebfe5b46f83de96ec67f9982f8e26e
+  checksum: a969f17a0a6c9238584f8946d96e8d39be8eb957
   make_jobs: 2
