@@ -40,6 +40,5 @@ nginx-full:
         - file: /etc/nginx/nginx.conf
       - require:
         - pkg: nginx-full
-        - file: /opt/buddycloud-webapp
         - file: /etc/nginx/nginx.conf
 
