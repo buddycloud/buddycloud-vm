@@ -1,7 +1,3 @@
-/opt/buddycloud-webapp:
-  file.directory:
-    - makedirs: True
-
 /etc/nginx/nginx.conf:
   file:
     - managed
