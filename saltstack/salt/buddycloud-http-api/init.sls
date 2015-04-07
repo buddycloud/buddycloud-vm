@@ -1,31 +1,31 @@
-buddycloud-http-api-dependencies:
-  pkg.installed:
-    - pkgs:
-      - software-properties-common
-      - python-software-properties
-      - libicu-dev
+buddycloud-http-api-git-checkout:
+  git.latest:
+    - name: https://github.com/buddycloud/buddycloud-http-api.git
+    - rev: master
+    - target: /opt/buddycloud-http-api
+    - force_reset: true
+    - force: true
+    - require:
+        - pkg: git
 
-buddycloud-http-api:
-  pkg:
-    - installed
-    - sources:
-      - buddycloud-http-api: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-http-api/buddycloud-http-api_latest.deb
+buddycloud-http-api-install:
+  cmd.run:
+    - name: npm i --development .
+    - cwd: /opt/buddycloud-http-api
+    - require:
+       - git: buddycloud-http-api-git-checkout
 
-/usr/share/buddycloud-http-api/config.js:
+/etc/init/buddycloud-http-api.conf:
   file.managed:
-    - source: salt://buddycloud-http-api/config.js
+    - source: salt://buddycloud-http-api/upstart-script
     - user: root
     - group: root
-    - mode: 644
-
-/etc/init.d/buddycloud-http-api:
+    - mode: 0755
   service.running:
     - name: buddycloud-http-api
     - enable: True
-    - restart: True
     - reload: True
-    - require:
-      - file: /usr/share/buddycloud-http-api/config.js
-    - watch: 
-      - file: /usr/share/buddycloud-http-api/config.js
+
+
+
 

@@ -2,7 +2,6 @@ base:
   '*':
     - base.sanity
     - packages
-    - gitfs
     - kernel
     - motd
     - wheel
@@ -16,9 +15,9 @@ base:
 #    - tigase-server
     - buddycloud-server-java
     - buddycloud-media-server
-#    - buddycloud-pusher
+    - buddycloud-pusher
     - nginx
-    - buddycloud-http-api
+#    - buddycloud-http-api
 #    - buddycloud-demos
     - wifi-chat
     - webhook-deployer
