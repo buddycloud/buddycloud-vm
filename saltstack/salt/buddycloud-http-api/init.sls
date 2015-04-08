@@ -42,7 +42,3 @@ buddycloud-http-api-install:
     - name: buddycloud-http-api
     - enable: True
     - reload: True
-
-
-
-

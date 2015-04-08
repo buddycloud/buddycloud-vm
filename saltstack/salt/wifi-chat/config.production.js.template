@@ -1,18 +1,18 @@
 module.exports = {
   /* Which domains does this client handle - only affects account features */
-  allowedDoamins: [ 'buddycloud.dev', 'example.com' ],
+  allowedDoamins: [ '{{ salt['pillar.get']('buddycloud:lookup:domain') }}', 'example.com' ],
 
   /* Used for emails */
-  url: 'http://localhost:3000',
+  url: '{{ salt['pillar.get']('buddycloud:lookup:frontend-url') }}',
 
   email: {
     /* Which address to send emails from */
-    sendAddress: 'noreply@buddycloud.dev',
+    sendAddress: '{{ salt['pillar.get']('buddycloud:lookup:send-address') }}',
     /* Connection details */
     connection: {
       user: 'user',
       password: 'password',
-      host: 'host',
+      host: '{{ salt['pillar.get']('buddycloud:lookup:smtp-server-address') }}',
       port: 'port', /* if not provided standard port used */
       ssl: 'ssl',  /* boolean or object {key, ca, cert} (if true or object, ssl connection will be made) */
       tls: true, /* boolean or object (if true or object, starttls will be initiated) */

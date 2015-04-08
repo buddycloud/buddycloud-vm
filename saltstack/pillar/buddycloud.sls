@@ -4,6 +4,9 @@ buddycloud:
   lookup:
     # This will set your user's to appear on <username>@buddycloud.dev.
     domain: buddycloud.dev
+    frontend-url: http://localhost:3000
+    send-address: noreply@somewhere.example
+    smtp-server-address: 127.0.0.1
     channels-xmpp-componet-password: channels-component-secret
     media-xmpp-componet-password: media-component-secret
     media-jid-password: media-jid-secret
