@@ -12,6 +12,8 @@ setgid root
 
 script
     cd /opt/wifi-chat
+    export DEBUG=*
+    export DATABASE_URL=postgres://prosody_server:{{ salt['pillar.get']('postgres:users:prosody_server:password') }}@127.0.0.1:5432/prosody_server
     exec npm start >> /var/log/wifi-chat-website.log 2>&1
 end script
 

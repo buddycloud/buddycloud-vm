@@ -36,13 +36,14 @@ wifi-chat-install:
 
 /etc/init/wifi-chat.conf:
   file.managed:
-    - source: salt://wifi-chat/upstart-script
+    - source: salt://wifi-chat/upstart-script.template
     - user: root
     - group: root
     - mode: 0755
+    - template: jinja
   service.running:
     - name: wifi-chat
     - enable: True
-    - reload: True
-
-
+    - restart: True
+    - watch:
+      - file: /opt/wifi-chat/*

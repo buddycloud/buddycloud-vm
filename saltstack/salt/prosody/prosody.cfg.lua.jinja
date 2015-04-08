@@ -57,6 +57,7 @@ log = {
 }
 
 VirtualHost "{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
+  allow_unencrypted_plain_auth = true
   authentication        = "internal_plain" 
   allow_registration    = true 
   anonymous_login       = false
@@ -80,8 +81,3 @@ Component "topics.{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
 -- Buddycloud Media Server XMPP component configuration.
 Component "media.{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
   component_secret      = "{{ salt['pillar.get']('buddycloud:lookup:media-xmpp-componet-password') }}"
-
--- Buddycloud Pusher Server XMPP component configuration.
-Component "pusher.{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
-  component_secret      = "{{ salt['pillar.get']('buddycloud:lookup:pusher-xmpp-componet-password') }}"
-
