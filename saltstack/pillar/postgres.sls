@@ -7,23 +7,23 @@ postgres:
 
   users:
     buddycloud_server_java:
-      password: '1198ruj923h4rfasdfasdf'
+      password: 'secret_for_buddycloud_server_java'
       createdb: False
 
     buddycloud_media_server:
-      password: '98asdfdaasdddaaa'
+      password: 'secret_for_buddycloud_media_server'
       createdb: False
 
     buddycloud_pusher:
-      password: '98addaassdfdaasdddaaa'
+      password: 'secret_for_buddycloud_pusher'
       createdb: False
 
     tigase_server:
-      password: 'Ied8eichOasheil0'
+      password: 'secret_for_tigase_server'
       createdb: False
 
     prosody_server:
-      password: 'Ied8eichOasheil0'
+      password: 'secret_for_prosody_server'
       createdb: False
 
   # This section cover this ACL management of the pg_hba.conf file.
