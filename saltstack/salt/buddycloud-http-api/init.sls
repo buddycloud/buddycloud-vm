@@ -6,7 +6,7 @@ install-buddyclould-http-api-dependencies:
       - libicu-dev
       - libexpat-dev
       - build-essential
-      - libexpat-dev
+      - libexpat1-dev
       - libssl-dev
       - build-essential
       - g++
@@ -14,7 +14,7 @@ install-buddyclould-http-api-dependencies:
 buddycloud-http-api-git-checkout:
   git.latest:
     - name: https://github.com/buddycloud/buddycloud-http-api.git
-    - rev: master
+    - rev: develop
     - target: /opt/buddycloud-http-api
     - force_reset: true
     - force: true
