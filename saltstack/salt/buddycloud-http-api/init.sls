@@ -1,3 +1,16 @@
+install-buddyclould-http-api-dependencies:
+  pkg.installed:
+    - pkgs:
+      - git
+      - git-core
+      - libicu-dev
+      - libexpat-dev
+      - build-essential
+      - libexpat-dev
+      - libssl-dev
+      - build-essential
+      - g++
+
 buddycloud-http-api-git-checkout:
   git.latest:
     - name: https://github.com/buddycloud/buddycloud-http-api.git
@@ -5,8 +18,6 @@ buddycloud-http-api-git-checkout:
     - target: /opt/buddycloud-http-api
     - force_reset: true
     - force: true
-    - require:
-        - pkg: git
 
 buddycloud-http-api-install:
   cmd.run:
@@ -14,6 +25,12 @@ buddycloud-http-api-install:
     - cwd: /opt/buddycloud-http-api
     - require:
        - git: buddycloud-http-api-git-checkout
+
+/etc/logrotate.d/buddycloud-http-api:
+  file.managed:
+    - source: salt://buddycloud-http-api/logrotate
+    - user: root
+    - group: root
 
 /etc/init/buddycloud-http-api.conf:
   file.managed:

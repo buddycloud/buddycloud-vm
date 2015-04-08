@@ -1,20 +1,19 @@
-# buddycloud-http-api - buddycloud HTTP API server
-description "wifi-chat"
+# buddycloud-http-api - buddycloud HTTP API server 
+# script for upstart services (place in /etc/init)
 
+description     "buddycloud HTTP API server"
+
+# respawn the job up to 10 times within a 5 second period.
+# If the job exceeds these values, it will be stopped and
+# marked as failed.
 respawn
 respawn limit 10 5
 
 start on runlevel [2345]
 stop on runlevel [!2345]
 
-setuid root
-setgid root
+setuid nobody
+setgid nogroup
 
-script
-    cd /opt/wifi-chat
-    exec npm start >> /var/log/wifi-chat-website.log 2>&1
-end script
+exec /usr/bin/node /opt/buddycloud-http-api/server.js >> /var/log/buddycloud-http-api.log 2>&1
 
-post-start script
-   echo "wifi-chat-started"
-end script
