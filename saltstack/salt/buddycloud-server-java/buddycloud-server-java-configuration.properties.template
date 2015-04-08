@@ -3,7 +3,7 @@ xmpp.port=5347
 xmpp.secretkey={{ salt['pillar.get']('buddycloud:lookup:channels-xmpp-componet-password') }}
 
 server.domain={{ salt['pillar.get']('buddycloud:lookup:domain') }}
-server.domain.channels=buddycloud.{{ salt['pillar.get']('buddycloud:lookup:domain') }}
+server.domain.channels=channels.{{ salt['pillar.get']('buddycloud:lookup:domain') }}
 server.domain.topics=topics.{{ salt['pillar.get']('buddycloud:lookup:domain') }}
 
 jdbc.proxool.alias=buddycloud_server_java
