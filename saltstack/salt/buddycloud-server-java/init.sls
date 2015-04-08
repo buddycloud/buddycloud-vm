@@ -2,8 +2,7 @@ buddycloud-server-java:
   pkg:
     - installed
     - sources:
-      - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-server-java/buddycloud-server-java_20150408.git.b7bf8f1-1/buddycloud-server-java_20150408.git.b7bf8f1-1_all.deb
-      #- buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-server-java/buddycloud-server-java_latest.deb
+      - buddycloud-server-java: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-server-java/buddycloud-server-java_latest.deb
 
 create-buddycloud-server-schema:
   cmd.run:
