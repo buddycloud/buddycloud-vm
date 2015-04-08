@@ -34,9 +34,13 @@ create-buddycloud-server-schema:
     - group: root
     - mode: 0644
 
-/etc/init.d/buddycloud-server-java:
+remove-broken-init-file:
+  cmd.run: 
+    - name: update-rc.d buddycloud-server-java remove
+
+/etc/init/buddycloud-server-java.conf:
   file.managed:
-    - source: salt://buddycloud-server-java/buddycloud-server-java.init.d
+    - source: salt://buddycloud-server-java/upstart-script
     - user: root
     - group: root
     - mode: 0755
@@ -51,5 +55,5 @@ create-buddycloud-server-schema:
       - file: /usr/share/buddycloud-server-java/configuration.properties
       - file: /usr/share/buddycloud-server-java/log4j.properties
       - file: /etc/dbconfig-common/buddycloud-server-java.conf
-      - file: /etc/init.d/buddycloud-server-java
+      - file: /etc/init/buddycloud-server-java.conf
       - cmd: create-buddycloud-server-schema
