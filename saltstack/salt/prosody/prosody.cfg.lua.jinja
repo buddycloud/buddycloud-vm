@@ -70,7 +70,7 @@ VirtualHost "anon.{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
   anonymous_login       = true
 
 -- Buddycloud Channel Server XMPP component configuration.
-Component "buddycloud.{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
+Component "channels.{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
   component_secret      = "{{ salt['pillar.get']('buddycloud:lookup:channels-xmpp-componet-password') }}"
 
 -- Buddycloud Channel Server (optional topic channels).
