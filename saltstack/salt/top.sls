@@ -12,13 +12,10 @@ base:
     - java
     - node
     - prosody
-#    - tigase-server
+    - nginx
     - buddycloud-server-java
     - buddycloud-media-server
-    - buddycloud-pusher
-    - nginx
-#    - buddycloud-http-api
-#    - buddycloud-demos
+    - buddycloud-demos
+    - buddycloud-http-api
     - wifi-chat
     - webhook-deployer
-
