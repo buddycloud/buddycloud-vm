@@ -72,12 +72,12 @@ This VM can [optionally] mix settings from your 1) your private repo (override a
 
 Setup to run in production,
 - create a private repo (eg: `buddycloud-vm-bigproject`)
-- `git clone buddycloud-vm-bigproject` into `/srv/buddycloud-vm-bigproject` 
+- `git clone buddycloud-vm-bigproject` into `/srv/salt_local` 
 - edit `/etc/salt/minion.conf` add add the path of your private repo
 - run `salt-call --local state.highstate`
 
 Then each time you want to update the VM,
-- `cd /srv/buddycloud-vm-bigproject`
+- `cd /srv/salt_local`
 - `git pull`
 - `salt-call --local state.highstate`
 
