@@ -1,6 +1,7 @@
 base:
   '*':
     - base.sanity
+    - saltstack
     - packages
     - kernel
     - motd
