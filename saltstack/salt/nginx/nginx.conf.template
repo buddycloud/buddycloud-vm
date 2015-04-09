@@ -48,14 +48,18 @@ http {
         text/plain
         text/x-component;
 
-server {
-    server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
-    
-    # deploying into production, comment out the following:
-    listen              80;
-    location / {
+    server {
+      server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
+      listen              80;
+      location / {
         proxy_pass http://127.0.0.1:3000/;
+      }
     }
-  }
+    include /etc/nginx/mime.types;
+    types {
+      text/html   html htm shtml;
+      text/css    css;
+      text/xml    xml;
+      application/x-web-app-manifest+json   webapp;
+    }
 }
-
