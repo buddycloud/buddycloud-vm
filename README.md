@@ -35,8 +35,8 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 
 |                    | Outside the VM                                      | Inside the VM                      |             |
 |--------------------|-----------------------------------------------------|------------------------------------|----------------------------------|
-| Public configs    | `buddycloud-vm/saltstack/salt/*` (read-write)         | `/srv/salt` (read-only)              | e.g. `buddycloud-vm/saltstack/salt/nginx.conf.template`                  |
-| Private configs    | `buddycloud-vm/saltstack/pillars/*` (read-write)      | `/srv/pillars` (read-only)           | e.g. database passwords          |
+| Public configs    | `buddycloud-vm/saltstack/salt/*` (read-write)         | `/srv/salt_upstream/saltstack/salt` (read-only)              | e.g. `buddycloud-vm/saltstack/salt/nginx.conf.template`                  |
+| Private configs    | `buddycloud-vm/saltstack/pillars/*` (read-write)      | `/srv/salt_upstream/saltstack/pillars` (read-only)           | e.g. database passwords          |
 | Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                                   |                                  | add your own key to `buddycloud-vm/saltstack/pillar/users.sls`  
 | Activating changes |                                                     | `salt-call --local state.highstate`  |                                  |
 | Webroot            | `buddycloud-vm/buddycloud-webapp` (read-write)        | `/opt/buddycloud-webapp` (read-only) | visible on http://localhost:8080 |
