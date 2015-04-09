@@ -65,6 +65,22 @@ vagrant up --provider=vsphere
 
 Shut down Vagrant with: `vagrant halt`. And `vagrant kill` will remove all disks and configs.
 
+
+### Running in Production
+
+This VM can [optionally] mix settings from your 1) your private repo (override any settings elsewhere) 2) the buddycloud-vm repo. 
+
+Setup to run in production,
+- create a private repo (eg: `buddycloud-vm-bigproject`)
+- `git clone buddycloud-vm-bigproject` into `/srv/buddycloud-vm-bigproject` 
+- edit `/etc/salt/minion.conf` add add the path of your private repo
+- run `salt-call --local state.highstate`
+
+Then each time you want to update the VM,
+- `cd /srv/buddycloud-vm-bigproject`
+- `git pull`
+- `salt-call --local state.highstate`
+
 ### Todo (pull requests welcomed)
 
 - add logrotate for all packages
