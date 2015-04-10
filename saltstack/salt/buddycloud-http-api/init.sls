@@ -19,6 +19,21 @@ buddycloud-http-api-git-checkout:
     - force_reset: true
     - force: true
 
+/opt/buddycloud-http-api:
+  file.directory:
+    - user: nobody
+    - group: nogroup
+    - mode: 755
+    - recurse:
+      - user
+      - group
+
+/var/log/buddycloud-http-api.log:
+  file.managed:
+    - user: nobody
+    - group: nogroup
+    - mode: 755
+
 buddycloud-http-api-install:
   cmd.run:
     - name: npm i --development .

@@ -35,6 +35,8 @@ prosody:
   service.running:
     - require:
       - pkg: prosody-packages
+    - enable: True
+    - restart: True
     - watch:
       - file: /etc/prosody/prosody.cfg.lua
 
