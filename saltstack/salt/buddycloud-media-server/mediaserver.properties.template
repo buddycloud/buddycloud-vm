@@ -12,12 +12,12 @@ https.keystore.password=password
 https.key.password=password
 
 # XMPP
-xmpp.component.host={{ salt['pillar.get']('buddycloud:lookup:domain') }}
+xmpp.component.host=127.0.0.1
 xmpp.component.port=5347
 xmpp.component.subdomain=media.{{ salt['pillar.get']('buddycloud:lookup:domain') }}
 xmpp.component.secretkey={{ salt['pillar.get']('buddycloud:lookup:media-xmpp-componet-password') }}
 
-xmpp.connection.username=mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }}
+xmpp.connection.username=mediaserver-test
 xmpp.connection.password={{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}
 xmpp.connection.host=127.0.0.1
 xmpp.connection.port=5222
@@ -36,4 +36,6 @@ media.todisk.threshold=1048576
 # File System
 media.storage.root=/srv/buddycloud-media-server-filestore
 media.sizelimit=1000240000
+
+http.endpoint={{ salt['pillar.get']('buddycloud:lookup:website') }}/api/media_proxy
 

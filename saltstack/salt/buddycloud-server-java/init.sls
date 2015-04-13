@@ -35,7 +35,7 @@ create-buddycloud-server-schema:
 
 remove-broken-init-file:
   cmd.run: 
-    - name: update-rc.d buddycloud-server-java remove
+    - name: rm /etc/init.d/buddycloud-server-java | true
 
 /etc/init/buddycloud-server-java.conf:
   file.managed:
@@ -47,6 +47,7 @@ remove-broken-init-file:
     - name: buddycloud-server-java
     - enable: True
     - reload: True
+    - full_restart: True
     - require:
       - pkg: postgresql-9.3
       - pkg: oracle-java7-installer

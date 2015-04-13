@@ -28,11 +28,11 @@ buddycloud-http-api-git-checkout:
       - user
       - group
 
-/var/log/buddycloud-http-api.log:
+/var/log/buddycloud/buddycloud-http-api.log:
   file.managed:
     - user: nobody
     - group: nogroup
-    - mode: 755
+    - mode: 644
 
 buddycloud-http-api-install:
   cmd.run:
@@ -40,6 +40,11 @@ buddycloud-http-api-install:
     - cwd: /opt/buddycloud-http-api
     - require:
        - git: buddycloud-http-api-git-checkout
+
+/opt/buddycloud-http-api/config.js:
+  file.managed:
+    - source: salt://buddycloud-http-api/config.js.template
+    - template: jinja
 
 /etc/logrotate.d/buddycloud-http-api:
   file.managed:
@@ -56,4 +61,7 @@ buddycloud-http-api-install:
   service.running:
     - name: buddycloud-http-api
     - enable: True
-    - reload: True
+    - force_reload: True
+    - full_restart: True
+    - watch:
+      - file: /opt/buddycloud-http-api/*

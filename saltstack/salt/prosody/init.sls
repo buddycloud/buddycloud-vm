@@ -36,7 +36,8 @@ prosody:
     - require:
       - pkg: prosody-packages
     - enable: True
-    - restart: True
+    - full_restart: True
+    - force_reload: True
     - watch:
       - file: /etc/prosody/prosody.cfg.lua
 

@@ -48,13 +48,7 @@ create-buddycloud-media-server-schema:
 
 create-media-xmpp-user-account:
   cmd.run:
-    - name: echo -e "{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}\n{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}" | prosodyctl adduser mediaserver@buddycloud.dev | true 
-
-#create-media-xmpp-user-account:
-#  cmd.run:
-#    - name: psql -h 127.0.0.1 -U tigase_server tigase_server -c "SELECT TigAddUserPlainPw('mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }}', '{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}');"
-#    - env:
-#      - PGPASSWORD: '{{ salt['pillar.get']('postgres:users:tigase_server:password') }}'
+    - name: echo -e "{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}\n{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}" | prosodyctl adduser mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }} | true 
 
 /etc/init.d/buddycloud-media-server:
   file.managed:
@@ -65,7 +59,8 @@ create-media-xmpp-user-account:
   service.running:
     - name: buddycloud-media-server
     - enable: True
-    - reload: True
+    - force_reload: True
+    - full_restart: True
     - require:
       - pkg: postgresql-9.3
       - pkg: oracle-java7-installer
@@ -75,3 +70,4 @@ create-media-xmpp-user-account:
       - file: /usr/share/buddycloud-media-server/logback.xml
       - cmd: create-buddycloud-media-server-schema
       - cmd: create-media-xmpp-user-account
+

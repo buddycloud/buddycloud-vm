@@ -16,8 +16,9 @@ setuid root
 setgid root
 
 script
-   touch /var/log/buddycloud-http-api.log
-   chown nobody:nogroup /var/log/buddycloud-http-api.log
-   exec /usr/bin/node /opt/buddycloud-http-api/server.js >> /var/log/buddycloud-http-api.log 2>&1
+   touch /var/log/buddycloud/buddycloud-http-api.log
+   chown nobody:nogroup /var/log/buddycloud/buddycloud-http-api.log
+   cd /opt/buddycloud-http-api
+   exec /usr/bin/node /opt/buddycloud-http-api/server.js >> /var/log/buddycloud/buddycloud-http-api.log 2>&1
 end script
 
