@@ -1,0 +1,25 @@
+define({
+  // Where to find your API server (defaults to the buddycloud dev server - set
+  // to your own server.
+  // Note: Browsers do not permit using self signed certificates for AJAX requests
+  baseUrl: '{{ salt['pillar.get']('buddycloud:lookup:admin-website') }}/api',
+  
+  // Domain that you your users live on.
+  // For example, if your users' IDs look like user@example.com, then you would 
+  // set the homeDomain to example.com.
+  homeDomain: '{{ salt['pillar.get']('buddycloud:lookup:domain') }}',
+  
+  // To enable oEmbed support (link previews), sign up on http://embed.ly (they 
+  // have a free plan).
+  embedlyKey: '',
+  
+  // If you see "some content is unencrypted" messages while browsing, change 
+  // embedlySecure to "true".
+  embedlySecure: true,
+
+  // If you are a buddycloud developer you can optionally specify a port number
+  // to run the server on (defaults to 3000). Safely ignored by everyone else.
+  // port: 3000,
+
+  release: true
+});

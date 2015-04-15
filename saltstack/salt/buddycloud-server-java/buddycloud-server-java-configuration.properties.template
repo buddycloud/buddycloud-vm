@@ -21,7 +21,7 @@ user.admin = admin@{{ salt['pillar.get']('buddycloud:lookup:domain') }}
 
 # A list of channels (local or remote) to which to subscribe new users
 # Note that the channels will not be created - they must already exist
-channels.autosubscribe=lounge@topics.buddycloud.org
+channels.autosubscribe={{ salt['pillar.get']('buddycloud:lookup:channels.autosubscribe') }}
 
 # If any of the 'channels.autosubscribe' channels are private local channels,
 # then whether to automatically approve the user.
@@ -40,5 +40,7 @@ channel.configuration.geo.next.accessmodel=authorize
 channel.configuration.geo.current.accessmodel=authorize
 channel.configuration.geo.previous.accessmodel=authorize
 
-channel.configuration.status.description=%jid%'s status
-channel.configuration.status.description=The current status of %jid%
+channel.configuration.default.title=%jid%
+channel.configuration.default.description=%jid%
+
+notifiactions.connected: {{ salt['pillar.get']('buddycloud:lookup:notifications.connected') }}

@@ -8,7 +8,6 @@ exports.production = {
   xmppAnonymousDomain: 'anon.{{ salt['pillar.get']('buddycloud:lookup:domain') }}',
   pusherComponent: 'pusher.{{ salt['pillar.get']('buddycloud:lookup:domain') }}',
   friendFinderComponent: 'friend-finder.buddycloud.com',
-  searchComponent: 'search.buddycloud.org',
   mediaProxyPrefix: 'media_proxy',
   homeMediaRoot: 'http://127.0.0.1:60080',
   createUserOnSessionCreation: true,

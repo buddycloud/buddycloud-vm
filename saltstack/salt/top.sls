@@ -18,4 +18,5 @@ base:
     - buddycloud-media-server
     - buddycloud-http-api
     - wifi-chat
+    - webclient
     - webhook-deployer
