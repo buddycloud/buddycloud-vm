@@ -8,7 +8,7 @@
 admins = { "admin@{{ salt['pillar.get']('buddycloud:lookup:domain') }}" }
 
 daemonize = true
-use_libevent = true;
+use_libevent = false;
 
 plugin_paths = { "/etc/prosody/modules" }
 pidfile = "/var/run/prosody/prosody.pid"
