@@ -51,8 +51,14 @@ http {
     server {
       server_name         {{ salt['pillar.get']('buddycloud:lookup:domain') }};
       listen              80;
+      location /api/ {
+        proxy_pass http://127.0.0.1:9123/;
+      }
       location / {
         proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
       }
     }
     include /etc/nginx/mime.types;
