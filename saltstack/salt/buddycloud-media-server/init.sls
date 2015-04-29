@@ -1,10 +1,19 @@
-install-media-server-dependencies:
+media-server-dependencies:
   pkg.installed:
     - pkgs:
       - postgresql-client
       - dbconfig-common 
       - libssl1.0.0
       - openssl
+      - openjdk-7-jre-headless
+
+buddycloud-media-server:
+  pkg:
+    - installed
+    - sources:
+      - buddycloud-media-server: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-media-server/buddycloud-media-server_latest.deb
+    - service:
+      - running
 
 /srv/buddycloud-media-server-filestore:
     file.directory:
@@ -16,14 +25,6 @@ install-media-server-dependencies:
         - user
         - group
         - mode
-
-buddycloud-media-server:
-  pkg:
-    - installed
-    - sources:
-      - buddycloud-media-server: http://downloads.buddycloud.com/packages/debian/nightly/buddycloud-media-server/buddycloud-media-server_latest.deb
-    - service:
-      - running
 
 /usr/share/buddycloud-media-server/mediaserver.properties:
   file.managed:
@@ -62,10 +63,9 @@ create-media-xmpp-user-account:
     - force_reload: True
     - full_restart: True
     - require:
-      - pkg: postgresql-9.3
-      - pkg: oracle-java7-installer
       - pkg: buddycloud-server-java
       - pkg: buddycloud-media-server
+      - pkg: media-server-dependencies
       - file: /usr/share/buddycloud-media-server/mediaserver.properties
       - file: /usr/share/buddycloud-media-server/logback.xml
       - cmd: create-buddycloud-media-server-schema

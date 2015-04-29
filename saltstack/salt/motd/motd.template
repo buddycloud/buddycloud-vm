@@ -3,35 +3,29 @@
 |__)    _| _|   _| _     _| __ \  /|\/| 
 |__)|_|(_|(_|\/(_|(_)|_|(_|     \/ |  | 
              /                          
-Configuration
--------------
-ID            : {{ grains.get('id') }}
-Node Name     : {{ grains.get('nodename') }}
-Zone Name     : {{ grains.get('zonename') }}
-Memory        : {{ grains.get('mem_total') }}
-OS            : {{ grains.get('os') }}
-Image Version : {{ grains.get('imageversion') }}
-Pkgsrc Verson : {{ grains.get('pkgsrcversion') }}
-Pkgsrc Repo   : {{ grains.get('pkgsrcpath') }}
-
-Ingredients
------------
-- buddycloud-server-java
-- buddycloud-media-server
-- buddycloud-http-api
-- buddycloud-Pusher
-- a demo app avaliable on localhost:8080
 
 Preparation
 -----------
 This server is managed by Saltstack which means changes will 
 be lost unless pushed through saltstack. Make changes on your 
-local machine (eg in ~/src/buddycloud-vm/saltstack/...), 
+local machine (eg in ~/src/buddycloud-vm/saltstack/...), Pull 
+requests welcomed at https://github.com/buddycloud/buddycloud-vm
 
-Pull requests welcomed at https://github.com/buddycloud/buddycloud-vm
+Services running
+----------------
+- buddycloud-server-java
+- buddycloud-media-server
+- buddycloud-http-api  http://localhost:8080/api
+- buddycloud-webclient http://localhost:8080
+- websocket endpoint   http://localhost:8080/api/scripts/primus/primus.js
+- angular-xmpp-demo    http://localhost:8081
 
-To active changes, run: 
+Log files
+---------
+/var/log/buddycloud/
 
+To active any changes 
+---------------------
 export LC_ALL="en_US.UTF-8"
 sudo salt-call  --local state.highstate
 

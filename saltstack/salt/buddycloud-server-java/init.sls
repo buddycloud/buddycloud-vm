@@ -1,3 +1,12 @@
+buddycloud-server-java-dependencies:
+  pkg.installed:
+    - pkgs:
+      - postgresql-client
+      - dbconfig-common 
+      - libssl1.0.0
+      - openssl
+      - openjdk-7-jre-headless
+
 buddycloud-server-java:
   pkg:
     - installed
@@ -50,8 +59,8 @@ remove-broken-init-file:
     - full_restart: True
     - require:
       - pkg: postgresql-9.3
-      - pkg: oracle-java7-installer
       - pkg: buddycloud-server-java
+      - pkg: buddycloud-server-java-dependencies
       - file: /usr/share/buddycloud-server-java/configuration.properties
       - file: /usr/share/buddycloud-server-java/log4j.properties
       - file: /etc/dbconfig-common/buddycloud-server-java.conf

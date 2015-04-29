@@ -10,7 +10,6 @@ base:
     - iptables
     - bind
     - postgres
-    - java
     - node
     - prosody
     - nginx

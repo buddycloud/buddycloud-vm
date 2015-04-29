@@ -45,8 +45,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id,
                   "--memory", "1024",
-                  "--cpus",   "4",
-                  "--name",     "buddycloud-dev-machine",
+                  "--cpuexecutioncap", "50",
+                  "--name", "buddycloud-dev-machine",
     ]
   end
 
