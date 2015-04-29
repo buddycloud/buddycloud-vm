@@ -49,11 +49,9 @@ sql = {
     }
 
 log = {
-    --debug = "/var/log/prosody/prosody.dbg";
-    info = "/var/log/prosody/prosody.log";
-    error = "/var/log/prosody/prosody.err";
-    -- Syslog:
-    { levels = { "error" }; to = "syslog";  };
+    info =  "/var/log/buddycloud/prosody.log";
+    error = "/var/log/buddycloud/prosody.err";
+    -- debug = "/var/log/buddycloud/prosody-debug.log";
 }
 
 VirtualHost "{{ salt['pillar.get']('buddycloud:lookup:domain') }}"
