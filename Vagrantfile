@@ -14,6 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Forward ports
   config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
   config.vm.network :forwarded_port, guest: 80,   host: 8080 # non-ssl-website
+  config.vm.network :forwarded_port, guest: 3000, host: 3000 # node-xmpp-ftw
   config.vm.network :forwarded_port, guest: 5222, host: 5222 # XMPP-client
   config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
@@ -38,18 +39,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.log_level = "info"
     salt.verbose = true
     salt.install_type = "git"
-    salt.install_args = "v2015.2" 
+    salt.install_args = "v2015.2"
   end
 
   # configure for virtualbox
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, 
+    vb.customize ["modifyvm", :id,
                   "--memory", "1024",
                   "--cpus",   "4",
                   "--name",     "buddycloud-dev-machine",
     ]
   end
-  
+
   config.vm.provider "libvirt" do |lv|
     lv.memory = 1024
   end
@@ -61,12 +62,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     google.google_key_location = "~/.ssh/google_compute_engine.private_key"
     google.zone = "europe-west1-d"
     google.zone_config "europe-west1-d" do |zone1d|
-        zone1d.name = "testing-vagrant"
-        zone1d.image = "debian-7-wheezy-v20150127"
-        zone1d.machine_type = "n1-standard-4"
-        zone1d.zone = "europe-west1-d"
-        zone1d.metadata = {'custom' => 'metadata', 'testing' => 'foobarbaz'}
-        zone1d.tags = ['web', 'app1']
+      zone1d.name = "testing-vagrant"
+      zone1d.image = "debian-7-wheezy-v20150127"
+      zone1d.machine_type = "n1-standard-4"
+      zone1d.zone = "europe-west1-d"
+      zone1d.metadata = {'custom' => 'metadata', 'testing' => 'foobarbaz'}
+      zone1d.tags = ['web', 'app1']
     end
   end
 
