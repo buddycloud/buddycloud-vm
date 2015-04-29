@@ -65,3 +65,15 @@ buddycloud-http-api-install:
     - full_restart: True
     - watch:
       - file: /opt/buddycloud-http-api/*
+
+xmpp-ftw-firewall:
+  iptables.append:
+    - table: filter
+    - chain: INPUT
+    - jump: ACCEPT
+    - match: state
+    - connstate: NEW
+    - dport: 3000
+    - proto: tcp
+    - save: True
+

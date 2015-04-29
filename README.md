@@ -1,4 +1,4 @@
-## Vagrant + Saltstack + Buddycloud = Buddycloud Stack in a Box
+## Vagrant + Saltstack + Buddycloud = Buddycloud stack in a Box
 
 ### Getting Started
 
