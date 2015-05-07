@@ -11,11 +11,10 @@ base:
     - bind
     - postgres
     - node
-    - prosody
     - nginx
+    - prosody
     - buddycloud-server-java
     - buddycloud-media-server
     - buddycloud-http-api
-    - wifi-chat
-    - webclient
-    - webhook-deployer
+    - buddycloud-pusher
+    - buddycloud-webapps

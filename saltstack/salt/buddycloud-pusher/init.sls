@@ -14,7 +14,7 @@ buddycloud-pusher:
 
 /usr/share/buddycloud-pusher/log4j.properties:
   file.managed:
-    - source: salt://buddycloud-pusher/log4j.properties
+    - source: salt://buddycloud-pusher/buddycloud-pusher-log4j.properties.jinja
     - user: root
     - group: root
     - mode: 0644

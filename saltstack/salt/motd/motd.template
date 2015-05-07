@@ -22,7 +22,7 @@ Services running
 
 Log files
 ---------
-/var/log/buddycloud/
+everything: tail -F /var/log/buddycloud/*log
 
 To active any changes 
 ---------------------

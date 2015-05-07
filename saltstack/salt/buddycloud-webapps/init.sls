@@ -11,7 +11,7 @@ buddycloud-webclient-bad-config:
 
 /usr/share/buddycloud-webclient/config.js:
   file.managed:
-    - source: salt://webclient/config.js.template
+    - source: salt://buddycloud-webapps/buddycloud-webclient.js.jinja
     - user: root
     - group: root
     - mode: 644
