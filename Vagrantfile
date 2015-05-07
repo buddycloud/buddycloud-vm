@@ -5,11 +5,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
-
-  # ssh <username>@127.0.0.1:2222
+  config.vm.host_name = "buddycloud-vm.dev"
   config.ssh.forward_agent = true
+  config.vm.define :buddycloud-vm do |t| # sets the name
+  end
 
   # Forward ports
   config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
@@ -19,16 +19,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
 
-  # Uncomment for Yosemite
-  # config.trigger.after [:up, :reload, :provision], :stdout => true do
-  #   system('echo "
-  #     rdr pass inet proto tcp from any to any port 80 -> 127.0.0.1 port 8080
-  #     " | sudo pfctl -ef - >/dev/null 2>&1; echo "Add Port Forwarding (80 => 8080)"')
-  #     end
-  #  config.trigger.after [:halt, :suspend, :destroy], :stdout => true do
-  #   system('sudo pfctl -F all -f /etc/pf.conf >/dev/null 2>&1; echo "Removing Port Forwarding (80 => 8080)"')
-  # end
-
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/salt",    "/srv/salt"
   config.vm.synced_folder "saltstack/pillar",  "/srv/pillar"
@@ -36,9 +26,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.minion_config = "saltstack/configs/minion.conf"
     salt.run_highstate = true
     salt.colorize = true
-    salt.log_level = "debug"
-    salt.install_type = "git"
-    salt.install_args = "v2015.2"
+    salt.log_level = "error"
+    #salt.install_type = "git"
+    #salt.install_args = "v2015.2"
   end
 
   # configure for virtualbox

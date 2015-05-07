@@ -46,6 +46,9 @@ remove-broken-init-file:
   cmd.run: 
     - name: rm /etc/init.d/buddycloud-server-java | true
 
+/var/log/buddycloud-server-java:
+  file.absent
+
 /etc/init/buddycloud-server-java.conf:
   file.managed:
     - source: salt://buddycloud-server-java/upstart-script

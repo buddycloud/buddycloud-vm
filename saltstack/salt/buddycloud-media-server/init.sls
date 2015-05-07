@@ -51,6 +51,9 @@ create-media-xmpp-user-account:
   cmd.run:
     - name: echo -e "{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}\n{{ salt['pillar.get']('buddycloud:lookup:media-jid-password') }}" | prosodyctl adduser mediaserver-test@{{ salt['pillar.get']('buddycloud:lookup:domain') }} | true 
 
+/var/log/buddycloud-media-server:
+  file.absent
+
 /etc/init.d/buddycloud-media-server:
   file.managed:
     - source: salt://buddycloud-media-server/buddycloud-media-server.init.d
