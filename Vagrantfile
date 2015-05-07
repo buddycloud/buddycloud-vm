@@ -8,8 +8,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.host_name = "buddycloud-vm.dev"
   config.ssh.forward_agent = true
-  config.vm.define :buddycloud-vm do |t| # sets the name
-  end
 
   # Forward ports
   config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
