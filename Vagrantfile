@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.host_name = "buddycloud-vm.dev"
   config.ssh.forward_agent = true
+  # Resolve "stdin: is not a tty" errors
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   # Forward ports
   config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
@@ -26,8 +28,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.colorize = true
     salt.verbose = true
     salt.log_level = "error"
-    salt.install_type = "daily"
-    #salt.install_args = "v2015.3"
+    salt.install_type = "git"
+    salt.install_args = "v2015.5"
   end
 
   # configure for virtualbox
