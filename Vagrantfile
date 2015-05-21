@@ -26,8 +26,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.colorize = true
     salt.verbose = true
     salt.log_level = "error"
-    #salt.install_type = "git"
-    #salt.install_args = "v2015.2"
+    salt.install_type = "daily"
+    #salt.install_args = "v2015.3"
   end
 
   # configure for virtualbox
