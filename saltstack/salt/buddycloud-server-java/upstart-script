@@ -7,7 +7,11 @@ respawn
 start on started network-services
 stop on stopping network-services
 
+# don't spin
+post-stop exec sleep 5
+
 script
 cd /usr/share/buddycloud-server-java
 exec /usr/bin/java -jar channelserver-jar-with-dependencies.jar
 end script
+
