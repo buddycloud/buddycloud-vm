@@ -1,20 +1,28 @@
 base:
   '*':
-    - base.sanity
-    - saltstack
-    - packages
-    - kernel
-    - motd
-    - wheel
+    - sanity
+    - time
+    - sssd
+    - groups
     - users
-    - iptables
-    - bind
-    - postgres
-    - node
+    - sudoers
+    - certificates
+    - node 
     - nginx
-    - prosody
+    - sun-java
+    - tigase-server
     - buddycloud-server-java
     - buddycloud-media-server
-    - buddycloud-http-api
     - buddycloud-pusher
+    - buddycloud-hosting
+    - buddycloud-http-api
     - buddycloud-webapps
+    - buddycloud-http-api
+    - node
+    - postgres
+    - nginx
+    - ruby
+    - mumble-server
+    - buddycloud-downloads
+    - buddycloud-angular-app
+    - buddycloud-ddns
