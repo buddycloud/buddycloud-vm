@@ -17,8 +17,8 @@
 # summary: keep all your config values in /srv/pillar (and committed to a private repo)
 
 fileserver_backend:
-  - git
   - roots
+  - git
 
 # useful for local changes
 # recommended that you keep /srv/salt in git
@@ -30,6 +30,9 @@ gitfs_provider: gitpython
 
 # use the Buddycloud saltstates as fallback
 gitfs_remotes:
+  - http://github.com/you/your-custom-buddycloud-repo.git:
+    - base: master
+    - root: salt
   - http://github.com/buddycloud/saltstack.git:
     - base: master
     - root: salt
