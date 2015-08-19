@@ -20,16 +20,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
 
   # Provision the box with a masterless salt configuration
+  config.vm.synced_folder "saltstack/config",  "/etc/salt"
   config.vm.synced_folder "saltstack/salt",    "/srv/salt"
   config.vm.synced_folder "saltstack/pillar",  "/srv/pillar"
   config.vm.provision :salt do |salt|
-    salt.minion_config = "saltstack/configs/minion.conf"
-    salt.run_highstate = true
-    salt.colorize = true
-    salt.verbose = true
-    salt.log_level = "error"
-    salt.install_type = "git"
-    salt.install_args = "v2015.5"
+    # configure the master
+    salt.install_master = true
+    salt.master_config  = "saltstack/config/master"
+    salt.master_key     = "saltstack/config/key/master.pem"
+    salt.master_pub     = "saltstack/config/key/master.pub"
+    # configure the minon
+    salt.minion_config  = "saltstack/config/minion"
+    salt.minion_key     = "saltstack/config/key/buddycloud-vm.dev.pem"
+    salt.minion_pub     = "saltstack/config/key/buddycloud-vm.dev.pub"
+    salt.seed_master = { 
+      "buddycloud-vm.dev" => "saltstack/config/key/buddycloud-vm.dev.pub" 
+    } 
+    # other settings
+    salt.always_install = true
+    salt.log_level      = "error"
+    salt.install_type   = "git"
+    salt.install_args   = "v2015.5"
+    salt.run_highstate  = true
+    salt.colorize       = true
+    salt.verbose        = true
   end
 
   # configure for virtualbox

@@ -1,16 +1,10 @@
 base:
   '*':
-    - sanity
-    - time
-    - sssd
-    - groups
-    - users
-    - sudoers
-    - certificates
     - node 
     - nginx
     - sun-java
     - tigase-server
+    - postgres
     - buddycloud-server-java
     - buddycloud-media-server
     - buddycloud-pusher
@@ -18,11 +12,5 @@ base:
     - buddycloud-http-api
     - buddycloud-webapps
     - buddycloud-http-api
-    - node
-    - postgres
-    - nginx
-    - ruby
-    - mumble-server
-    - buddycloud-downloads
     - buddycloud-angular-app
     - buddycloud-ddns

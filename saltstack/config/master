@@ -1,22 +1,38 @@
-# local changes will override buddycloud/saltstack
-
-# Try the local version first then fallback to the version at
-# https://github.com/buddycloud/saltstack/tree/master/salt
-# in other words, /srv/saltstack/salt/prosody/init.sls
-# will override github.com/buddycloud/saltstack/prosody/init.sls
+# --------------
+# How this works
+# --------------
+# 
+# Salt states
+# -----------
+# check: /srv/salt/top.sls
+# check: https://github.com/buddycloud/saltstack/tree/master/salt/top.sls
+#
+# summary: local changes will override http://github://buddycloud/saltstack
+#
+# Pillar values
+# -------------
+# check: /srv/pillar/top.sls
+# check: [nothing else]
+#
+# summary: keep all your config values in /srv/pillar (and committed to a private repo)
 
 fileserver_backend:
-  - roots
   - git
+  - roots
 
 # useful for local changes
 # recommended that you keep /srv/salt in git
 base:
   - /srv/salt
 
+# apt-get install git-python for this to work
+gitfs_provider: gitpython
+
 # use the Buddycloud saltstates as fallback
 gitfs_remotes:
-  - https://github.com/buddycloud/saltstack.git
+  - http://github.com/buddycloud/saltstack.git:
+    - base: master
+    - root: salt
 
 # put your private keys, certificates and config data into 
 # /srv/pillar/buddycloud/init.sls
