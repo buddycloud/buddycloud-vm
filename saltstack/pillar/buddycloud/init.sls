@@ -1,19 +1,12 @@
-# This file is used to configure Buddycloud-stack components
-
 buddycloud:
   lookup:
-    # This will set your user's to appear on <username>@buddycloud.dev.
-    domain: buddycloud.dev
-    frontend-url: http://localhost:3000
-    send-address: noreply@somewhere.example
-    smtp-server-address: 127.0.0.1
-    channels-xmpp-componet-password: channels-component-secret
-    media-xmpp-componet-password: media-component-secret
-    media-jid-password: media-jid-secret
-    pusher-xmpp-componet-password: pusher-secret
-    # if you are running on a public-IP and want your services accessible
-    # uncomment below
-    # external-ipv4:
-    #  - 12.4.127.1
-    # external-ipv6:
-    #  - 2001:DEAD:BEEF::1
+    domain: buddycloud.dev                                  # domain for buddycloud service
+    database-server: 127.0.0.1                               
+    ddns-server: ns01.example.com                           # setup scripts can automatically set DNS
+    env: dev                                                # name of the environment (the vm-should use) 
+    frontend-url: http://localhost:3000                     # where to serv
+    git-branch: master                                      # which git branch to deploy from
+    send-address: noreply@example.com
+    smtp-server: smtp.example.com
+    tsigkeyname: my-tsig-key                                  
+    tsigkeysecret: txUhsdfTw7GqJwfpRlbA==

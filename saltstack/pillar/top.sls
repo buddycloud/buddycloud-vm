@@ -6,3 +6,4 @@ base:
     - iptables
     - nameservers
     - node
+    - prosody

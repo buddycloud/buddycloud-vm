@@ -8,6 +8,7 @@ base:
     - node
     - postgres
     - nginx
+    - prosody
     - sun-java
     - buddycloud-ddns
     - buddycloud-server-java
