@@ -20,9 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
 
   # Provision the box with a masterless salt configuration
-  config.vm.synced_folder "saltstack/config",  "/etc/salt"
-  config.vm.synced_folder "saltstack/salt",    "/srv/salt"
-  config.vm.synced_folder "saltstack/pillar",  "/srv/pillar"
+  config.vm.synced_folder "saltstack/config",                    "/etc/salt"
+  config.vm.synced_folder "saltstack/salt_local",                "/srv/salt_local"
+  config.vm.synced_folder "saltstack/buddycloud_saltstack_repo", "/srv/buddycloud_saltstack_repo"
   config.vm.provision :salt do |salt|
     # configure the master
     salt.install_master = true
