@@ -1,17 +1,19 @@
+# applied to all machines in your saltstack setup
 base:
   '*':
-    - base
-    - buddycloud_saltstack_repo
-    - motd
+    - buddycloud-vm-motd
+    - sanity
+    - time
+    - groups
     - users
     - sudoers
     - certificates
-    - node
-    - postgres
+#    - buddycloud-ddns
+    - postgres   
     - nginx
+    - node
     - prosody
     - sun-java
-    - buddycloud-ddns
     - buddycloud-server-java
     - buddycloud-http-api
     - buddycloud-media-server

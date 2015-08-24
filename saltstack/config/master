@@ -24,7 +24,7 @@ fileserver_backend:
 # /srv/salt-upstream/salt is a "git clone https://github.com/buddycloud/saltstack"
 file_roots:
   base:
-  - /srv/salt_local/salt
+    - /srv/salt_local/salt
 # to work locally uncomment this line below.
 #  - /srv/buddycloud_saltstack_repo/salt
 
@@ -42,4 +42,3 @@ gitfs_remotes:
   - http://github.com/buddycloud/saltstack.git:
     - base: master
     - root: salt
-

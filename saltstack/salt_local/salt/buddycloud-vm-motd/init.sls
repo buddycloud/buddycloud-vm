@@ -3,6 +3,6 @@
     - user: root 
     - group: root 
     - mode: 0644 
-    - source: salt://motd/motd.template 
+    - source: salt://buddycloud-vm-motd/motd.template 
     - template: jinja
 
