@@ -1,6 +1,7 @@
 base:
   '*':
     - base
+    - buddycloud_saltstack_repo
     - motd
     - users
     - sudoers
