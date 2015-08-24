@@ -23,6 +23,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "saltstack/config",                    "/etc/salt"
   config.vm.synced_folder "saltstack/salt_local",                "/srv/salt_local"
   config.vm.synced_folder "saltstack/buddycloud_saltstack_repo", "/srv/buddycloud_saltstack_repo"
+  # Saltstack needs python-git to work so we pre-install it
+  config.vm.provision :shell, :inline => "sudo apt-get update -qq -y"
+  config.vm.provision :shell, :inline => "sudo apt-get install python-git -qq -y"
   config.vm.provision :salt do |salt|
     # configure the master
     salt.install_master = true
@@ -41,10 +44,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.log_level      = "error"
     salt.install_type   = "git"
     salt.install_args   = "v2015.5"
-    salt.run_highstate  = true
+    salt.run_highstate  = false
     salt.colorize       = true
     salt.verbose        = true
   end
+  # Now tell Saltstack to do it's thing
+  config.vm.provision :shell, :inline => "sudo restart salt-master && sleep 10 && sudo restart salt-minion && sleep 10"
+  config.vm.provision :shell, :inline => "sudo salt '*' state.highstate -l debug"  
 
   # configure for virtualbox
   config.vm.provider "virtualbox" do |v|
