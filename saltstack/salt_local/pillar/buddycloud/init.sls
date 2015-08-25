@@ -1,6 +1,7 @@
 buddycloud:
   lookup:
     domain: buddycloud.dev                                  # domain for buddycloud service
+    web-listen-port: 8080                                    # where to listen
     database-server: 127.0.0.1                               
     ddns-server: 127.0.0.1                                  # setup scripts can automatically set DNS
     env: dev                                                # name of the environment (the vm-should use) 

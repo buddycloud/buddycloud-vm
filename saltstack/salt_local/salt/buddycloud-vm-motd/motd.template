@@ -4,21 +4,28 @@
 |__)|_|(_|(_|\/(_|(_)|_|(_|     \/ |  | 
              /                          
 
-Preparation
------------
-This server is managed by Saltstack which means changes will 
-be lost unless pushed through saltstack. Make changes on your 
-local machine (eg in ~/src/buddycloud-vm/saltstack/...), Pull 
-requests welcomed at https://github.com/buddycloud/buddycloud-vm
+Working
+-------
+For your convenience Vagrant syncs /srv/saltstack with 
+~/src/buddycloud-vm/saltstack (or equivalent).
 
-Services running
-----------------
-- buddycloud-server-java
-- buddycloud-media-server
-- buddycloud-http-api  http://localhost:8080/api
-- buddycloud-webclient http://localhost:8080
-- websocket endpoint   http://localhost:8080/api/scripts/primus/primus.js
-- angular-xmpp-demo    http://localhost:8081
+Setup
+-----
+This service all runs on a magical domain called {{ salt['pillar.get']('buddycloud:lookup:domain') }}. 
+But your development environment wont see this unless you point
+your DNS at this virtual-machine. Don't worry the virtual-machine
+will forward your DNS reqiests for everything other than
+{{ salt['pillar.get']('buddycloud:lookup:domain') }} to your real
+DNS server.
+
+To set this up change your nameserver to simply 127.0.0.1. And if
+you already run a local nameserver you will know what to do.
+
+URLs:
+-----
+- buddycloud-http-api      http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api
+- websocket endpoint       http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api/scripts/primus/primus.js
+- angular-xmpp-demo        http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}
 
 Log files
 ---------
@@ -27,7 +34,8 @@ everything: tail -F /var/log/buddycloud/*log
 To active any changes 
 ---------------------
 export LC_ALL="en_US.UTF-8"
-sudo salt-call  --local state.highstate
+sudo salt  "*" state.highstate -l debug
 
+Pull requests welcomed.
 
 
