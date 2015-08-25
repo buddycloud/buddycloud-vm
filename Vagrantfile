@@ -13,8 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Forward ports
   config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
-  config.vm.network :forwarded_port, guest: 80,   host: 8080 # non-ssl-website
-  config.vm.network :forwarded_port, guest: 3000, host: 3000 # node-xmpp-ftw
+  config.vm.network :forwarded_port, guest: 80,   host: 8080 # website
   config.vm.network :forwarded_port, guest: 5222, host: 5222 # XMPP-client
   config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
@@ -22,7 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/config",                    "/etc/salt"
   config.vm.synced_folder "saltstack/salt_local",                "/srv/salt_local"
-  config.vm.synced_folder "saltstack/buddycloud_saltstack_repo", "/srv/buddycloud_saltstack_repo"
   # Saltstack needs python-git to work so we pre-install it
   config.vm.provision :shell, :inline => "sudo apt-get update -qq -y"
   config.vm.provision :shell, :inline => "sudo apt-get install python-git -qq -y"

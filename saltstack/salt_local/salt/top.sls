@@ -7,13 +7,13 @@ base:
     - groups
     - users
     - sudoers
+    - node
+    - sun-java
     - certificates
-#    - buddycloud-ddns
+    - buddycloud-ddns
     - postgres   
     - nginx
-    - node
     - prosody
-    - sun-java
     - buddycloud-server-java
     - buddycloud-http-api
     - buddycloud-media-server
