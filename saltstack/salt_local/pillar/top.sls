@@ -1,7 +1,8 @@
 base:
   '*':
-    - buddycloud
     - users
+    - buddycloud
+    - certificates
     - postgres
     - iptables
     - nameservers
