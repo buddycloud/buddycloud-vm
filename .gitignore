@@ -1,3 +1,4 @@
+saltstack/config/minion.d/
 .vagrant
 .DS_Store
 *.swp
