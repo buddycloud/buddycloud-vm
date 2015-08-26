@@ -4,7 +4,5 @@ base:
     - buddycloud
     - postgres
     - iptables
-    - certificates
     - nameservers
     - node
-    - prosody
