@@ -10,4 +10,4 @@ buddycloud:
     send-address: noreply@example.com
     smtp-server: smtp.example.com
     tsigkeyname: my-tsig-key                                  
-    tsigkeysecret: txasdUhsdfTw7GqJwfpRlbA==
+    tsigkeysecret: Cafgg7bVEnErJ95n143cBA==

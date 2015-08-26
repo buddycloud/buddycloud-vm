@@ -7,16 +7,16 @@ base:
     - groups
     - users
     - sudoers
-    - node
-    - sun-java
-    - certificates
+    - bind
     - buddycloud-ddns
-    - postgres   
-    - nginx
-    - prosody
-    - buddycloud-server-java
-    - buddycloud-http-api
-    - buddycloud-media-server
-    - buddycloud-pusher
-    - buddycloud-webclient
-    - buddycloud-angular-app
+#    - node
+#    - sun-java
+#    - postgres
+#    - nginx
+#    - prosody
+#    - buddycloud-server-java
+#    - buddycloud-http-api
+#    - buddycloud-media-server
+#    - buddycloud-pusher
+#    - buddycloud-webclient
+#    - buddycloud-angular-app

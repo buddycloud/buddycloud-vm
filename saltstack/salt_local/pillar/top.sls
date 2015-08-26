@@ -2,9 +2,9 @@ base:
   '*':
     - users
     - buddycloud
-    - certificates
     - postgres
     - iptables
+    - certificates
     - nameservers
     - node
     - prosody
