@@ -32,7 +32,7 @@ file_roots:
 # /srv/pillar/buddycloud/init.sls
 pillar_roots:
   base:
-    - /srv/salt-local/pillar
+    - /srv/salt_local/pillar
 
 # apt-get install git-python for this to work
 gitfs_provider: gitpython

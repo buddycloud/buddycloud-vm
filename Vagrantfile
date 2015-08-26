@@ -31,6 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.master_key     = "saltstack/config/key/master.pem"
     salt.master_pub     = "saltstack/config/key/master.pub"
     # configure the minon
+    salt.no_minion      = false
     salt.minion_config  = "saltstack/config/minion"
     salt.minion_key     = "saltstack/config/key/buddycloud-vm.dev.pem"
     salt.minion_pub     = "saltstack/config/key/buddycloud-vm.dev.pub"
@@ -39,20 +40,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     } 
     # other settings
     salt.always_install = true
-    salt.log_level      = "error"
-    salt.install_type   = "git"
-    salt.install_args   = "v2015.5"
-    salt.run_highstate  = false
+    salt.run_highstate  = true
     salt.colorize       = true
     salt.verbose        = true
+    salt.log_level      = "all"
+    salt.install_type   = "git"
+    salt.install_args   = "v2015.5"
+    # salt.bootstrap_options = "-P"
   end
   # Now tell Saltstack to do it's thing
-  config.vm.provision :shell, :inline => "sudo restart salt-master && sleep 10 && sudo restart salt-minion && sleep 10"
-  config.vm.provision :shell, :inline => "sudo salt '*' state.highstate -l debug"  
+  # config.vm.provision :shell, :inline => "sudo restart salt-master && sleep 10 && sudo restart salt-minion && sleep 10"
+  # config.vm.provision :shell, :inline => "sudo salt '*' state.highstate -l debug"  
 
   # configure for virtualbox
   config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
+    v.memory = 3072
     v.cpus = 2
     v.name = "buddycloud-vm"
   end
