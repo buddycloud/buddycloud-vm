@@ -4,6 +4,7 @@ buddycloud:
     env: dev
     git-branch: master
     web-listen-port: 8080                                    # where to listen
+    use_tls: False
     database-server: 127.0.0.1                               
     send-address: noreply@example.com
     smtp-server: smtp.example.com
