@@ -33,23 +33,29 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 # password is vagrant
 ```
 
-### Configure changes
+### Edit setup
 
 |                    | Outside the VM                                      | Inside the VM                      |             |
 |--------------------|-----------------------------------------------------|------------------------------------|----------------------------------|
-| Public configs    | `buddycloud-vm/saltstack/salt/*` (read-write)         | `/srv/salt_upstream/saltstack/salt` (read-only)              | e.g. `buddycloud-vm/saltstack/salt/nginx.conf.template`                  |
-| Private configs    | `buddycloud-vm/saltstack/pillars/*` (read-write)      | `/srv/salt_upstream/saltstack/pillars` (read-only)           | e.g. database passwords          |
-| Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                                   |                                  | add your own key to `buddycloud-vm/saltstack/pillar/users.sls`  
-| Activating changes |                                                     | `salt-call --local state.highstate`  |                                  |
-| Webroot            | `buddycloud-vm/buddycloud-webapp` (read-write)        | `/opt/buddycloud-webapp` (read-only) | visible on http://localhost:8080 |
-| When deployed to AWS/GCE/your-server  |          | edit `/etc/salt/minion` to pull updates from Git | this will pull all future system configs from your private git repo |
+| Public configs    | `buddycloud-vm/saltstack/salt_local/salt/*` (read-write)         | `/srv/salt_local/salt` (read-only)              |      |
+| Private configs    | `buddycloud-vm/saltstack/salt_local/pillar/*` (read-write)      | `/srv/salt_local/pillar` (read-only)           | e.g. database passwords          |
+| Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                                   |                                  | add your own key to `buddycloud-vm/saltstack/salt_local/pillar/users.sls`  
 
+### [Re]configure VM with new setup
 
-### Depoloying to providers
+```bash
+salt "*" state.highstate -l all
+```
+
+### Shutting down the VM
+
+Shut down Vagrant with: `vagrant halt`. Running `vagrant kill` will remove all disks and configs.
+
+## Depoloying to providers
 
 To deploy to a hosting provider, edit the `Vagrantfile` with your cloud-hosting-provider data.
 
-#### Google Cloud
+### Google Cloud
 
 Configure according to https://github.com/mitchellh/vagrant-google, then:
 ```
@@ -57,32 +63,14 @@ vagrant plugin install vagrant-google
 vagrant up --provider=google
 ```
 
-#### VSphere 
+### VSphere 
 ```
 vagrant plugin install vagrant-vsphere
 vagrant up --provider=vsphere
 ```
 
-### Shutting down the VM
+## Running in Production
 
-Shut down Vagrant with: `vagrant halt`. And `vagrant kill` will remove all disks and configs.
-
-
-### Running in Production
-
-This VM can [optionally] mix settings from your 1) your private repo (override any settings elsewhere) 2) the buddycloud-vm repo. 
-
-Setup to run in production,
-- create a private repo (eg: `buddycloud-vm-bigproject`)
-- `git clone buddycloud-vm-bigproject` into `/srv/salt_local` 
-- edit `/etc/salt/minion.conf` add add the path of your private repo
-- run `salt "*" state.highstate -l all`
-
-Then each time you want to update the VM,
-- `cd /srv/salt_local`
-- `git pull`
-- `salt "*" state.highstate -l all`
-
-### Todo (pull requests welcomed)
-
-- add logrotate for all packages
+It's recommended to configure to:
+- use your saltstack repo as priority (eg. /srv/dev-ops or gitfs from git://github.com/example/dev-ops.git)
+- use gitfs with https://github.com/buddycloud/saltstack.git for everything you don't override.
