@@ -12,11 +12,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   # Forward ports
-  config.vm.network :forwarded_port, guest: 53,   host: 53   # hosted nameserver
-  config.vm.network :forwarded_port, guest: 80,   host: 8080 # website
-  config.vm.network :forwarded_port, guest: 5222, host: 5222 # XMPP-client
-  config.vm.network :forwarded_port, guest: 5269, host: 5269 # XMPP-S2S
-  config.vm.network :forwarded_port, guest: 5432, host: 5432 # Postgresql
+  config.vm.network :forwarded_port, guest: 53,   host: 53,   protocol: 'udp' # hosted nameserver
+  config.vm.network :forwarded_port, guest: 53,   host: 53,   protocol: 'tcp' # hosted nameserver
+  config.vm.network :forwarded_port, guest: 8080, host: 8080, protocol: 'tcp' # website
+  config.vm.network :forwarded_port, guest: 5222, host: 5222, protocol: 'tcp' # XMPP-client
+  config.vm.network :forwarded_port, guest: 5269, host: 5269, protocol: 'tcp' # XMPP-S2S
+  config.vm.network :forwarded_port, guest: 5432, host: 5432, protocol: 'tcp' # Postgresql
 
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/config",                    "/etc/salt"
