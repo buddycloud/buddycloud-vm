@@ -37,9 +37,9 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 
 |                    | Outside the VM                                      | Inside the VM                      |             |
 |--------------------|-----------------------------------------------------|------------------------------------|----------------------------------|
-| Public configs    | `buddycloud-vm/saltstack/salt_local/salt/*` (read-write)         | `/srv/salt_local/salt` (read-only)              |      |
-| Private configs    | `buddycloud-vm/saltstack/salt_local/pillar/*` (read-write)      | `/srv/salt_local/pillar` (read-only)           | e.g. database passwords          |
-| Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                                   |                                  | add your own key to `buddycloud-vm/saltstack/salt_local/pillar/users.sls`  
+| Public configs    | `buddycloud-vm/saltstack/salt_local/salt/*`       | `/srv/salt_local/salt`             |     
+| Private configs    | `buddycloud-vm/saltstack/salt_local/pillar/*`     | `/srv/salt_local/pillar`            | 
+| Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |  |
 
 ### [Re]configure VM with new setup
 
