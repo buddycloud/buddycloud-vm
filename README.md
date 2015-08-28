@@ -24,6 +24,38 @@ Add your username and public key to `~/src/buddycloud-vm/saltstack/pillar/users.
 vagrant up
 ```
 
+### Using the VM
+
+```
+ +-------------------------------------------------+ 
+ |                                                 |
+ |   Local workstation                             | 
+ |   -----------------                             | 
+ |   * set local DNS to use 127.0.0.1              | 
+ |   * port forwards 53,5222,8080 -> buddycloud-vm | 
+ |   * http://buddycloud.dev:8080                  |
+ |                                                 | 
+ +-------------------------------------------------+ 
+             |          |             |
+         (port 53)  (port 5222)  (port 8080)
+             |          |             |
+ +-------------------------------------------------+
+ |                                                 |
+ |   buddycloud-VM                                 |
+ |   -------------                                 |
+ |   * hostname: buddycloud.dev                    |
+ |   * listening for DNS queries on port 53        |
+ |   * answers *.buddycloud.dev with 127.0.0.1     |
+ |   * forwards  other queries to 8.8.8.8          |
+ |   * runs complete buddycloud stack              |
+ |   * TLS functions disabled                      |
+ |   * federation disabled                         |
+ |                                                 |
+ +-------------------------------------------------+
+```
+
+
+
 ### SSH into the VM
 
 ```bash
@@ -35,11 +67,11 @@ ssh vagrant@localhost -p2222 # or your username if you configured it
 
 ### Edit setup
 
-|                    | Outside the VM                                      | Inside the VM                      |             |
-|--------------------|-----------------------------------------------------|------------------------------------|----------------------------------|
-| Public configs    | `buddycloud-vm/saltstack/salt_local/salt/*`       | `/srv/salt_local/salt`             |     
-| Private configs    | `buddycloud-vm/saltstack/salt_local/pillar/*`     | `/srv/salt_local/pillar`            | 
-| Connecting         | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |  |
+|                 | Outside the VM                                  | Inside the VM                      |
+|-----------------|-------------------------------------------------|------------------------------------|
+| Public configs  | `buddycloud-vm/saltstack/salt_local/salt/*`     | `/srv/salt_local/salt`             |     
+| Private configs | `buddycloud-vm/saltstack/salt_local/pillar/*`   | `/srv/salt_local/pillar`           | 
+| Connecting      | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                            |
 
 ### [Re]configure VM with new setup
 
