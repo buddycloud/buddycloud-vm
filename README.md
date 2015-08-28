@@ -1,4 +1,6 @@
-## Vagrant + Saltstack + Buddycloud = Buddycloud stack in a Box
+## Buddycloud Developer Environment
+
+This VM uses Vagrant to build a VM then uses the [Buddycloud Salt formuale](https://github.com/buddycloud/saltstack) to spin up a complete developer environment.
 
 ### Getting Started
 
@@ -74,12 +76,12 @@ Setup to run in production,
 - create a private repo (eg: `buddycloud-vm-bigproject`)
 - `git clone buddycloud-vm-bigproject` into `/srv/salt_local` 
 - edit `/etc/salt/minion.conf` add add the path of your private repo
-- run `salt-call --local state.highstate`
+- run `salt "*" state.highstate -l all`
 
 Then each time you want to update the VM,
 - `cd /srv/salt_local`
 - `git pull`
-- `salt-call --local state.highstate`
+- `salt "*" state.highstate -l all`
 
 ### Todo (pull requests welcomed)
 
