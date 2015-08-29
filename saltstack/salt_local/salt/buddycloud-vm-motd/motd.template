@@ -24,8 +24,8 @@ you already run a local nameserver you will know what to do.
 URLs:
 -----
 - buddycloud-http-api      http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api
+- buddycloud-angular-app   http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}
 - websocket endpoint       http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api/scripts/primus/primus.js
-- angular-xmpp-demo        http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}
 
 Log files
 ---------
@@ -33,9 +33,7 @@ everything: tail -F /var/log/buddycloud/*log
 
 To active any changes 
 ---------------------
-export LC_ALL="en_US.UTF-8"
 sudo salt  "*" state.highstate -l debug
 
 Pull requests welcomed.
-
 
