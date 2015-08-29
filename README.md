@@ -16,13 +16,15 @@ git clone https://github.com/buddycloud/buddycloud-vm.git
 cd buddycloud-vm
 ```
 
-Add your username and public key to `~/src/buddycloud-vm/saltstack/pillar/users.sls`
-
 ### Building the VM
 
 ```bash
 vagrant up
 ```
+
+### SSHing into the VM
+
+Log in as user: `vagrant`, password: `vagrant`. (for convenience, add your username and public key to `saltstack/salt_local/pillar/users/init.sls`)
 
 ### Using the VM
 
