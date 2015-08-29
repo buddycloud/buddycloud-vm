@@ -23,40 +23,36 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "saltstack/config",                    "/etc/salt"
   config.vm.synced_folder "saltstack/salt_local",                "/srv/salt_local"
   # Saltstack needs python-git to work so we pre-install it
-  config.vm.provision :shell, :inline => "sudo apt-get update -qq -y"
-  config.vm.provision :shell, :inline => "sudo apt-get install python-git -qq -y"
+  config.vm.provision :shell, :inline => "sudo apt-get update -y ; sudo apt-get install python-git -y"
   config.vm.provision :salt do |salt|
     # configure the master
     salt.install_master = true
     salt.master_config  = "saltstack/config/master"
     salt.master_key     = "saltstack/config/key/master.pem"
     salt.master_pub     = "saltstack/config/key/master.pub"
+    salt.seed_master = { 
+      "buddycloud-vm.dev" => "saltstack/config/key/buddycloud-vm.dev.pub" 
+    } 
     # configure the minon
     salt.no_minion      = false
     salt.minion_config  = "saltstack/config/minion"
     salt.minion_key     = "saltstack/config/key/buddycloud-vm.dev.pem"
     salt.minion_pub     = "saltstack/config/key/buddycloud-vm.dev.pub"
-    salt.seed_master = { 
-      "buddycloud-vm.dev" => "saltstack/config/key/buddycloud-vm.dev.pub" 
-    } 
     # other settings
-    salt.always_install = true
     salt.run_highstate  = true
     salt.colorize       = true
     salt.verbose        = true
     salt.log_level      = "all"
     salt.install_type   = "git"
     salt.install_args   = "v2015.5"
-    # salt.bootstrap_options = "-P"
+    #salt.bootstrap_options = "-D -v " # Debug, version
   end
   # Now tell Saltstack to do it's thing
-  # config.vm.provision :shell, :inline => "sudo restart salt-master && sleep 10 && sudo restart salt-minion && sleep 10"
-  # config.vm.provision :shell, :inline => "sudo salt '*' state.highstate -l debug"  
-
+  config.vm.provision :shell, :inline => "sudo restart salt-master ; sleep 10 ; sudo restart salt-minion ; sleep 10; sudo salt '*' state.highstate -l all"  
   # configure for virtualbox
   config.vm.provider "virtualbox" do |v|
     v.memory = 3072
-    v.cpus = 2
+    v.cpus = 1
     v.name = "buddycloud-vm"
   end
 
