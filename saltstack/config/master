@@ -20,14 +20,14 @@ fileserver_backend:
   - roots
   - git
 
-# The buddycloud-vm will use /srv/salt-local/salt then fall back to trying the /srv/salt-upstream/salt
-# /srv/salt-upstream/salt is a "git clone https://github.com/buddycloud/saltstack"
+# The buddycloud-vm will use /srv/salt-local/salt then fall back to trying
+# the git version at https://github.com/buddycloud/saltstack
+# To work locally:
+# 1. sudo git clone https://github.com/buddycloud/saltstack.git /srv/buddycloud_saltstack_repo
+# 2  uncomment the line "#   - /srv/buddycloud_saltstack_repo/salt"
 file_roots:
   base:
     - /srv/salt_local/salt
-# to work locally:
-# 1. sudo git clone https://github.com/buddycloud/saltstack.git /srv/buddycloud_saltstack_repo
-# 2  uncomment the line below
 #   - /srv/buddycloud_saltstack_repo/salt
 
 # put your private keys, certificates and config data into 
