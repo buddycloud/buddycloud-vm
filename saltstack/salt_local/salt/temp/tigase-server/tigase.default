@@ -1,6 +1,0 @@
-TIGASE_HOME=/opt/tigase-server
-JAVA_HOME=/usr/lib/jvm/java-7-oracle/
-USERNAME=root
-USERGROUP=root
-USER=root
-HOME=/opt/tigase-server
