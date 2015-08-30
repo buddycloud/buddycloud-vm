@@ -25,9 +25,10 @@ fileserver_backend:
 file_roots:
   base:
     - /srv/salt_local/salt
-    - /srv/saltstack/salt
-# to work locally uncomment this line below.
-#  - /srv/buddycloud_saltstack_repo/salt
+# to work locally:
+# 1. sudo git clone https://github.com/buddycloud/saltstack.git /srv/buddycloud_saltstack_repo
+# 2  uncomment the line below
+#   - /srv/buddycloud_saltstack_repo/salt
 
 # put your private keys, certificates and config data into 
 # /srv/pillar/buddycloud/init.sls
