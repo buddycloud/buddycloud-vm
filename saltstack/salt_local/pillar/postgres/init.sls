@@ -6,10 +6,10 @@ postgres:
     pg_hba: '/etc/postgresql/9.3/main/pg_hba.conf'
 
   users:
-    {% for env in ['dev_'] %}
+    {% for env in ['dev'] %}
     {% for db in ['buddycloudserver','hosting','mediaserver','tigase','friendfinder','prosody','pusher','channeldirectory'] %} 
-    {{ env }}{{ db }}:
-      password: '{{ env }}secret'
+    {{ env }}_{{ db }}:
+      password: '{{ env }}_secret'
       createdb: False
       connlimit: 10
     {% endfor %}
@@ -22,11 +22,11 @@ postgres:
     - ['host', 'all',                       'all',                      '127.0.0.1/32']
     
   databases:
-    {% for env in ['dev_'] %}
+    {% for env in ['dev'] %}
     {% for db in ['buddycloudserver','hosting','mediaserver','tigase','friendfinder','prosody','pusher','channeldirectory'] %} 
-    {{ env }}{{ db }}:
-      owner: '{{ env }}{{ db }}'
-      user: '{{ env }}{{ db }}'
+    {{ env }}_{{ db }}:
+      owner: '{{ env }}_{{ db }}'
+      user: '{{ env }}_{{ db }}'
       template: 'template0'
       lc_ctype: 'en_GB.UTF-8'
       lc_collate: 'en_GB.UTF-8'
