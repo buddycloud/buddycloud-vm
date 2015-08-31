@@ -2,9 +2,12 @@
 
 This VM uses Vagrant to build a VM then uses the [Buddycloud Salt formuale](https://github.com/buddycloud/saltstack) to spin up a complete developer environment.
 
+- [List of installed packages](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls) in the VM
+- How each packages is [configured](https://github.com/buddycloud/saltstack/tree/master/salt)
+
 ### Getting Started
 
-Install [Git]([http://git-scm.com/downloads)
+Install [Git](http://git-scm.com/downloads)
 Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
 
