@@ -56,7 +56,7 @@ This build process will take anywhere from 1 to 10 minutes depending on the spee
 ### Access Buddycloud services running on the VM
 
 1. set your workstation DNS server to use `127.0.0.1`
-2. browse to https://buddycloud.dev:8080
+2. browse to http://buddycloud.dev:8080
 
 ### SSHing into the VM
 
