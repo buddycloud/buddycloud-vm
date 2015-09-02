@@ -11,18 +11,13 @@ For your convenience Vagrant syncs /srv/saltstack with
 
 Setup
 -----
-This service all runs on a magical domain called {{ salt['pillar.get']('buddycloud:lookup:domain') }}. 
-But your development environment wont see this unless you point
-your DNS at this virtual-machine. Don't worry the virtual-machine
-will forward your DNS reqiests for everything other than
-{{ salt['pillar.get']('buddycloud:lookup:domain') }} to your real
-DNS server.
+Change your workstation's nameserver to 127.0.0.1. DNS requests are
+forwarded to the VM. Anything not for {{ salt['pillar.get']('buddycloud:lookup:domain') }} 
+is forwarded onto Google's nameserver (8.8.8.8).
 
-To set this up change your nameserver to simply 127.0.0.1. And if
-you already run a local nameserver you will know what to do.
-
-URLs:
+Config:
 -----
+- xmpp domain              {{ salt['pillar.get']('buddycloud:lookup:domain') }} 
 - buddycloud-http-api      http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api
 - buddycloud-angular-app   http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}
 - websocket endpoint       http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api/scripts/primus/primus.js
