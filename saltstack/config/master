@@ -28,7 +28,7 @@ fileserver_backend:
 file_roots:
   base:
     - /srv/salt_local/salt
-    - /srv/buddycloud_saltstack_repo/salt
+#    - /srv/buddycloud_saltstack_repo/salt
 
 # put your private keys, certificates and config data into 
 # /srv/pillar/buddycloud/init.sls
