@@ -1,13 +1,23 @@
-## Buddycloud Developer Environment
+# Buddycloud-VM
 
-This VM uses Vagrant to build a VM then uses the [Buddycloud Salt formuale](https://github.com/buddycloud/saltstack) to spin up a complete developer environment. 
+The VM can be run locally and also used as a way to setup Buddycloud on deployed into a cloud provider (e.g. AWS and Google-Cloud). 
 
-- [List of installed packages](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls) in the VM
-- How each packages is [configured](https://github.com/buddycloud/saltstack/tree/master/salt)
+## Goals
+
+**Quick:** The buddycloud-vm project is designed to give developers a complete Buddycloud stack in about 10 mintues. 
+
+**Ship identical bits to dev and production:** The Buddycloud-VM and the [BC saltstack project](https://github.com/buddycloud/saltstack) help you ship the same configuration to your developer environment as you ship to your production environment. Both environments use identical orchestration files and help you reduce the "but it worked in dev" type scenarios.
+
+## How it works
+
+This VM uses Vagrant to build a VM then uses the [Buddycloud Salt formuale](https://github.com/buddycloud/saltstack) to spin up a complete Buddycloud stack. 
+
+- All [installed Buddycloud components](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls), 
+- Packages [configuration](https://github.com/buddycloud/saltstack/tree/master/salt)
 
 ### Using the VM
 
-The VM is designed to expose buddycloud-services out to your workstation.
+The VM is designed to expose buddycloud-services out to your workstation. A quick ascii-art diagram explaines.
 
 ```
  +-------------------------------------------------+ 
@@ -82,6 +92,37 @@ ssh vagrant@localhost -p2222     # password is `vagrant`
 ```bash
 salt "*" state.highstate -l all
 ```
+
+### Adding your own changes
+
+Fork https://github.com/buddycloud/saltstack
+
+Inside the VM:
+```bash
+sudo git clone https://github.com/example/my-buddycloudstack.git /srv/my-buddycloudstack
+```
+
+Edit `/etc/salt/master` to include the second `file_roots:` like this:
+``` 
+file_roots:
+  base:
+    - /srv/salt_local/salt
+    - /srv/my-buddycloudstack/salt
+```
+
+Edit your configuration in `/srv/my-buddycloudstack/salt` and update `/srv/salt_local/salt/top.sls` where necessary.
+
+You now have a configuration:
+1. /srv/salt_local/salt is checked first (e.g. salt formula for buddycloud-server-java)
+2. /srv/my-buddycloud-stack/salt is checked second,
+3. finally, https://github.com/buddycloud/saltstack/tree/master/salt is checked. 
+
+Activate your changes:
+```bash
+salt "*" state.highstate -l all
+```
+
+(and don't forget to commit /srv/my-buddycloudstack back to git before you destroy your VM)
 
 ### Shutting down the VM
 
