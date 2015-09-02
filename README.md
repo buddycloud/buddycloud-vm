@@ -1,35 +1,13 @@
 ## Buddycloud Developer Environment
 
-This VM uses Vagrant to build a VM then uses the [Buddycloud Salt formuale](https://github.com/buddycloud/saltstack) to spin up a complete developer environment.
+This VM uses Vagrant to build a VM then uses the [Buddycloud Salt formuale](https://github.com/buddycloud/saltstack) to spin up a complete developer environment. 
 
 - [List of installed packages](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls) in the VM
 - How each packages is [configured](https://github.com/buddycloud/saltstack/tree/master/salt)
 
-### Getting Started
-
-Install [Git](http://git-scm.com/downloads)
-Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
-
-Open a terminal
-
-```bash
-# in this example we'll assume you work in ~/src/
-git clone https://github.com/buddycloud/buddycloud-vm.git
-cd buddycloud-vm
-```
-
-### Building the VM
-
-```bash
-vagrant up
-```
-
-### SSHing into the VM
-
-Log in as user: `vagrant`, password: `vagrant`. (for convenience, add your username and public key to `saltstack/salt_local/pillar/users/init.sls`)
-
 ### Using the VM
+
+The VM is designed to expose buddycloud-services out to your workstation.
 
 ```
  +-------------------------------------------------+ 
@@ -59,26 +37,47 @@ Log in as user: `vagrant`, password: `vagrant`. (for convenience, add your usern
  +-------------------------------------------------+
 ```
 
+### Run the Buddycloud VM
 
+Install [Git](http://git-scm.com/downloads)
+Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
 
-### SSH into the VM
+Open a terminal
 
 ```bash
-# [if necessary] remove old key
-ssh-keygen -R '[localhost]:2222'
-ssh vagrant@localhost -p2222 # or your username if you configured it 
-# password is vagrant
+git clone https://github.com/buddycloud/buddycloud-vm.git
+cd buddycloud-vm
+vagrant up
 ```
 
-### Edit setup
+This build process will take anywhere from 1 to 10 minutes depending on the speed of your network and disk. The log of the build is stored inside the VM (see below for accessing) `/var/log/salt/minion`.
+
+### Access Buddycloud services running on the VM
+
+1. set your workstation DNS server to use `127.0.0.1`
+2. browse to https://buddycloud.dev:8080
+
+### SSHing into the VM
+
+```bash
+vagrant ssh
+
+# or, 
+ssh-keygen -R '[localhost]:2222' # remove old key
+ssh vagrant@localhost -p2222     # password is `vagrant`
+```
+
+(for convenience, add your username and public key to `saltstack/salt_local/pillar/users/init.sls`)
+
+### Edit VM configuration (e.g. domainname, ssh keys, buddycloud config)
 
 |                 | Outside the VM                                  | Inside the VM                      |
 |-----------------|-------------------------------------------------|------------------------------------|
 | Public configs  | `buddycloud-vm/saltstack/salt_local/salt/*`     | `/srv/salt_local/salt`             |     
 | Private configs | `buddycloud-vm/saltstack/salt_local/pillar/*`   | `/srv/salt_local/pillar`           | 
-| Connecting      | `ssh vagrant@localhost -p2222` (password is `vagrant`)  |                            |
 
-### [Re]configure VM with new setup
+### [Re]configure the VM
 
 ```bash
 salt "*" state.highstate -l all
@@ -88,7 +87,7 @@ salt "*" state.highstate -l all
 
 Shut down Vagrant with: `vagrant halt`. Running `vagrant kill` will remove all disks and configs.
 
-## Depoloying to providers
+# Depoloying Buddycloud to different providers
 
 To deploy to a hosting provider, edit the `Vagrantfile` with your cloud-hosting-provider data.
 
