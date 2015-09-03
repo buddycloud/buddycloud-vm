@@ -14,10 +14,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Forward ports
   config.vm.network :forwarded_port, guest: 53,   host: 53,   protocol: 'udp' # hosted nameserver
   config.vm.network :forwarded_port, guest: 53,   host: 53,   protocol: 'tcp' # hosted nameserver
-  config.vm.network :forwarded_port, guest: 8080, host: 8080, protocol: 'tcp' # website
   config.vm.network :forwarded_port, guest: 5222, host: 5222, protocol: 'tcp' # XMPP-client
   config.vm.network :forwarded_port, guest: 5269, host: 5269, protocol: 'tcp' # XMPP-S2S
   config.vm.network :forwarded_port, guest: 5432, host: 5432, protocol: 'tcp' # Postgresql
+  config.vm.network :forwarded_port, guest: 8080, host: 8080, protocol: 'tcp' # website
 
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/config",                    "/etc/salt"
@@ -43,8 +43,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     salt.colorize       = true
     salt.verbose        = true
     salt.log_level      = "all"
-    salt.install_type   = "git"
-    salt.install_args   = "v2015.5"
+    salt.install_type   = "daily"
+    #salt.install_args   = "v2015.5"
     #salt.bootstrap_options = "-D -v " # Debug, version
   end
   # Now tell Saltstack to do it's thing

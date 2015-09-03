@@ -41,6 +41,8 @@ gitfs_provider: gitpython
 
 # use the Buddycloud saltstates as fallback
 gitfs_remotes:
-  - http://github.com/buddycloud/saltstack.git:
-    - base: master
-    - root: salt
+  - https://github.com/buddycloud/saltstack.git 
+
+gitfs_base: master
+gitfs_root: salt
+
