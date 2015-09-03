@@ -51,9 +51,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :inline => "sudo restart salt-master ; sleep 10 ; sudo restart salt-minion ; sleep 10; sudo salt '*' state.highstate -l all"  
   # configure for virtualbox
   config.vm.provider "virtualbox" do |v|
-    v.memory = 3072
-    v.cpus = 1
-    v.name = "buddycloud-vm"
+    v.gui    = true
+    v.memory = 2048
+    v.cpus   = 1
+    v.name   = "buddycloud-vm"
   end
 
   # Libvirt
