@@ -6,7 +6,7 @@ apt-get --yes -q update
 mkdir /etc/salt
 apt-get --yes -q install python-git salt-master salt-minion
 cp /srv/vagrant_salt_bootstrap/master /etc/salt/master
-cp /srv/vagrant_salt_bootstrap/minion /etc/salt/minon 
+cp /srv/vagrant_salt_bootstrap/minion /etc/salt/minion 
 restart salt-minion
 restart salt-master
 sleep 10
