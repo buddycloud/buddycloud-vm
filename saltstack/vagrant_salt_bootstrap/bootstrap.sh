@@ -11,4 +11,5 @@ restart salt-minion
 restart salt-master
 sleep 10
 salt-key -y -a '*'
+sleep 10
 salt -v "*" state.highstate -l debug
