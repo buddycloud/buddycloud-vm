@@ -12,4 +12,6 @@ restart salt-master
 sleep 10
 salt-key -y -a '*'
 sleep 10
+echo "this next step will take around 10 minutes to run... be patient"
+echo "if you are curious sudo tail -F /var/log/salt/minion on the VM"
 salt -v "*" state.highstate -l debug
