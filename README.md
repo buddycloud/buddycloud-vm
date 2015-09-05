@@ -10,9 +10,9 @@ The VM can be run locally and also used as a way to setup Buddycloud on deployed
 
 ## How it works
 
-* This VM uses Vagrant to build a VM
-* Installs a [definied list of  components](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls) using Stalstack formuae from the Buddycloud [saltstack project](https://github.com/buddycloud/saltstack).
-* [Configures](https://github.com/buddycloud/saltstack/tree/master/salt) each package.
+1. Vagrant to build a VM
+2. Install a [definied list of  components](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls).
+3. [Configure](https://github.com/buddycloud/saltstack/tree/master/salt) each package.
 
 ### Using the VM
 
