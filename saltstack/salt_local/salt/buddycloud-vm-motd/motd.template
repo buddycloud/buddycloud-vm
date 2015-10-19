@@ -11,11 +11,11 @@ For your convenience Vagrant syncs /srv/saltstack with
 
 Setup
 -----
-Change your workstation's nameserver to 127.0.0.1. DNS requests are
-forwarded to the VM. Anything not for {{ salt['pillar.get']('buddycloud:lookup:domain') }} 
-is forwarded onto Google's nameserver (8.8.8.8).
+- set workstation nameserver to 127.0.0.1. 
+- browse to http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }} 
+- DNS requests are forwarded to the VM. Anything not for {{ salt['pillar.get']('buddycloud:lookup:domain') }} is forwarded onto Google's nameserver (8.8.8.8).
 
-Config:
+Running configuration:
 -----
 - xmpp domain              {{ salt['pillar.get']('buddycloud:lookup:domain') }} 
 - buddycloud-http-api      http://{{ salt['pillar.get']('buddycloud:lookup:domain') }}:{{ salt['pillar.get']('buddycloud:lookup:web-listen-port') }}/api
