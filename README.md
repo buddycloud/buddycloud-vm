@@ -151,3 +151,33 @@ vagrant up --provider=vsphere
 It's recommended to configure to:
 - use your saltstack repo as priority (eg. /srv/dev-ops or gitfs from git://github.com/example/dev-ops.git)
 - use gitfs with https://github.com/buddycloud/saltstack.git for everything you don't override.
+ 
+## about localhost.buddycloud.org
+
+This is a special subdomain that points everything to localhost
+
+```bind
+_xmpp-client._tcp.localhost.buddycloud.org.              SRV 5 0 5222 c2s.localhost.buddycloud.org.
+_xmpp-server._tcp.localhost.buddycloud.org.              SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp.channels.localhost.buddycloud.org.     SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp.friendfinder.localhost.buddycloud.org. SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp.media.localhost.buddycloud.org.        SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp.pusher.localhost.buddycloud.org.       SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp.search.localhost.buddycloud.org.       SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp.topics.localhost.buddycloud.org.       SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_bcloud-server._tcp.localhost.buddycloud.org.            TXT "v=1.0 server=channels.localhost.buddycloud.org"
+_buddycloud-api._tcp.localhost.buddycloud.org.           TXT "v=1.0 host=localhost.buddycloud.org protocol=https path=/api port=8080"
+$ORIGIN .localhost.buddycloud.org.
+api                                                      A 127.0.0.1
+webclient                                                A 127.0.0.1
+friendfinder                                             A 127.0.0.1
+search                                                   A 127.0.0.1
+topics                                                   A 127.0.0.1
+pusher                                                   A 127.0.0.1
+s2s                                                      A 127.0.0.1
+buddycloud                                               A 127.0.0.1
+media                                                    A 127.0.0.1
+c2s                                                      A 127.0.0.1
+channels                                                 A 127.0.0.1
+*                                                        A 127.0.0.1
+```
