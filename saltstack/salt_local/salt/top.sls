@@ -8,8 +8,6 @@ base:
     - groups
     - users
     - sudoers
-    - bind
-    - buddycloud-ddns
     - node
     - sun-java
     - postgres

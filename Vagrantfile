@@ -12,28 +12,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   # Forward ports
-  config.vm.network :forwarded_port, guest: 53,   host: 53,   protocol: 'udp' # hosted nameserver
-  config.vm.network :forwarded_port, guest: 53,   host: 53,   protocol: 'tcp' # hosted nameserver
   config.vm.network :forwarded_port, guest: 5222, host: 5222, protocol: 'tcp' # XMPP-client
   config.vm.network :forwarded_port, guest: 5269, host: 5269, protocol: 'tcp' # XMPP-S2S
   config.vm.network :forwarded_port, guest: 5432, host: 5432, protocol: 'tcp' # Postgresql
-  config.vm.network :forwarded_port, guest: 8080, host: 8080, protocol: 'tcp' # website
+  config.vm.network :forwarded_port, guest: 443,  host: 8080, protocol: 'tcp' # website
 
   # Provision the box with a masterless salt configuration
   config.vm.synced_folder "saltstack/salt_local",               "/srv/salt_local"
   config.vm.synced_folder "saltstack/vagrant_salt_bootstrap",   "/srv/vagrant_salt_bootstrap"
   config.vm.provision :shell, :inline => "sudo /srv/vagrant_salt_bootstrap/bootstrap.sh"
+
   # configure for virtualbox
-  config.vm.provider "virtualbox" do |v|
-    # v.gui    = true
-    v.memory = 2048
-    v.cpus   = 1
-    v.name   = "buddycloud-vm"
+  config.vm.provider :virtualbox do |virtualbox|
+    virtualbox.gui    = false
+    virtualbox.memory = 2048
+    virtualbox.cpus   = 1
+    virtualbox.name   = "buddycloud-vm"
   end
 
   # Libvirt
   config.vm.provider "libvirt" do |lv|
-    lv.memory = 1024
+    lv.memory = 2048
   end
 
   # Google Compute
