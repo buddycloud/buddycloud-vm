@@ -59,7 +59,7 @@ cd buddycloud-vm
 vagrant up
 ```
 
-Be patient: the build process will take anywhere from 1 to 10 minutes. Build log is avaliable at [inside the VM] `/var/log/salt/minion`.
+Have patience! The build process will take anywhere from 5 to 10 minutes. You can watch progress with `sudo tail -F /var/log/salt/minion` inside the VM.
 
 ### Access
 
@@ -78,16 +78,6 @@ Be patient: the build process will take anywhere from 1 to 10 minutes. Build log
 Activating the changes
 ```bash
 salt "*" state.highstate -l all
-```
-
-### Deploying to cloud-hosting
-
-Generally you will want to run your own copy of saltstack to orchestrate changes to your production environment. If you would rather copy VMs around, edit the `Vagrantfile` and install the provider plugin. 
-
-For example, Google Cloud ([background reading](https://github.com/mitchellh/vagrant-google)) uses
-```
-vagrant plugin install vagrant-google
-vagrant up --provider=google
 ```
 
 ### about localhost.buddycloud.org
@@ -125,3 +115,13 @@ _buddycloud-api._tcp                TXT "v=1.0 host=localhost.buddycloud.org pro
 
 - Shut down Vagrant with: `vagrant halt`. 
 - Running `vagrant kill` will remove all disks and configs.
+
+### Deploying to cloud-providers
+
+Generally you will want to run your own copy of saltstack to orchestrate changes to your production environment. If you would rather copy VMs around, edit the `Vagrantfile` and install the provider plugin. 
+
+For example, Google Cloud ([background reading](https://github.com/mitchellh/vagrant-google)) uses
+```
+vagrant plugin install vagrant-google
+vagrant up --provider=google
+```
