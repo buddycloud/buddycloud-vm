@@ -1,17 +1,19 @@
 # Buddycloud-VM
 
-The VM can be run locally and also used as a way to setup Buddycloud on deployed into a cloud provider (e.g. AWS and Google-Cloud). 
+The VM can be run locally and also used as a way to setup Buddycloud on deployed into a cloud provider (examples for AWS and Google Cloud included in the Vagrantfile).
 
 ## Goals
 
-**Quick:** The buddycloud-vm project is designed to give developers a complete Buddycloud stack in about 10 mintues. 
+**Quick:** The buddycloud-vm project is designed to a new developer a complete Buddycloud stack in about 10 mintues. Running locally.
 
-**Ship identical bits to dev and production:** The Buddycloud-VM and the [BC saltstack project](https://github.com/buddycloud/saltstack) help you ship the same configuration to your developer environment as you ship to your production environment. Both environments use identical orchestration files and help you reduce the "but it worked in dev" type scenarios.
+**Ship identical bits to dev and production:** The Buddycloud-VM and the [BC saltstack project](https://github.com/buddycloud/saltstack) help you ship the same configuration to your developer environment as you ship to your production environment. 
+
+Both environments use identical orchestration files and help you reduce the "but it worked in dev" scenarios.
 
 ## How it works
 
 1. Vagrant to build a VM
-2. Install a [definied list of  components](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls).
+2. Install a [definied list of components](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls).
 3. [Configure](https://github.com/buddycloud/saltstack/tree/master/salt) each package.
 
 ### Using the VM
@@ -23,22 +25,19 @@ The VM is designed to expose buddycloud-services out to your workstation. A quic
  |                                                 |
  |   Local workstation                             | 
  |   -----------------                             | 
- |   * set local DNS to use 127.0.0.1              | 
- |   * port forwards 53,5222,8080 -> buddycloud-vm | 
- |   * http://buddycloud.dev:8080                  |
+ |                                                 | 
+ |   * port forwards 5222,5269,5432,8080           | 
+ |   * http://localhost.buddycloud.org:8080        |
  |                                                 | 
  +-------------------------------------------------+ 
              |          |             |
-         (port 53)  (port 5222)  (port 8080)
+       (port 2222) (port 5222)  (port 8080)
              |          |             |
  +-------------------------------------------------+
  |                                                 |
  |   buddycloud-VM                                 |
  |   -------------                                 |
- |   * hostname: buddycloud.dev                    |
- |   * listening for DNS queries on port 53        |
- |   * answers *.buddycloud.dev with 127.0.0.1     |
- |   * forwards  other queries to 8.8.8.8          |
+ |   * hostname: localhost.buddycloud.org          |
  |   * runs complete buddycloud stack              |
  |   * TLS functions disabled                      |
  |   * federation disabled                         |
@@ -60,12 +59,11 @@ cd buddycloud-vm
 vagrant up
 ```
 
-This build process will take anywhere from 1 to 10 minutes depending on the speed of your network and disk. The log of the build is stored inside the VM (see below for accessing) `/var/log/salt/minion`.
+This build process will take anywhere from 1 to 10 minutes depending on the speed of your network and disk. The log of the build is stored inside the guest-VM (see below for accessing) `/var/log/salt/minion`.
 
 ### Access Buddycloud services running on the VM
 
-1. set your workstation DNS server to use `127.0.0.1`
-2. browse to http://buddycloud.dev:8080
+Browse to http://localhost.buddycloud.org:8080
 
 ### SSHing into the VM
 
@@ -98,7 +96,7 @@ Fork https://github.com/buddycloud/saltstack
 
 Inside the VM:
 ```bash
-sudo git clone https://github.com/example/my-buddycloudstack.git /srv/my-buddycloudstack
+sudo git clone https://github.com/example/my-buddycloudstack.git /srv/buddycloudstack
 ```
 
 Edit `/etc/salt/master` to include the second `file_roots:` like this:
@@ -154,30 +152,30 @@ It's recommended to configure to:
  
 ## about localhost.buddycloud.org
 
-This is a special subdomain that points everything to localhost
+A special subdomain that answers DNS queries with `127.0.0.1`
 
 ```bind
-_xmpp-client._tcp.localhost.buddycloud.org.              SRV 5 0 5222 c2s.localhost.buddycloud.org.
-_xmpp-server._tcp.localhost.buddycloud.org.              SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_xmpp-server._tcp.channels.localhost.buddycloud.org.     SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_xmpp-server._tcp.friendfinder.localhost.buddycloud.org. SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_xmpp-server._tcp.media.localhost.buddycloud.org.        SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_xmpp-server._tcp.pusher.localhost.buddycloud.org.       SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_xmpp-server._tcp.search.localhost.buddycloud.org.       SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_xmpp-server._tcp.topics.localhost.buddycloud.org.       SRV 5 0 5269 s2s.localhost.buddycloud.org.
-_bcloud-server._tcp.localhost.buddycloud.org.            TXT "v=1.0 server=channels.localhost.buddycloud.org"
-_buddycloud-api._tcp.localhost.buddycloud.org.           TXT "v=1.0 host=localhost.buddycloud.org protocol=https path=/api port=8080"
+localhost.buddycloud.org.           A 127.0.0.1
 $ORIGIN .localhost.buddycloud.org.
-api                                                      A 127.0.0.1
-webclient                                                A 127.0.0.1
-friendfinder                                             A 127.0.0.1
-search                                                   A 127.0.0.1
-topics                                                   A 127.0.0.1
-pusher                                                   A 127.0.0.1
-s2s                                                      A 127.0.0.1
-buddycloud                                               A 127.0.0.1
-media                                                    A 127.0.0.1
-c2s                                                      A 127.0.0.1
-channels                                                 A 127.0.0.1
-*                                                        A 127.0.0.1
+api                                 A 127.0.0.1
+webclient                           A 127.0.0.1
+friendfinder                        A 127.0.0.1
+search                              A 127.0.0.1
+topics                              A 127.0.0.1
+pusher                              A 127.0.0.1
+s2s                                 A 127.0.0.1
+buddycloud                          A 127.0.0.1
+media                               A 127.0.0.1
+c2s                                 A 127.0.0.1
+channels                            A 127.0.0.1
+_xmpp-client._tcp                   SRV 5 0 5222 c2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
+_bcloud-server._tcp                 TXT "v=1.0 server=channels.localhost.buddycloud.org"
+_buddycloud-api._tcp                TXT "v=1.0 host=localhost.buddycloud.org protocol=https path=/api port=8080"
 ```
