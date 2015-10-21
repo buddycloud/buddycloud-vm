@@ -6,7 +6,9 @@ apt-get --yes -q update
 mkdir /etc/salt
 apt-get --yes -q install python-git salt-master salt-minion
 cp /srv/vagrant_salt_bootstrap/master /etc/salt/master
-cp /srv/vagrant_salt_bootstrap/minion /etc/salt/minion 
+cp /srv/vagrant_salt_bootstrap/minion /etc/salt/minion
+# add the https://github.com/buddycloud/saltstack repo (the heavy lifting part)
+git clone https://github.com/buddycloud/saltstack.git /srv/buddycloud_saltstack_repo
 restart salt-minion
 restart salt-master
 sleep 10

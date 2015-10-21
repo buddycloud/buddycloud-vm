@@ -18,7 +18,7 @@
 
 fileserver_backend:
   - roots
-  - git
+#  - git
 
 # The buddycloud-vm will use /srv/salt-local/salt then fall back to trying
 # the git version at https://github.com/buddycloud/saltstack
@@ -28,7 +28,7 @@ fileserver_backend:
 file_roots:
   base:
     - /srv/salt_local/salt
-#    - /srv/buddycloud_saltstack_repo/salt
+    - /srv/buddycloud_saltstack_repo/salt
 
 # put your private keys, certificates and config data into 
 # /srv/pillar/buddycloud/init.sls
@@ -37,12 +37,11 @@ pillar_roots:
     - /srv/salt_local/pillar
 
 # apt-get install git-python for this to work
-gitfs_provider: gitpython
+# gitfs_provider: gitpython
 
 # use the Buddycloud saltstates as fallback
-gitfs_remotes:
-  - https://github.com/buddycloud/saltstack.git 
+# gitfs_remotes:
+#   - https://github.com/buddycloud/saltstack.git 
 
-gitfs_base: master
-gitfs_root: salt
-
+#gitfs_base: master
+#gitfs_root: salt
