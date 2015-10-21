@@ -8,13 +8,13 @@ This Vagrant-based virtual machine can be run locally as a complete buddycloud s
 - buddycloud-pusher
 - buddycloud-angular-app
 
-## Project Goals
+### Project Goals
 
 **Ship identical bits to dev and production:** When development, staging and production environments use identical orchestration files you reduce the "but it worked in dev" scenarios.
 
 **Quick:** The buddycloud-vm project is designed to a new developer a complete Buddycloud stack in about 10 mintues. Running locally.
 
-## How it works
+### How it works
 
 1. Vagrant to build a VM
 2. Install a [definied list of components](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls).
@@ -61,19 +61,19 @@ vagrant up
 
 Be patient: the build process will take anywhere from 1 to 10 minutes. Build log is avaliable at [inside the VM] `/var/log/salt/minion`.
 
-### Using
+### Access
 
 - Web: [demo](https://github.com/buddycloud/buddycloud-angular-app) at http://localhost.buddycloud.org:8080
 - ssh: `vagrant ssh`
 
-### [Re]configure
+### Changes
 
 |                 | Outside the VM                                  | Inside the VM                      |
 |-----------------|-------------------------------------------------|------------------------------------|
-| basic [what to install](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls)    | `buddycloud-vm/saltstack/salt_local/salt`       | `/srv/salt_local/salt`             |     
-| basic [configs](https://github.com/buddycloud/buddycloud-vm/tree/master/saltstack/salt_local/pillar)   | `buddycloud-vm/saltstack/salt_local/pillar`     | `/srv/salt_local/pillar`           | 
-| your changes (is checked incase you decide to run your own packages)  | `buddycloud-vm/saltstack/my_saltstack_repo`     | `/srv/my_saltstack_repo`           |
-| [buddycloud stack](https://github.com/buddycloud/saltstack) as a fallback for all packages | `buddycloud-vm/saltstack/buddycloud_saltstack_repo` | `/srv/buddycloud_saltstack_repo` |
+| basic [what to install](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls)    | `saltstack/salt_local/salt`       | `/srv/salt_local/salt`             |     
+| basic [configs](https://github.com/buddycloud/buddycloud-vm/tree/master/saltstack/salt_local/pillar)   | `saltstack/salt_local/pillar`     | `/srv/salt_local/pillar`           | 
+| your changes (is checked incase you decide to run your own packages)  | `saltstack/my_saltstack_repo`     | `/srv/my_saltstack_repo`           |
+| [buddycloud stack](https://github.com/buddycloud/saltstack) as a fallback for all packages | `saltstack/buddycloud_saltstack_repo` | `/srv/buddycloud_saltstack_repo` |
 
 Activate any changes
 ```bash 
