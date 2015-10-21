@@ -66,44 +66,31 @@ Be patient: the build process will take anywhere from 1 to 10 minutes. Build log
 - Web: [demo](https://github.com/buddycloud/buddycloud-angular-app) at http://localhost.buddycloud.org:8080
 - ssh: `vagrant ssh`
 
-### Changes
+### Making Changes
 
 |                 | Outside the VM                                  | Inside the VM                      |
 |-----------------|-------------------------------------------------|------------------------------------|
 | basic [what to install](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls)    | `saltstack/salt_local/salt`       | `/srv/salt_local/salt`             |     
 | basic [configs](https://github.com/buddycloud/buddycloud-vm/tree/master/saltstack/salt_local/pillar)   | `saltstack/salt_local/pillar`     | `/srv/salt_local/pillar`           | 
-| your changes (is checked incase you decide to run your own packages)  | `saltstack/my_saltstack_repo`     | `/srv/my_saltstack_repo`           |
+| somewhere for your own changes  | `saltstack/my_saltstack_repo`     | `/srv/my_saltstack_repo`           |
 | [buddycloud stack](https://github.com/buddycloud/saltstack) as a fallback for all packages | `saltstack/buddycloud_saltstack_repo` | `/srv/buddycloud_saltstack_repo` |
 
-Activate any changes
-```bash 
+Activating the changes
+```bash
 salt "*" state.highstate -l all
 ```
 
-### Adding your own changes
-
-1. Fork https://github.com/buddycloud/saltstack
-2. [inside the VM] `sudo git clone https://github.com/my-repo/saltstack.git /srv/my_saltstack_repo`
-
-### Shutting down the VM
-
-- Shut down Vagrant with: `vagrant halt`. 
-- Running `vagrant kill` will remove all disks and configs.
-
 ### Deploying to cloud-hosting
 
-To deploy to a cloud-hosting provider, edit the `Vagrantfile` and install the provider plugin. For example, Google Cloud ([background reading](https://github.com/mitchellh/vagrant-google) uses
+Generally you will want to run your own copy of saltstack to orchestrate changes to your production environment. If you would rather copy VMs around, edit the `Vagrantfile` and install the provider plugin. 
+
+For example, Google Cloud ([background reading](https://github.com/mitchellh/vagrant-google)) uses
 ```
 vagrant plugin install vagrant-google
 vagrant up --provider=google
 ```
-and VSphere uses
-```
-vagrant plugin install vagrant-vsphere
-vagrant up --provider=vsphere
-```
 
-## about localhost.buddycloud.org
+### about localhost.buddycloud.org
 
 `localhost.buddycloud.org` is a special sub-domain hosted for this project. It answers all DNS queries with `127.0.0.1` which is great for testing code inside a VM.
 
@@ -133,3 +120,8 @@ _xmpp-server._tcp                   SRV 5 0 5269 s2s.localhost.buddycloud.org.
 _bcloud-server._tcp                 TXT "v=1.0 server=channels.localhost.buddycloud.org"
 _buddycloud-api._tcp                TXT "v=1.0 host=localhost.buddycloud.org protocol=https path=/api port=8080"
 ```
+
+### Shutting down the VM
+
+- Shut down Vagrant with: `vagrant halt`. 
+- Running `vagrant kill` will remove all disks and configs.
