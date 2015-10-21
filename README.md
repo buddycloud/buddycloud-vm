@@ -18,8 +18,7 @@ Both environments use identical orchestration files and help you reduce the "but
 
 ### Using the VM
 
-The VM is designed to expose buddycloud-services out to your workstation. A quick ascii-art diagram explaines.
-
+The VM is designed to expose buddycloud-services out to your workstation:
 ```
  +-------------------------------------------------+ 
  |                                                 |
@@ -45,10 +44,10 @@ The VM is designed to expose buddycloud-services out to your workstation. A quic
  +-------------------------------------------------+
 ```
 
-### Run the Buddycloud VM
+### Running the Buddycloud VM
 
-Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
+- Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
 
 ```bash
 git clone https://github.com/buddycloud/buddycloud-vm.git
@@ -56,24 +55,22 @@ cd buddycloud-vm
 vagrant up
 ```
 
-This build process will take anywhere from 1 to 10 minutes depending on the speed of your network and disk. The log of the build is stored inside the guest-VM (see below for accessing) `/var/log/salt/minion`.
+This build process will take anywhere from 1 to 10 minutes. The log of the build is stored inside the guest-VM (see below for accessing) `/var/log/salt/minion`.
 
 ### Access Buddycloud services running on the VM
 
-Browse to http://localhost.buddycloud.org:8080
+[Demo](https://github.com/buddycloud/buddycloud-angular-app): http://localhost.buddycloud.org:8080
 
-### SSHing into the VM
+SSHing into the VM using `vagrant ssh`
 
-```bash
-vagrant ssh
-```
-
-### Configure VM
+### Configure buddycloud-vm
 
 |                 | Outside the VM                                  | Inside the VM                      |
 |-----------------|-------------------------------------------------|------------------------------------|
-| Public configs  | `buddycloud-vm/saltstack/salt_local/salt/*`     | `/srv/salt_local/salt`             |     
-| Private configs | `buddycloud-vm/saltstack/salt_local/pillar/*`   | `/srv/salt_local/pillar`           | 
+| basic setup     | `buddycloud-vm/saltstack/salt_local/salt`       | `/srv/salt_local/salt`             |     
+| basic config    | `buddycloud-vm/saltstack/salt_local/pillar`     | `/srv/salt_local/pillar`           | 
+| your changes    | `buddycloud-vm/saltstack/my_saltstack_repo`     | `/srv/my_saltstack_repo`           |
+| [buddycloud stack](https://github.com/buddycloud/saltstack)  | `buddycloud-vm/saltstack/buddycloud_saltstack_repo` | `/srv/buddycloud_saltstack_repo` |
 
 ### [Re]configure the VM
 
@@ -83,41 +80,22 @@ salt "*" state.highstate -l all
 
 ### Adding your own changes
 
-Fork https://github.com/buddycloud/saltstack
+1. Fork https://github.com/buddycloud/saltstack
+2. [inside the VM] `sudo git clone https://github.com/my-repo/saltstack.git /srv/my_saltstack_repo`
+3. [inside the VM] add to /etc/salt/master
+4. [inside the VM] `service salt-master restart`
 
-Inside the VM:
-```bash
-sudo git clone https://github.com/example/my-buddycloudstack.git /srv/buddycloudstack
-```
+You now have a configuration that is checked in the following order:
 
-Edit `/etc/salt/master` to include the second `file_roots:` like this:
-``` 
-file_roots:
-  base:
-    - /srv/salt_local/salt
-    - /srv/my-buddycloudstack/salt
-```
-
-Edit your configuration in `/srv/my-buddycloudstack/salt` and update `/srv/salt_local/salt/top.sls` where necessary.
-
-You now have a configuration:
-
-1. /srv/salt_local/salt is checked first (e.g. salt formula for buddycloud-server-java)
-2. /srv/my-buddycloud-stack/salt is checked second,
-3. finally, https://github.com/buddycloud/saltstack/tree/master/salt is checked. 
-
-Activate your changes:
-```bash
-salt "*" state.highstate -l all
-```
-
-(and don't forget to commit /srv/my-buddycloudstack back to git before you destroy your VM)
+1. `/srv/salt_local/salt` is checked for [configs](https://github.com/buddycloud/buddycloud-vm/tree/master/saltstack/salt_local/pillar) and [what to install](https://github.com/buddycloud/buddycloud-vm/blob/master/saltstack/salt_local/salt/top.sls)
+3. `/srv/my_saltstack_repo` is checked incase you decide to run your own packages
+2. `/srv/buddycloud_saltstack_repo` is there as a fallback for all packages
 
 ### Shutting down the VM
 
 Shut down Vagrant with: `vagrant halt`. Running `vagrant kill` will remove all disks and configs.
 
-# Depoloying Buddycloud to different providers
+### Depoloying Buddycloud to different providers
 
 To deploy to a hosting provider, edit the `Vagrantfile` with your cloud-hosting-provider data.
 
