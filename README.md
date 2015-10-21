@@ -47,11 +47,8 @@ The VM is designed to expose buddycloud-services out to your workstation. A quic
 
 ### Run the Buddycloud VM
 
-Install [Git](http://git-scm.com/downloads)
 Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 Install [Vagrant](http://www.vagrantup.com/) (v1.7.2 or later)
-
-Open a terminal
 
 ```bash
 git clone https://github.com/buddycloud/buddycloud-vm.git
@@ -69,15 +66,9 @@ Browse to http://localhost.buddycloud.org:8080
 
 ```bash
 vagrant ssh
-
-# or, 
-ssh-keygen -R '[localhost]:2222' # remove old key
-ssh vagrant@localhost -p2222     # password is `vagrant`
 ```
 
-(for convenience, add your username and public key to `saltstack/salt_local/pillar/users/init.sls`)
-
-### Edit VM configuration (e.g. domainname, ssh keys, buddycloud config)
+### Configure VM
 
 |                 | Outside the VM                                  | Inside the VM                      |
 |-----------------|-------------------------------------------------|------------------------------------|
@@ -130,30 +121,23 @@ Shut down Vagrant with: `vagrant halt`. Running `vagrant kill` will remove all d
 
 To deploy to a hosting provider, edit the `Vagrantfile` with your cloud-hosting-provider data.
 
-### Google Cloud
-
-Configure according to https://github.com/mitchellh/vagrant-google, then:
+Google Cloud [background reading](https://github.com/mitchellh/vagrant-google)
 ```
 vagrant plugin install vagrant-google
 vagrant up --provider=google
 ```
 
-### VSphere 
+VSphere 
 ```
 vagrant plugin install vagrant-vsphere
 vagrant up --provider=vsphere
 ```
 
-## Running in Production
+## localhost.buddycloud.org
 
-It's recommended to configure to:
-- use your saltstack repo as priority (eg. /srv/dev-ops or gitfs from git://github.com/example/dev-ops.git)
-- use gitfs with https://github.com/buddycloud/saltstack.git for everything you don't override.
- 
-## about localhost.buddycloud.org
+`localhost.buddycloud.org` is a special sub-domain hosted for this project. It always answers DNS queries with `127.0.0.1` which is great for testing code inside a guest VM.
 
-A special subdomain that answers DNS queries with `127.0.0.1`
-
+zone-file:
 ```bind
 localhost.buddycloud.org.           A 127.0.0.1
 $ORIGIN .localhost.buddycloud.org.
