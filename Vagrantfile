@@ -17,9 +17,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432, protocol: 'tcp' # Postgresql
   config.vm.network :forwarded_port, guest: 443,  host: 8080, protocol: 'tcp' # website
 
+  # Sync the following folders
+  config.vm.synced_folder "saltstack/vagrant_salt_bootstrap",        "/srv/vagrant_salt_bootstrap"
+  config.vm.synced_folder "saltstack/salt_local",                    "/srv/salt_local"
+  config.vm.synced_folder "saltstack/buddycloud_saltstack_repo",     "/srv/buddycloud_saltstack_repo"
+  config.vm.synced_folder "saltstack/my_saltstack_repo",             "/srv/my_saltstack_repo"
+  
   # Provision the box with a masterless salt configuration
-  config.vm.synced_folder "saltstack/salt_local",               "/srv/salt_local"
-  config.vm.synced_folder "saltstack/vagrant_salt_bootstrap",   "/srv/vagrant_salt_bootstrap"
   config.vm.provision :shell, :inline => "sudo /srv/vagrant_salt_bootstrap/bootstrap.sh"
 
   # configure for virtualbox
