@@ -18,3 +18,4 @@ base:
     - buddycloud-media-server
     - buddycloud-pusher
     - buddycloud-angular-app
+    - buddycloud-webclient
